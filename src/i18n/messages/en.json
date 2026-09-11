@@ -1,0 +1,18 @@
+{
+  "metadata": {
+    "title": "Seera — Build an ATS-friendly resume",
+    "description": "Create your resume in Arabic or English with clear, example-guided steps, and pass applicant tracking systems with confidence."
+  },
+  "marketing": {
+    "badge": "Free resume builder",
+    "title": "A resume that passes ATS",
+    "subtitle": "Every field comes with a ready example, in Arabic and English, no guide required.",
+    "cta": "Start for free",
+    "ctaSecondary": "Sign in"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "description": "We're working on it. You can try again now.",
+    "retry": "Try again"
+  }
+}

@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# سِيرة (Seera)
 
-## Getting Started
+منصّة عربية/إنجليزية لبناء سيرة ذاتية تجتاز أنظمة تتبّع المتقدمين (ATS)، بخطوات مشروحة بأمثلة جاهزة لكل حقل.
 
-First, run the development server:
+راجع `PROJECT-BRIEF.md` للرؤية والخطة الكاملة، `CLAUDE.md` لقواعد الكود، و`ATS-CRITERIA.md` لمعايير المحتوى والتنسيق.
+
+## الحزمة التقنية (المرحلة 0)
+
+- Next.js 16 (App Router + Turbopack + React 19)
+- TypeScript strict
+- Tailwind CSS v4 + shadcn/ui (preset: Radix/Nova)
+- next-intl (`ar` افتراضي، `en`) مع دعم RTL/LTR كامل
+- react-hook-form + zod (يُستخدم بدءًا من المرحلة 3)
+- ESLint (صارم) + Prettier
+
+## التشغيل محليًا
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+يفتح على `http://localhost:3000/ar` (أو `/en`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## أوامر الجودة
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run typecheck
+npm run build
+npm run format
+```
 
-## Learn More
+## بنية المشروع
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/
+│   ├── [locale]/
+│   │   ├── (marketing)/page.tsx     # الصفحة الرئيسية
+│   │   ├── (auth)/login|verify      # المرحلة 2
+│   │   ├── (app)/dashboard|builder  # المراحل 3-4
+│   │   └── (admin)/admin            # المرحلة 8
+│   ├── print/[resumeId]             # المرحلة 5
+│   └── api/export|admin             # المراحل 6، 8
+├── components/{ui,builder,resume,admin,shared}
+├── db/{schema,migrations}           # المرحلة 1
+├── server/{services,repositories}   # المرحلة 1+
+├── actions/                         # Server Actions
+├── lib/{ats,validations,constants,auth,errors.ts,logger.ts,env.ts}
+├── i18n/{routing.ts,request.ts,navigation.ts,messages/}
+└── proxy.ts                         # توجيه اللغة (بديل middleware في Next 16)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## حالة المراحل
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [x] **المرحلة 0** — التهيئة: Next.js + TS strict + Tailwind v4 + shadcn + next-intl (ar/en + RTL) + ESLint/Prettier + بنية المجلدات + `docs/DECISIONS.md`. `npm run build` ينجح.
+- [ ] المرحلة 1 — قاعدة البيانات (Drizzle + PostgreSQL)
+- [ ] المرحلة 2 — المصادقة (OTP + JWT)
+- [ ] المرحلة 3 — نواة المعالج
+- [ ] المرحلة 4 — بقية الأقسام
+- [ ] المرحلة 5 — المعاينة والطباعة
+- [ ] المرحلة 6 — PDF على السيرفر
+- [ ] المرحلة 7 — محرك ATS
+- [ ] المرحلة 8 — لوحة التحكم
+- [ ] المرحلة 9 — الصقل
+- [ ] المرحلة 10 — النشر على CranL
