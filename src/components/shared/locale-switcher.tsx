@@ -1,32 +1,30 @@
 "use client";
 
-import { useLocale } from "next-intl";
+import { Languages } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Link, usePathname } from "@/i18n/navigation";
-import { routing } from "@/i18n/routing";
 
-const LOCALE_LABELS: Record<string, string> = { ar: "العربية", en: "English" };
-
+/** Toggles between the two locales, keeping the current path. */
 export function LocaleSwitcher() {
   const locale = useLocale();
   const pathname = usePathname();
+  const t = useTranslations("common");
+  const nextLocale = locale === "ar" ? "en" : "ar";
+  const label = t("switchTo", { locale: nextLocale === "ar" ? "العربية" : "English" });
 
   return (
-    <div className="flex items-center gap-1 text-sm">
-      {routing.locales.map((loc) => (
-        <Link
-          key={loc}
-          href={pathname}
-          locale={loc}
-          aria-current={loc === locale ? "true" : undefined}
-          className={
-            loc === locale
-              ? "text-foreground font-medium"
-              : "text-muted-foreground hover:text-foreground transition-colors"
-          }
-        >
-          {LOCALE_LABELS[loc]}
-        </Link>
-      ))}
-    </div>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button asChild variant="ghost" size="sm" className="gap-1.5">
+          <Link href={pathname} locale={nextLocale} aria-label={label}>
+            <Languages className="size-4" aria-hidden="true" />
+            <span className="text-xs font-medium uppercase">{nextLocale}</span>
+          </Link>
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>{label}</TooltipContent>
+    </Tooltip>
   );
 }

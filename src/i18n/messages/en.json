@@ -418,6 +418,15 @@
       "generatingPdf": "Generating...",
       "pdfExportFailed": "Couldn't generate the PDF, please try again",
       "emailComingSoon": "Emailing yourself a copy is coming soon."
+    },
+    "exit": {
+      "back": "Back",
+      "title": "Leave the builder?",
+      "description": "Your data is saved automatically as you type, and you can come back to finish this resume later from the dashboard — it stays a draft until you complete and export it. Only what you typed in the last second or two is not saved yet: choose \"Save and leave\" to keep it, or \"Discard\" to leave without it.",
+      "stay": "Keep editing",
+      "discard": "Discard",
+      "save": "Save and leave",
+      "saving": "Saving..."
     }
   },
   "ats": {
@@ -449,5 +458,8 @@
       "easternDigits": "Use Latin numerals (0-9) instead of Eastern Arabic-Indic digits",
       "phoneFormat": "Write your phone number in international format (e.g. +966 5X XXX XXXX)"
     }
+  },
+  "common": {
+    "switchTo": "Switch to {locale}"
   }
 }

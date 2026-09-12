@@ -59,13 +59,19 @@ export function VerifyForm({ email }: { email: string }) {
           control={form.control}
           name="code"
           render={({ field, fieldState }) => (
-            <FormItem>
+            <FormItem className="flex flex-col items-center gap-3">
               <FieldLabel required>{t("codeLabel")}</FieldLabel>
               <FormControl>
-                <InputOTP maxLength={6} value={field.value} onChange={field.onChange}>
+                <InputOTP
+                  maxLength={6}
+                  value={field.value}
+                  onChange={field.onChange}
+                  autoFocus
+                  containerClassName="justify-center"
+                >
                   <InputOTPGroup dir="ltr">
                     {OTP_SLOT_INDEXES.map((index) => (
-                      <InputOTPSlot key={index} index={index} />
+                      <InputOTPSlot key={index} index={index} className="size-14 text-xl font-semibold" />
                     ))}
                   </InputOTPGroup>
                 </InputOTP>

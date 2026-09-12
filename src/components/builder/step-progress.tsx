@@ -61,7 +61,7 @@ export function StepProgress({ resumeId }: { resumeId: string }) {
   }
 
   return (
-    <nav aria-label={t("ariaLabel")} className="border-border overflow-x-auto border-b">
+    <nav aria-label={t("ariaLabel")} className="border-border overflow-x-auto border-t">
       <ol className="mx-auto flex w-full max-w-4xl items-center gap-3 px-4 py-3">
         {BUILDER_STEPS.map((step, index) => {
           const isCurrent = step.id === currentStepId;
