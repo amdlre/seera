@@ -21,9 +21,12 @@ function Switch({
       )}
       {...props}
     >
+      {/* RTL: the thumb is positioned with the logical `start` inset instead of
+          `translate-x`. `translate-x` always moves right, so in Arabic the "on"
+          thumb slid out of the track and vanished. */}
       <SwitchPrimitive.Thumb
         data-slot="switch-thumb"
-        className="pointer-events-none block rounded-full bg-background ring-0 transition-transform group-data-[size=default]/switch:size-4 group-data-[size=sm]/switch:size-3 group-data-[size=default]/switch:data-checked:translate-x-[calc(100%-2px)] group-data-[size=sm]/switch:data-checked:translate-x-[calc(100%-2px)] dark:data-checked:bg-primary-foreground group-data-[size=default]/switch:data-unchecked:translate-x-0 group-data-[size=sm]/switch:data-unchecked:translate-x-0 dark:data-unchecked:bg-foreground"
+        className="pointer-events-none absolute start-[2px] block rounded-full bg-background shadow-sm ring-0 transition-[inset-inline-start] duration-200 group-data-[size=default]/switch:size-4 group-data-[size=sm]/switch:size-3 group-data-[size=default]/switch:data-checked:start-[14px] group-data-[size=sm]/switch:data-checked:start-[10px] dark:data-checked:bg-primary-foreground dark:data-unchecked:bg-foreground"
       />
     </SwitchPrimitive.Root>
   )

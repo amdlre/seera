@@ -267,7 +267,10 @@
       "savingDraft": "Saving...",
       "draftSaved": "Your resume is saved as a draft",
       "draftSavedHint": "You can close this page and finish it later from your dashboard.",
-      "saveFailed": "Could not save, please try again"
+      "saveFailed": "Could not save, please try again",
+      "finish": "Finish",
+      "finished": "Your resume is saved",
+      "finishedHint": "You can come back and edit it any time from your dashboard."
     },
     "common": {
       "delete": "Delete",

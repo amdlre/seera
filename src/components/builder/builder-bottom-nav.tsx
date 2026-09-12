@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, Check, Save } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, CircleCheck, Save } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
@@ -29,7 +29,7 @@ export function BuilderBottomNav({ resumeId }: { resumeId: string }) {
   const currentStepId = pathname.split("/").filter(Boolean).pop() ?? "personal";
   const { previous, next } = getAdjacentSteps(currentStepId);
 
-  function saveThen(navigateTo?: string) {
+  function saveThen(navigateTo?: string, options?: { confirmWith: "draftSaved" | "finished" }) {
     startBusy(async () => {
       const saved = (await registry?.saveAll()) ?? true;
       if (!saved) {
@@ -37,12 +37,15 @@ export function BuilderBottomNav({ resumeId }: { resumeId: string }) {
         return;
       }
 
+      if (options) {
+        toast.success(t(options.confirmWith), { description: t(`${options.confirmWith}Hint`) });
+      }
+
       if (navigateTo) {
         router.push(navigateTo);
         return;
       }
 
-      toast.success(t("draftSaved"), { description: t("draftSavedHint") });
       setJustSaved(true);
       setTimeout(() => setJustSaved(false), 2000);
     });
@@ -66,12 +69,17 @@ export function BuilderBottomNav({ resumeId }: { resumeId: string }) {
         )}
 
         <div className="flex items-center gap-2">
-          <Button variant="outline" disabled={isBusy} onClick={() => saveThen()} className="gap-1.5">
+          <Button
+            variant="outline"
+            disabled={isBusy}
+            onClick={() => saveThen(undefined, { confirmWith: "draftSaved" })}
+            className="gap-1.5"
+          >
             {justSaved ? <Check className="size-4" /> : <Save className="size-4" />}
             {isBusy ? t("savingDraft") : t("saveDraft")}
           </Button>
 
-          {next && next.implemented && (
+          {next && next.implemented ? (
             <Button
               disabled={isBusy}
               onClick={() => saveThen(stepHref(resumeId, next.id))}
@@ -79,6 +87,16 @@ export function BuilderBottomNav({ resumeId }: { resumeId: string }) {
             >
               {t("next")}
               <ArrowRight className="size-4 rtl:rotate-180" aria-hidden="true" />
+            </Button>
+          ) : (
+            // Last step: nothing left to fill in, so offer the way out.
+            <Button
+              disabled={isBusy}
+              onClick={() => saveThen("/dashboard", { confirmWith: "finished" })}
+              className="gap-1.5"
+            >
+              <CircleCheck className="size-4" aria-hidden="true" />
+              {t("finish")}
             </Button>
           )}
         </div>
