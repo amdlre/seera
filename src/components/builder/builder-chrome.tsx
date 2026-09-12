@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import type { ResumeSection } from "@/db/schema";
-import { AutosaveRegistryProvider } from "@/hooks/use-autosave-registry";
+import { DraftRegistryProvider } from "@/hooks/use-draft-registry";
 import type { PersonalInfoDraftInput } from "@/lib/validations/resume/personal-info";
 import type { SummaryDraftInput } from "@/lib/validations/resume/summary";
 import { BuilderBottomNav } from "./builder-bottom-nav";
@@ -10,6 +10,7 @@ import { BuilderHeader } from "./builder-header";
 import { BuilderPreviewProvider, type PreviewItem } from "./builder-preview-context";
 import { LivePreviewPanel } from "./live-preview-panel";
 import { MobilePreviewSheet } from "./mobile-preview-sheet";
+import { UnsavedChangesGuard } from "./unsaved-changes-guard";
 
 type BuilderChromeProps = {
   resumeId: string;
@@ -36,7 +37,7 @@ export function BuilderChrome({
       initialSummary={initialSummary}
       initialItemsBySectionId={initialItemsBySectionId}
     >
-      <AutosaveRegistryProvider>
+      <DraftRegistryProvider>
         <div className="flex min-h-screen flex-col">
           <BuilderHeader resumeId={resumeId} />
           <div className="flex flex-1 flex-col lg:flex-row">
@@ -44,9 +45,10 @@ export function BuilderChrome({
             <LivePreviewPanel />
           </div>
           <MobilePreviewSheet />
+          <UnsavedChangesGuard />
           <BuilderBottomNav resumeId={resumeId} />
         </div>
-      </AutosaveRegistryProvider>
+      </DraftRegistryProvider>
     </BuilderPreviewProvider>
   );
 }

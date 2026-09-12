@@ -266,7 +266,8 @@
       "saveDraft": "Save as draft",
       "savingDraft": "Saving...",
       "draftSaved": "Your resume is saved as a draft",
-      "draftSavedHint": "You can close this page and finish it later from your dashboard."
+      "draftSavedHint": "You can close this page and finish it later from your dashboard.",
+      "saveFailed": "Could not save, please try again"
     },
     "common": {
       "delete": "Delete",
@@ -279,8 +280,9 @@
     },
     "autosave": {
       "saving": "Saving...",
-      "saved": "Saved ✓",
-      "error": "Couldn't save, try again"
+      "saved": "Saved",
+      "error": "Could not save, please try again",
+      "unsaved": "Unsaved changes"
     },
     "fieldExample": {
       "tooltipAriaLabel": "Writing rule for this field",
@@ -450,11 +452,12 @@
     "exit": {
       "back": "Back",
       "title": "Leave the builder?",
-      "description": "Your data is saved automatically as you type, and you can come back to finish this resume later from the dashboard — it stays a draft until you complete and export it. Only what you typed in the last second or two is not saved yet: choose \"Save and leave\" to keep it, or \"Discard\" to leave without it.",
+      "description": "This step has changes that are not saved yet. Save them to find your work as you left it, or leave without saving and lose just these changes.",
       "stay": "Keep editing",
-      "discard": "Discard",
+      "discard": "Leave without saving",
       "save": "Save and leave",
-      "saving": "Saving..."
+      "saving": "Saving...",
+      "saveFailed": "Could not save, please try again"
     }
   },
   "ats": {

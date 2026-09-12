@@ -8,7 +8,7 @@ import { saveSummaryAction } from "@/actions/resume.actions";
 import { Form, FormControl, FormField } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { FieldWithExample } from "@/components/shared/field-with-example";
-import { useAutosaveForm } from "@/hooks/use-autosave-form";
+import { useDraftForm } from "@/hooks/use-draft-form";
 import { FIELD_GUIDES } from "@/lib/constants/field-guides";
 import { summarySchema, type SummaryInput } from "@/lib/validations/resume/summary";
 import { AutosaveIndicator } from "./autosave-indicator";
@@ -31,7 +31,7 @@ export function SummaryForm({ resumeId }: { resumeId: string }) {
     return () => subscription.unsubscribe();
   }, [form, updateSummary]);
 
-  const status = useAutosaveForm(form.watch, async (values) => {
+  const status = useDraftForm(form.watch, async (values) => {
     const result = await saveSummaryAction(resumeId, values);
     return result.success;
   });

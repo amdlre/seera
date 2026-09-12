@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { draftText } from "@/lib/validations/shared";
 
 /** Full validation used by the client form's Zod resolver (drives required-field UI). */
 export const summarySchema = z.object({
@@ -13,10 +14,14 @@ export const summarySchema = z.object({
 });
 
 /**
- * Relaxed variant used server-side for autosave: every field optional so a
- * partially-filled draft can persist, while present values are still validated.
+ * Relaxed variant used server-side for autosave. Not `.partial()`: the form
+ * submits both fields on every keystroke, so the untouched one arrives as `""`
+ * and would fail `min(1)`, blocking every autosave until both are filled.
  */
-export const summaryDraftSchema = summarySchema.partial();
+export const summaryDraftSchema = z.object({
+  summaryAr: draftText(600),
+  summaryEn: draftText(600),
+});
 
 export type SummaryInput = z.infer<typeof summarySchema>;
 export type SummaryDraftInput = z.infer<typeof summaryDraftSchema>;

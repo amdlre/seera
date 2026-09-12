@@ -3,7 +3,9 @@
 import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { ResumeSectionType } from "@/db/schema";
-import { Link, usePathname } from "@/i18n/navigation";
+import { useTransition } from "react";
+import { useDraftRegistry } from "@/hooks/use-draft-registry";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { BUILDER_STEPS } from "@/lib/constants/builder";
 import { personalInfoSchema } from "@/lib/validations/resume/personal-info";
 import { summarySchema } from "@/lib/validations/resume/summary";
@@ -27,6 +29,9 @@ function currentStepIdFromPathname(pathname: string): string {
 
 export function StepProgress({ resumeId }: { resumeId: string }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const registry = useDraftRegistry();
+  const [isSaving, startSaving] = useTransition();
   const t = useTranslations("builder.steps");
   const { personalInfo, summary, sections, itemsBySectionId } = useBuilderPreview();
   const currentStepId = currentStepIdFromPathname(pathname);
@@ -98,10 +103,21 @@ export function StepProgress({ resumeId }: { resumeId: string }) {
           return (
             <li key={step.id} className="flex items-center gap-1.5">
               {step.implemented ? (
-                <Link href={href} className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  disabled={isSaving}
+                  onClick={() =>
+                    startSaving(async () => {
+                      // Saves this step before jumping — nothing is written while typing.
+                      await registry?.saveAll();
+                      router.push(href);
+                    })
+                  }
+                  className="flex items-center gap-1.5"
+                >
                   {badge}
                   {label}
-                </Link>
+                </button>
               ) : (
                 <span className="flex cursor-not-allowed items-center gap-1.5 opacity-40">
                   {badge}

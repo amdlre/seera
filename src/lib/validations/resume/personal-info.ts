@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { optionalUrl } from "@/lib/validations/shared";
+import { draftText, optionalUrl } from "@/lib/validations/shared";
 
 /** Full validation used by the client form's Zod resolver (drives required-field UI). */
 export const personalInfoSchema = z.object({
@@ -22,10 +22,23 @@ export const personalInfoSchema = z.object({
 });
 
 /**
- * Relaxed variant used server-side for autosave: every field optional so a
- * partially-filled draft can persist, while present values are still validated.
+ * Relaxed variant used server-side for autosave. Built field-by-field rather
+ * than with `.partial()`: that only permits a key to be *absent*, while the
+ * form always submits every field — so an untouched field arrives as `""` and
+ * would fail `min(1)`, silently breaking autosave on every new resume.
  */
-export const personalInfoDraftSchema = personalInfoSchema.partial();
+export const personalInfoDraftSchema = z.object({
+  fullNameAr: draftText(200),
+  fullNameEn: draftText(200),
+  targetJobTitleAr: draftText(200),
+  targetJobTitleEn: draftText(200),
+  email: draftText(254),
+  phone: draftText(50),
+  cityCountryAr: draftText(200),
+  cityCountryEn: draftText(200),
+  linkedin: draftText(500),
+  portfolioUrl: draftText(500),
+});
 
 export type PersonalInfoInput = z.infer<typeof personalInfoSchema>;
 export type PersonalInfoDraftInput = z.infer<typeof personalInfoDraftSchema>;

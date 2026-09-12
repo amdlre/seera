@@ -7,12 +7,12 @@ import type { z } from "zod";
 import type { ItemDataKind } from "@/actions/resume-items.actions";
 import { saveItemDraftAction } from "@/actions/resume-items.actions";
 import { useBuilderPreview } from "@/components/builder/builder-preview-context";
-import { useAutosaveForm } from "@/hooks/use-autosave-form";
+import { useDraftForm } from "@/hooks/use-draft-form";
 
 /**
  * Shared setup for one item card's form: RHF + Zod resolver, syncing every
- * keystroke into the live preview context, and debounced autosave to the
- * server. Used by every multi-entry section (experience, education, ...).
+ * keystroke into the live preview context, and saving to the server only when
+ * asked (the save button or moving between steps). Used by every multi-entry section (experience, education, ...).
  */
 export function useItemForm<TSchema extends z.ZodTypeAny>(params: {
   schema: TSchema;
@@ -37,7 +37,7 @@ export function useItemForm<TSchema extends z.ZodTypeAny>(params: {
     return () => subscription.unsubscribe();
   }, [form, sectionId, itemId, updateSectionItem]);
 
-  const status = useAutosaveForm(form.watch, async (values) => {
+  const status = useDraftForm(form.watch, async (values) => {
     const result = await saveItemDraftAction(itemId, kind, values);
     return result.success;
   });

@@ -8,7 +8,7 @@ import { savePersonalInfoAction } from "@/actions/resume.actions";
 import { Form, FormControl, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { FieldWithExample } from "@/components/shared/field-with-example";
-import { useAutosaveForm } from "@/hooks/use-autosave-form";
+import { useDraftForm } from "@/hooks/use-draft-form";
 import { FIELD_GUIDES } from "@/lib/constants/field-guides";
 import { personalInfoSchema, type PersonalInfoInput } from "@/lib/validations/resume/personal-info";
 import { AutosaveIndicator } from "./autosave-indicator";
@@ -42,7 +42,7 @@ export function PersonalInfoForm({ resumeId }: { resumeId: string }) {
     return () => subscription.unsubscribe();
   }, [form, updatePersonalInfo]);
 
-  const status = useAutosaveForm(form.watch, async (values) => {
+  const status = useDraftForm(form.watch, async (values) => {
     const result = await savePersonalInfoAction(resumeId, values);
     return result.success;
   });
