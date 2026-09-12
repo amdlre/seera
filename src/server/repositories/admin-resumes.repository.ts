@@ -154,3 +154,18 @@ export async function softDeleteResumes(resumeIds: string[]): Promise<void> {
   if (resumeIds.length === 0) return;
   await db.update(resumes).set({ deletedAt: new Date() }).where(inArray(resumes.id, resumeIds));
 }
+
+export type AdminResumesSummary = { total: number; draft: number; completed: number };
+
+/** Totals for the resumes page header cards: overall, drafts, and completed. */
+export async function getResumesSummary(): Promise<AdminResumesSummary> {
+  const [row] = await db
+    .select({
+      total: sql<number>`count(*)::int`,
+      completed: sql<number>`count(*) filter (where ${resumes.status} = 'completed')::int`,
+    })
+    .from(resumes)
+    .where(isNull(resumes.deletedAt));
+
+  return { total: row.total, draft: row.total - row.completed, completed: row.completed };
+}

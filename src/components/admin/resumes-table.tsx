@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpDown, FileSearch, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, FileSearch, SquarePen, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
@@ -11,12 +11,6 @@ import {
 import { EmptyState } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -25,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import {
   Table,
   TableBody,
@@ -177,7 +172,7 @@ export function AdminResumesTable({
           <Table className={CELL_SPACING}>
             <TableHeader>
               <TableRow className="bg-muted/40">
-                <TableHead className="w-10">
+                <TableHead className="w-12 pe-2">
                   <Checkbox
                     aria-label={t("selectAll")}
                     checked={rows.length > 0 && selectedIds.size === rows.length}
@@ -193,7 +188,7 @@ export function AdminResumesTable({
                 <SortableHead label={t("columnAts")} column="atsScore" onSort={toggleSort} />
                 <SortableHead label={t("columnUpdated")} column="updatedAt" onSort={toggleSort} />
                 <TableHead>{t("columnExports")}</TableHead>
-                <TableHead className="w-10" />
+                <TableHead className="w-24">{t("columnActions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -235,24 +230,35 @@ export function AdminResumesTable({
                     AR {row.exportsAr} · EN {row.exportsEn}
                   </TableCell>
                   <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon-sm" aria-label={t("rowActions")}>
-                          <MoreHorizontal className="size-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => setEditingResume(row)}>
-                          {t("viewEdit")}
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          variant="destructive"
-                          onClick={() => setDeletingResume(row)}
-                        >
-                          {t("delete")}
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <div className="flex items-center gap-1">
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon-sm"
+                            aria-label={t("viewEdit")}
+                            onClick={() => setEditingResume(row)}
+                          >
+                            <SquarePen className="size-4" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>{t("viewEdit")}</TooltipContent>
+                      </Tooltip>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon-sm"
+                            aria-label={t("delete")}
+                            className="text-destructive hover:text-destructive"
+                            onClick={() => setDeletingResume(row)}
+                          >
+                            <Trash2 className="size-4" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>{t("delete")}</TooltipContent>
+                      </Tooltip>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}

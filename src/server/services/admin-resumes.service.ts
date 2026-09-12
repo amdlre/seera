@@ -1,6 +1,8 @@
 import {
   type AdminResumeFilters,
   type AdminResumeRow,
+  type AdminResumesSummary,
+  getResumesSummary,
   listResumesForAdmin,
   softDeleteResume,
   softDeleteResumes,
@@ -41,4 +43,9 @@ export async function bulkDeleteResumesAsAdmin(
       logAdminAction(adminUserId, "resume.bulk_delete", "resume", resumeId),
     ),
   );
+}
+
+/** Summary counts for the resumes page header cards. */
+export async function getResumesOverview(): Promise<AdminResumesSummary> {
+  return getResumesSummary();
 }

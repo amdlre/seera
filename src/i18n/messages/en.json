@@ -86,6 +86,13 @@
       "invalidCode": "Incorrect code",
       "generic": "Something went wrong. Please try again",
       "accountSuspended": "This account has been suspended by an administrator. Contact us if you believe this is a mistake."
+    },
+    "alreadySignedIn": {
+      "title": "You are already signed in",
+      "signedInAs": "Current account: {email}",
+      "hint": "To use a different account, sign out of this one first.",
+      "goToDashboard": "Go to my dashboard",
+      "goToAdmin": "Go to admin dashboard"
     }
   },
   "dashboard": {
@@ -194,9 +201,12 @@
       "pageOf": "Page {page} of {totalPages}",
       "selectAll": "Select all",
       "selectRow": "Select resume {title}",
-      "rowActions": "Row actions",
       "noResults": "No results",
-      "noResultsHint": "Try adjusting your search or filters."
+      "noResultsHint": "Try adjusting your search or filters.",
+      "columnActions": "Actions",
+      "summaryTotal": "Total resumes",
+      "summaryDrafts": "Drafts",
+      "summaryCompleted": "Completed"
     },
     "usersTable": {
       "searchPlaceholder": "Search by name or email",
@@ -227,7 +237,11 @@
       "blockWarning": "“{name}” will be suspended indefinitely: they will not be able to sign in at all and will receive no login codes. Their resumes stay stored but out of reach — until you lift the suspension from here.",
       "blockCancel": "Cancel",
       "blockConfirm": "Suspend account",
-      "blocking": "Suspending..."
+      "blocking": "Suspending...",
+      "columnActions": "Actions",
+      "summaryTotal": "Total users",
+      "summaryActive": "Active",
+      "summaryBlocked": "Suspended"
     },
     "badge": "Admin"
   },

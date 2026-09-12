@@ -1,6 +1,6 @@
 "use client";
 
-import { ShieldBan, UserSearch } from "lucide-react";
+import { ShieldBan, ShieldCheck, UserSearch } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
@@ -25,6 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import {
   Table,
   TableBody,
@@ -119,7 +120,7 @@ export function AdminUsersTable({
                 <TableHead>{t("columnResumeCount")}</TableHead>
                 <TableHead>{t("columnJoined")}</TableHead>
                 <TableHead>{t("columnStatus")}</TableHead>
-                <TableHead className="w-32" />
+                <TableHead className="w-24">{t("columnActions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -168,14 +169,28 @@ export function AdminUsersTable({
                       </span>
                     </TableCell>
                     <TableCell>
-                      <Button
-                        variant={blocked ? "outline" : "ghost"}
-                        size="sm"
-                        className={cn(!blocked && "text-destructive hover:text-destructive")}
-                        onClick={() => (blocked ? setDisabled(row, false) : setPendingBlock(row))}
-                      >
-                        {blocked ? t("enable") : t("disable")}
-                      </Button>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon-sm"
+                            aria-label={blocked ? t("enable") : t("disable")}
+                            className={cn(
+                              blocked
+                                ? "text-emerald-600 hover:text-emerald-600 dark:text-emerald-400"
+                                : "text-destructive hover:text-destructive",
+                            )}
+                            onClick={() => (blocked ? setDisabled(row, false) : setPendingBlock(row))}
+                          >
+                            {blocked ? (
+                              <ShieldCheck className="size-4" />
+                            ) : (
+                              <ShieldBan className="size-4" />
+                            )}
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>{blocked ? t("enable") : t("disable")}</TooltipContent>
+                      </Tooltip>
                     </TableCell>
                   </TableRow>
                 );

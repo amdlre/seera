@@ -1,7 +1,9 @@
-import { setRequestLocale } from "next-intl/server";
+import { CheckCircle2, FileStack, FilePen } from "lucide-react";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { StatCard } from "@/components/admin/stat-card";
 import { AdminResumesTable } from "@/components/admin/resumes-table";
 import type { AdminResumeFilters, AdminResumeSortColumn } from "@/server/repositories/admin-resumes.repository";
-import { listResumes } from "@/server/services/admin-resumes.service";
+import { getResumesOverview, listResumes } from "@/server/services/admin-resumes.service";
 
 const PAGE_SIZE = 10;
 const SORT_COLUMNS: AdminResumeSortColumn[] = ["updatedAt", "title", "atsScore", "status"];
@@ -33,7 +35,25 @@ export default async function AdminResumesPage({ params, searchParams }: AdminRe
     pageSize: PAGE_SIZE,
   };
 
-  const { rows, total } = await listResumes(filters);
+  const [{ rows, total }, overview, t] = await Promise.all([
+    listResumes(filters),
+    getResumesOverview(),
+    getTranslations("admin.resumesTable"),
+  ]);
 
-  return <AdminResumesTable rows={rows} total={total} pageSize={PAGE_SIZE} filters={filters} />;
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <StatCard label={t("summaryTotal")} value={overview.total} icon={FileStack} tone="blue" />
+        <StatCard label={t("summaryDrafts")} value={overview.draft} icon={FilePen} tone="amber" />
+        <StatCard
+          label={t("summaryCompleted")}
+          value={overview.completed}
+          icon={CheckCircle2}
+          tone="emerald"
+        />
+      </div>
+      <AdminResumesTable rows={rows} total={total} pageSize={PAGE_SIZE} filters={filters} />
+    </div>
+  );
 }

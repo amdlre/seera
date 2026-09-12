@@ -1,7 +1,9 @@
 import { redirect } from "@/i18n/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { AlreadySignedIn } from "@/components/auth/already-signed-in";
 import { VerifyForm } from "@/components/auth/verify-form";
 import type { AppLocale } from "@/i18n/routing";
+import { getSession } from "@/lib/auth/session";
 
 type VerifyPageProps = {
   params: Promise<{ locale: string }>;
@@ -15,6 +17,15 @@ export default async function VerifyPage({ params, searchParams }: VerifyPagePro
 
   if (!email) {
     redirect({ href: "/login", locale: locale as AppLocale });
+  }
+
+  const session = await getSession();
+  if (session) {
+    return (
+      <main className="flex flex-1 flex-col items-center justify-center gap-6 px-6 py-24">
+        <AlreadySignedIn email={session.email} role={session.role} />
+      </main>
+    );
   }
 
   const t = await getTranslations("auth.verify");

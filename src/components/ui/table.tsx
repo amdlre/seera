@@ -69,7 +69,9 @@ function TableHead({ className, ...props }: React.ComponentProps<"th">) {
     <th
       data-slot="table-head"
       className={cn(
-        "h-10 px-2 text-left align-middle font-medium whitespace-nowrap text-foreground [&:has([role=checkbox])]:pr-0",
+        /* RTL: `text-start` so headers follow the page direction instead of
+           being pinned left in Arabic. */
+        "h-10 px-2 text-start align-middle font-medium whitespace-nowrap text-foreground",
         className
       )}
       {...props}
@@ -82,7 +84,7 @@ function TableCell({ className, ...props }: React.ComponentProps<"td">) {
     <td
       data-slot="table-cell"
       className={cn(
-        "p-2 align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0",
+        "p-2 align-middle whitespace-nowrap",
         className
       )}
       {...props}

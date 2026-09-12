@@ -1,4 +1,6 @@
 import {
+  type AdminUsersSummary,
+  getUsersSummary,
   type AdminUserFilters,
   type AdminUserRow,
   listUsersForAdmin,
@@ -31,4 +33,9 @@ export async function setUserDisabledAsAdmin(
 ): Promise<void> {
   await setUserDisabled(targetUserId, disabled);
   await logAdminAction(adminUserId, disabled ? "user.disable" : "user.enable", "user", targetUserId);
+}
+
+/** Summary counts for the users page header cards. */
+export async function getUsersOverview(): Promise<AdminUsersSummary> {
+  return getUsersSummary();
 }

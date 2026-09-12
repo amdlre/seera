@@ -81,3 +81,17 @@ export async function setUserDisabled(userId: string, disabled: boolean): Promis
     .set({ deletedAt: disabled ? new Date() : null })
     .where(eq(users.id, userId));
 }
+
+export type AdminUsersSummary = { total: number; active: number; blocked: number };
+
+/** Totals for the users page header cards: overall, active, and suspended. */
+export async function getUsersSummary(): Promise<AdminUsersSummary> {
+  const [row] = await db
+    .select({
+      total: sql<number>`count(*)::int`,
+      blocked: sql<number>`count(*) filter (where ${users.deletedAt} is not null)::int`,
+    })
+    .from(users);
+
+  return { total: row.total, active: row.total - row.blocked, blocked: row.blocked };
+}

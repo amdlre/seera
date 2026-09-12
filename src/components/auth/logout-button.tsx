@@ -6,7 +6,7 @@ import { logoutAction } from "@/actions/auth.actions";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "@/i18n/navigation";
 
-export function LogoutButton() {
+export function LogoutButton({ className }: { className?: string }) {
   const t = useTranslations("dashboard");
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -20,7 +20,7 @@ export function LogoutButton() {
   }
 
   return (
-    <Button variant="outline" onClick={onLogout} disabled={isPending}>
+    <Button variant="outline" className={className} onClick={onLogout} disabled={isPending}>
       {t("logout")}
     </Button>
   );

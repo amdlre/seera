@@ -1,7 +1,9 @@
-import { setRequestLocale } from "next-intl/server";
+import { ShieldBan, UserCheck, Users } from "lucide-react";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { StatCard } from "@/components/admin/stat-card";
 import { AdminUsersTable } from "@/components/admin/users-table";
 import type { AdminUserFilters } from "@/server/repositories/admin-users.repository";
-import { listUsers } from "@/server/services/admin-users.service";
+import { getUsersOverview, listUsers } from "@/server/services/admin-users.service";
 
 const PAGE_SIZE = 10;
 
@@ -25,7 +27,20 @@ export default async function AdminUsersPage({ params, searchParams }: AdminUser
     pageSize: PAGE_SIZE,
   };
 
-  const { rows, total } = await listUsers(filters);
+  const [{ rows, total }, overview, t] = await Promise.all([
+    listUsers(filters),
+    getUsersOverview(),
+    getTranslations("admin.usersTable"),
+  ]);
 
-  return <AdminUsersTable rows={rows} total={total} pageSize={PAGE_SIZE} filters={filters} />;
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <StatCard label={t("summaryTotal")} value={overview.total} icon={Users} tone="blue" />
+        <StatCard label={t("summaryActive")} value={overview.active} icon={UserCheck} tone="emerald" />
+        <StatCard label={t("summaryBlocked")} value={overview.blocked} icon={ShieldBan} tone="rose" />
+      </div>
+      <AdminUsersTable rows={rows} total={total} pageSize={PAGE_SIZE} filters={filters} />
+    </div>
+  );
 }

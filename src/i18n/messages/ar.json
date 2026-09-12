@@ -86,6 +86,13 @@
       "invalidCode": "الرمز غير صحيح",
       "generic": "حدث خطأ ما. حاول مرة أخرى",
       "accountSuspended": "هذا الحساب معلّق من قبل الإدارة. تواصل معنا إذا كنت تعتقد أن هذا خطأ."
+    },
+    "alreadySignedIn": {
+      "title": "أنت مسجَّل الدخول بالفعل",
+      "signedInAs": "الحساب الحالي: {email}",
+      "hint": "للدخول بحساب آخر، سجّل الخروج من هذا الحساب أولًا.",
+      "goToDashboard": "الذهاب إلى لوحتي",
+      "goToAdmin": "الذهاب إلى لوحة التحكم"
     }
   },
   "dashboard": {
@@ -194,9 +201,12 @@
       "pageOf": "صفحة {page} من {totalPages}",
       "selectAll": "تحديد الكل",
       "selectRow": "تحديد السيرة {title}",
-      "rowActions": "إجراءات الصف",
       "noResults": "لا توجد نتائج",
-      "noResultsHint": "جرّب تغيير البحث أو الفلاتر."
+      "noResultsHint": "جرّب تغيير البحث أو الفلاتر.",
+      "columnActions": "الإجراءات",
+      "summaryTotal": "إجمالي السير",
+      "summaryDrafts": "مسودات",
+      "summaryCompleted": "مكتملة"
     },
     "usersTable": {
       "searchPlaceholder": "البحث بالاسم أو البريد الإلكتروني",
@@ -227,7 +237,11 @@
       "blockWarning": "سيتم تعليق حساب «{name}» نهائيًا: لن يستطيع تسجيل الدخول إطلاقًا ولن تصله رموز دخول، وتبقى سيره الذاتية محفوظة دون أن يصل إليها — إلى أن تفكّ التعليق من هنا.",
       "blockCancel": "إلغاء",
       "blockConfirm": "تعليق الحساب",
-      "blocking": "جارٍ التعليق..."
+      "blocking": "جارٍ التعليق...",
+      "columnActions": "الإجراءات",
+      "summaryTotal": "إجمالي المستخدمين",
+      "summaryActive": "نشطون",
+      "summaryBlocked": "معلّقون"
     },
     "badge": "لوحة التحكم"
   },
