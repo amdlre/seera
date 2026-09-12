@@ -108,7 +108,9 @@
       "draft": "Draft",
       "completed": "Completed"
     },
-    "emptyHint": "Create your first one to get started."
+    "emptyHint": "Create your first one to get started.",
+    "atsLabel": "ATS score:",
+    "updatedAt": "Edited {date}"
   },
   "admin": {
     "title": "Admin Dashboard",
@@ -260,7 +262,11 @@
     },
     "nav": {
       "previous": "Previous",
-      "next": "Next"
+      "next": "Next",
+      "saveDraft": "Save as draft",
+      "savingDraft": "Saving...",
+      "draftSaved": "Your resume is saved as a draft",
+      "draftSavedHint": "You can close this page and finish it later from your dashboard."
     },
     "common": {
       "delete": "Delete",

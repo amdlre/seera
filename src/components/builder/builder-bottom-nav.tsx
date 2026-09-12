@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Link, usePathname } from "@/i18n/navigation";
 import { getAdjacentSteps } from "@/lib/constants/builder";
+import { SaveDraftButton } from "./save-draft-button";
 
 function stepHref(resumeId: string, stepId: string): string {
   return stepId === "review" ? `/builder/${resumeId}/review` : `/builder/${resumeId}/${stepId}`;
@@ -24,13 +25,14 @@ export function BuilderBottomNav({ resumeId }: { resumeId: string }) {
       ) : (
         <span />
       )}
-      {next && next.implemented ? (
-        <Button asChild>
-          <Link href={stepHref(resumeId, next.id)}>{t("next")}</Link>
-        </Button>
-      ) : (
-        <span />
-      )}
+      <div className="flex items-center gap-2">
+        <SaveDraftButton />
+        {next && next.implemented && (
+          <Button asChild>
+            <Link href={stepHref(resumeId, next.id)}>{t("next")}</Link>
+          </Button>
+        )}
+      </div>
     </div>
   );
 }

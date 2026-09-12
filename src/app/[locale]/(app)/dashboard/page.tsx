@@ -1,10 +1,9 @@
 import { FileText } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CreateResumeButton } from "@/components/builder/create-resume-button";
+import { ResumeCard } from "@/components/builder/resume-card";
 import { AppHeader } from "@/components/shared/app-header";
 import { EmptyState } from "@/components/shared/empty-state";
-import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "@/i18n/navigation";
 import { requireAuth } from "@/lib/auth/session";
 import { listMyResumes } from "@/server/services/resume.service";
 
@@ -40,18 +39,7 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
         ) : (
           <div className="flex flex-col gap-3">
             {resumes.map((resume) => (
-              <Link key={resume.id} href={`/builder/${resume.id}/personal`}>
-                <Card className="hover:border-primary/50 transition-colors">
-                  <CardContent className="flex items-center justify-between gap-4 py-4">
-                    <div>
-                      <p className="text-foreground font-medium">{resume.title}</p>
-                      <p className="text-muted-foreground text-xs">
-                        {t(`status.${resume.status}`)} · {t("atsScore", { score: resume.atsScore })}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
+              <ResumeCard key={resume.id} resume={resume} />
             ))}
           </div>
         )}
