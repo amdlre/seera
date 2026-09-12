@@ -6,6 +6,7 @@ const AUTH_ERROR_MESSAGE_KEYS: Record<string, string> = {
   OTP_EXPIRED: "auth.errors.invalidOrExpired",
   OTP_MAX_ATTEMPTS: "auth.errors.maxAttempts",
   OTP_INVALID_CODE: "auth.errors.invalidCode",
+  ACCOUNT_SUSPENDED: "auth.errors.accountSuspended",
 };
 
 /** Maps a service-layer AppError code to a translation key safe to show the user. */

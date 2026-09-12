@@ -10,6 +10,10 @@ import * as authService from "@/server/services/auth.service";
 
 export type AuthActionResult = { success: true } | { success: false; messageKey: string };
 
+export type VerifyOtpActionResult =
+  | { success: true; role: "user" | "admin" }
+  | { success: false; messageKey: string };
+
 function firstClientIp(forwardedFor: string | null): string | null {
   return forwardedFor?.split(",")[0]?.trim() ?? null;
 }
@@ -44,7 +48,7 @@ export async function requestOtpAction(
 export async function verifyOtpAction(
   input: unknown,
   locale: AppLocale,
-): Promise<AuthActionResult> {
+): Promise<VerifyOtpActionResult> {
   const parsed = verifyOtpSchema.safeParse(input);
   if (!parsed.success) {
     return { success: false, messageKey: "validation.required" };
@@ -57,7 +61,7 @@ export async function verifyOtpAction(
   }
 
   await setSessionCookie(result.value.token);
-  return { success: true };
+  return { success: true, role: result.value.role };
 }
 
 /** Clears the session cookie, logging the current user out. */

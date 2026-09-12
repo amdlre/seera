@@ -1,12 +1,21 @@
 "use client";
 
-import { UserSearch } from "lucide-react";
+import { ShieldBan, UserSearch } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { setUserDisabledAction, updateUserRoleAction } from "@/actions/admin-users.actions";
 import { EmptyState } from "@/components/shared/empty-state";
-import { Badge } from "@/components/ui/badge";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -26,6 +35,9 @@ import {
 } from "@/components/ui/table";
 import { useAdminQueryParams } from "@/hooks/use-admin-query-params";
 import type { AdminUserFilters, AdminUserRow } from "@/server/repositories/admin-users.repository";
+import { cn } from "@/lib/utils";
+
+const CELL_SPACING = "[&_th]:px-4 [&_th]:py-3 [&_td]:px-4 [&_td]:py-3";
 
 export function AdminUsersTable({
   rows,
@@ -41,6 +53,8 @@ export function AdminUsersTable({
   const t = useTranslations("admin.usersTable");
   const tGlobal = useTranslations();
   const { setParams, refresh } = useAdminQueryParams();
+  const [pendingBlock, setPendingBlock] = useState<AdminUserRow | null>(null);
+  const [isBlocking, startBlocking] = useTransition();
   const [, startTransition] = useTransition();
 
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
@@ -55,14 +69,17 @@ export function AdminUsersTable({
     startTransition(refresh);
   }
 
-  async function handleDisabledToggle(userId: string, disabled: boolean) {
-    const result = await setUserDisabledAction({ userId, disabled });
-    if (!result.success) {
-      toast.error(tGlobal(result.messageKey));
-      return;
-    }
-    toast.success(disabled ? t("userDisabled") : t("userEnabled"));
-    startTransition(refresh);
+  function setDisabled(user: AdminUserRow, disabled: boolean) {
+    startBlocking(async () => {
+      const result = await setUserDisabledAction({ userId: user.id, disabled });
+      if (!result.success) {
+        toast.error(tGlobal(result.messageKey));
+        return;
+      }
+      toast.success(disabled ? t("userDisabled") : t("userEnabled"));
+      setPendingBlock(null);
+      refresh();
+    });
   }
 
   return (
@@ -92,10 +109,10 @@ export function AdminUsersTable({
       {rows.length === 0 ? (
         <EmptyState icon={UserSearch} title={t("noResults")} description={t("noResultsHint")} />
       ) : (
-        <div className="border-border overflow-x-auto rounded-lg border">
-          <Table>
+        <div className="border-border overflow-x-auto rounded-xl border">
+          <Table className={CELL_SPACING}>
             <TableHeader>
-              <TableRow>
+              <TableRow className="bg-muted/40">
                 <TableHead>{t("columnName")}</TableHead>
                 <TableHead>{t("columnEmail")}</TableHead>
                 <TableHead>{t("columnRole")}</TableHead>
@@ -107,10 +124,10 @@ export function AdminUsersTable({
             </TableHeader>
             <TableBody>
               {rows.map((row) => {
-                const disabled = row.deletedAt !== null;
+                const blocked = row.deletedAt !== null;
                 return (
                   <TableRow key={row.id}>
-                    <TableCell>{row.fullName}</TableCell>
+                    <TableCell className="font-medium">{row.fullName}</TableCell>
                     <TableCell className="text-muted-foreground text-xs">{row.email}</TableCell>
                     <TableCell>
                       <Select
@@ -128,20 +145,36 @@ export function AdminUsersTable({
                         </SelectContent>
                       </Select>
                     </TableCell>
-                    <TableCell>{row.resumeCount}</TableCell>
-                    <TableCell className="text-xs">{row.createdAt.toLocaleDateString()}</TableCell>
+                    <TableCell className="tabular-nums">{row.resumeCount}</TableCell>
+                    <TableCell className="text-muted-foreground text-xs whitespace-nowrap">
+                      {row.createdAt.toLocaleDateString()}
+                    </TableCell>
                     <TableCell>
-                      <Badge variant={disabled ? "destructive" : "secondary"}>
-                        {disabled ? t("statusDisabled") : t("statusActive")}
-                      </Badge>
+                      <span
+                        className={cn(
+                          "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium",
+                          blocked
+                            ? "border-rose-500/20 bg-rose-500/10 text-rose-700 dark:text-rose-400"
+                            : "border-emerald-500/20 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
+                        )}
+                      >
+                        <span
+                          className={cn(
+                            "size-1.5 rounded-full",
+                            blocked ? "bg-rose-500" : "bg-emerald-500",
+                          )}
+                        />
+                        {blocked ? t("statusDisabled") : t("statusActive")}
+                      </span>
                     </TableCell>
                     <TableCell>
                       <Button
-                        variant="outline"
+                        variant={blocked ? "outline" : "ghost"}
                         size="sm"
-                        onClick={() => handleDisabledToggle(row.id, !disabled)}
+                        className={cn(!blocked && "text-destructive hover:text-destructive")}
+                        onClick={() => (blocked ? setDisabled(row, false) : setPendingBlock(row))}
                       >
-                        {disabled ? t("enable") : t("disable")}
+                        {blocked ? t("enable") : t("disable")}
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -176,6 +209,33 @@ export function AdminUsersTable({
           </Button>
         </div>
       </div>
+
+      <AlertDialog open={pendingBlock !== null} onOpenChange={(open) => !open && setPendingBlock(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <ShieldBan className="text-destructive size-5" aria-hidden="true" />
+              {t("blockTitle")}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {t("blockWarning", { name: pendingBlock?.fullName ?? "" })}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t("blockCancel")}</AlertDialogCancel>
+            <AlertDialogAction
+              disabled={isBlocking}
+              onClick={(event) => {
+                event.preventDefault();
+                if (pendingBlock) setDisabled(pendingBlock, true);
+              }}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {isBlocking ? t("blocking") : t("blockConfirm")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

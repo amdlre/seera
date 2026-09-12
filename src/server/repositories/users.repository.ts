@@ -16,6 +16,15 @@ export async function findUserByEmail(email: string): Promise<User | null> {
 }
 
 /**
+ * Finds a user by email regardless of suspension, so the auth flow can tell a
+ * suspended account apart from one that never existed.
+ */
+export async function findUserByEmailIncludingSuspended(email: string): Promise<User | null> {
+  const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1);
+  return user ?? null;
+}
+
+/**
  * Finds a non-deleted user by id. Returns null if none exists.
  */
 export async function findUserById(id: string): Promise<User | null> {

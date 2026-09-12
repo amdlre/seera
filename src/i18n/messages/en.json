@@ -84,7 +84,8 @@
       "invalidOrExpired": "This code is invalid or has expired. Request a new one",
       "maxAttempts": "Maximum attempts exceeded. Request a new code",
       "invalidCode": "Incorrect code",
-      "generic": "Something went wrong. Please try again"
+      "generic": "Something went wrong. Please try again",
+      "accountSuspended": "This account has been suspended by an administrator. Contact us if you believe this is a mistake."
     }
   },
   "dashboard": {
@@ -108,7 +109,8 @@
     "nav": {
       "stats": "Stats",
       "resumes": "Resumes",
-      "users": "Users"
+      "users": "Users",
+      "ariaLabel": "Admin navigation"
     },
     "stats": {
       "title": "Statistics",
@@ -220,8 +222,14 @@
       "next": "Next",
       "pageOf": "Page {page} of {totalPages}",
       "noResults": "No results",
-      "noResultsHint": "Try adjusting your search or filter."
-    }
+      "noResultsHint": "Try adjusting your search or filter.",
+      "blockTitle": "Suspend this account?",
+      "blockWarning": "“{name}” will be suspended indefinitely: they will not be able to sign in at all and will receive no login codes. Their resumes stay stored but out of reach — until you lift the suspension from here.",
+      "blockCancel": "Cancel",
+      "blockConfirm": "Suspend account",
+      "blocking": "Suspending..."
+    },
+    "badge": "Admin"
   },
   "builder": {
     "steps": {
@@ -460,6 +468,7 @@
     }
   },
   "common": {
-    "switchTo": "Switch to {locale}"
+    "switchTo": "Switch to {locale}",
+    "themeToggle": "Toggle dark mode"
   }
 }

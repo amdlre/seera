@@ -18,6 +18,7 @@ import {
 } from "@/server/repositories/otp-codes.repository";
 import {
   findUserByEmail,
+  findUserByEmailIncludingSuspended,
   insertUser,
   updateLastLogin,
 } from "@/server/repositories/users.repository";
@@ -40,6 +41,11 @@ export async function requestOtp(
   ip: string | null,
   locale: AppLocale,
 ): Promise<Result<{ expiresInMinutes: number }, AppError>> {
+  const existing = await findUserByEmailIncludingSuspended(email);
+  if (existing?.deletedAt) {
+    return err(new AppError("Account is suspended", "ACCOUNT_SUSPENDED"));
+  }
+
   const windowStart = new Date(Date.now() - OTP_REQUEST_WINDOW_MINUTES * 60_000);
   const recentCount = await countRecentOtpRequests(email, windowStart);
   if (recentCount >= OTP_REQUEST_LIMIT) {
@@ -84,6 +90,11 @@ export async function verifyOtpAndLogin(
   }
 
   await markOtpConsumed(otpRow.id);
+
+  const existing = await findUserByEmailIncludingSuspended(email);
+  if (existing?.deletedAt) {
+    return err(new AppError("Account is suspended", "ACCOUNT_SUSPENDED"));
+  }
 
   let user = await findUserByEmail(email);
   if (!user) {

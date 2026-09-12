@@ -37,7 +37,7 @@ export function VerifyForm({ email }: { email: string }) {
         toast.error(tGlobal(result.messageKey));
         return;
       }
-      router.push("/dashboard");
+      router.push(result.role === "admin" ? "/admin" : "/dashboard");
     });
   }
 

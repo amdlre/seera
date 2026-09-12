@@ -1,3 +1,12 @@
+import {
+  CheckCircle2,
+  Download,
+  FileText,
+  Gauge,
+  TrendingUp,
+  UserPlus,
+  Users,
+} from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ExportLanguageChart } from "@/components/admin/export-language-chart";
 import { FunnelCard } from "@/components/admin/funnel-card";
@@ -30,14 +39,24 @@ export default async function AdminPage({ params, searchParams }: AdminPageProps
       </div>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <StatCard label={t("totalUsers")} value={stats.totalUsers} />
-        <StatCard label={t("totalResumes")} value={stats.totalResumes} />
-        <StatCard label={t("completedResumes")} value={stats.completedResumes} />
-        <StatCard label={t("completionRate")} value={`${stats.completionRate}%`} />
-        <StatCard label={t("exportsAr")} value={stats.exportsAr} />
-        <StatCard label={t("exportsEn")} value={stats.exportsEn} />
-        <StatCard label={t("averageAtsScore")} value={stats.averageAtsScore} />
-        <StatCard label={t("newUsers")} value={stats.newUsersLast7Days} />
+        <StatCard label={t("totalUsers")} value={stats.totalUsers} icon={Users} tone="blue" />
+        <StatCard label={t("totalResumes")} value={stats.totalResumes} icon={FileText} tone="violet" />
+        <StatCard
+          label={t("completedResumes")}
+          value={stats.completedResumes}
+          icon={CheckCircle2}
+          tone="emerald"
+        />
+        <StatCard
+          label={t("completionRate")}
+          value={`${stats.completionRate}%`}
+          icon={TrendingUp}
+          tone="teal"
+        />
+        <StatCard label={t("exportsAr")} value={stats.exportsAr} icon={Download} tone="sky" />
+        <StatCard label={t("exportsEn")} value={stats.exportsEn} icon={Download} tone="indigo" />
+        <StatCard label={t("averageAtsScore")} value={stats.averageAtsScore} icon={Gauge} tone="amber" />
+        <StatCard label={t("newUsers")} value={stats.newUsersLast7Days} icon={UserPlus} tone="rose" />
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">

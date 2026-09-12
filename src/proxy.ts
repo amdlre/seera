@@ -41,6 +41,12 @@ export default async function proxy(request: NextRequest): Promise<NextResponse>
     return NextResponse.redirect(new URL(`/${locale}/dashboard`, request.url));
   }
 
+  // Admins work only inside the admin area; the builder and personal dashboard
+  // belong to regular users.
+  if (!isAdminRoute && session.role === "admin") {
+    return NextResponse.redirect(new URL(`/${locale}/admin`, request.url));
+  }
+
   return intlResponse;
 }
 

@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { LocaleSwitcher } from "@/components/shared/locale-switcher";
 import { Logo } from "@/components/shared/logo";
+import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 
@@ -12,7 +13,8 @@ export async function SiteHeader() {
       <Link href="/" aria-label="سِيرة">
         <Logo />
       </Link>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1">
+        <ThemeToggle />
         <LocaleSwitcher />
         <Button asChild size="sm" variant="outline">
           <Link href="/login">{t("ctaSecondary")}</Link>

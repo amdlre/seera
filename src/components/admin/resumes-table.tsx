@@ -9,7 +9,6 @@ import {
   deleteResumeAsAdminAction,
 } from "@/actions/admin-resumes.actions";
 import { EmptyState } from "@/components/shared/empty-state";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -35,6 +34,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useAdminQueryParams } from "@/hooks/use-admin-query-params";
+import { cn } from "@/lib/utils";
 import type {
   AdminResumeFilters,
   AdminResumeRow,
@@ -42,6 +42,8 @@ import type {
 } from "@/server/repositories/admin-resumes.repository";
 import { ConfirmDeleteDialog } from "./confirm-delete-dialog";
 import { ResumeEditSheet } from "./resume-edit-sheet";
+
+const CELL_SPACING = "[&_th]:px-4 [&_th]:py-3 [&_td]:px-4 [&_td]:py-3";
 
 export function AdminResumesTable({
   rows,
@@ -171,10 +173,10 @@ export function AdminResumesTable({
       {rows.length === 0 ? (
         <EmptyState icon={FileSearch} title={t("noResults")} description={t("noResultsHint")} />
       ) : (
-        <div className="border-border overflow-x-auto rounded-lg border">
-          <Table>
+        <div className="border-border overflow-x-auto rounded-xl border">
+          <Table className={CELL_SPACING}>
             <TableHeader>
-              <TableRow>
+              <TableRow className="bg-muted/40">
                 <TableHead className="w-10">
                   <Checkbox
                     aria-label={t("selectAll")}
@@ -204,17 +206,32 @@ export function AdminResumesTable({
                       onCheckedChange={(checked) => toggleRow(row.id, checked === true)}
                     />
                   </TableCell>
-                  <TableCell>{row.userFullName}</TableCell>
+                  <TableCell className="font-medium">{row.userFullName}</TableCell>
                   <TableCell className="text-muted-foreground text-xs">{row.userEmail}</TableCell>
                   <TableCell>{row.title}</TableCell>
                   <TableCell>
-                    <Badge variant={row.status === "completed" ? "default" : "secondary"}>
+                    <span
+                      className={cn(
+                        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium",
+                        row.status === "completed"
+                          ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
+                          : "border-amber-500/20 bg-amber-500/10 text-amber-700 dark:text-amber-400",
+                      )}
+                    >
+                      <span
+                        className={cn(
+                          "size-1.5 rounded-full",
+                          row.status === "completed" ? "bg-emerald-500" : "bg-amber-500",
+                        )}
+                      />
                       {row.status === "completed" ? t("statusCompleted") : t("statusDraft")}
-                    </Badge>
+                    </span>
                   </TableCell>
-                  <TableCell>{row.atsScore}</TableCell>
-                  <TableCell className="text-xs">{row.updatedAt.toLocaleDateString()}</TableCell>
-                  <TableCell className="text-xs">
+                  <TableCell className="tabular-nums">{row.atsScore}</TableCell>
+                  <TableCell className="text-muted-foreground text-xs whitespace-nowrap">
+                    {row.updatedAt.toLocaleDateString()}
+                  </TableCell>
+                  <TableCell className="text-muted-foreground text-xs whitespace-nowrap">
                     AR {row.exportsAr} · EN {row.exportsEn}
                   </TableCell>
                   <TableCell>

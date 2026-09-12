@@ -2,6 +2,7 @@
 
 import { LocaleSwitcher } from "@/components/shared/locale-switcher";
 import { Logo } from "@/components/shared/logo";
+import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { BuilderExitButton } from "./builder-exit-button";
 import { StepProgress } from "./step-progress";
 
@@ -12,7 +13,10 @@ export function BuilderHeader({ resumeId }: { resumeId: string }) {
       <div className="flex items-center justify-between gap-3 px-4 py-2">
         <BuilderExitButton />
         <Logo showWordmark={false} />
-        <LocaleSwitcher />
+        <div className="flex items-center gap-1">
+          <ThemeToggle />
+          <LocaleSwitcher />
+        </div>
       </div>
       <StepProgress resumeId={resumeId} />
     </header>
