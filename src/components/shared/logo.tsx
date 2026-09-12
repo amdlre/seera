@@ -1,31 +1,66 @@
+import { useLocale } from "next-intl";
 import { cn } from "@/lib/utils";
 
-/** The Seera brand mark: a document sheet with text lines, matching app/icon.svg. */
-export function LogoMark({ className }: { className?: string }) {
+const BRAND_NAME = "سِيرة";
+
+/**
+ * Renders the brand asset twice and lets CSS pick one, so the blue mark shows
+ * in light mode and the white one in dark mode without any client-side state.
+ */
+function ThemedBrandImage({
+  blueSrc,
+  whiteSrc,
+  className,
+}: {
+  blueSrc: string;
+  whiteSrc: string;
+  className?: string;
+}) {
   return (
-    <svg
-      viewBox="0 0 64 64"
-      aria-hidden="true"
-      className={cn("size-8 shrink-0", className)}
-      fill="none"
-    >
-      <rect width="64" height="64" rx="14" className="fill-primary" />
-      <rect x="18" y="14" width="28" height="36" rx="3" className="fill-primary-foreground" />
-      <rect x="23" y="21" width="18" height="3" rx="1.5" className="fill-primary" />
-      <rect x="23" y="28" width="18" height="3" rx="1.5" className="fill-primary" />
-      <rect x="23" y="35" width="12" height="3" rx="1.5" className="fill-primary" />
-    </svg>
+    <>
+      {/* eslint-disable-next-line @next/next/no-img-element -- static brand SVG, no optimisation needed */}
+      <img src={blueSrc} alt={BRAND_NAME} className={cn(className, "dark:hidden")} />
+      {/* eslint-disable-next-line @next/next/no-img-element -- static brand SVG, no optimisation needed */}
+      <img src={whiteSrc} alt="" aria-hidden="true" className={cn(className, "hidden dark:block")} />
+    </>
   );
 }
 
-/** Brand mark plus the wordmark, used in the marketing and builder headers. */
-export function Logo({ className, showWordmark = true }: { className?: string; showWordmark?: boolean }) {
+/** The square brand mark on its own, for tight spots like the builder header. */
+export function LogoMark({ className }: { className?: string }) {
   return (
-    <span className={cn("flex items-center gap-2", className)}>
-      <LogoMark />
-      {showWordmark && (
-        <span className="text-foreground text-lg font-semibold tracking-tight">سِيرة</span>
-      )}
-    </span>
+    <ThemedBrandImage
+      blueSrc="/brand/seera-icon-blue.svg"
+      whiteSrc="/brand/seera-icon-white.svg"
+      className={cn("size-8 w-auto", className)}
+    />
+  );
+}
+
+/**
+ * The full lockup (mark + wordmark), in the wordmark matching the active
+ * locale. Falls back to the mark alone when `showWordmark` is false.
+ */
+export function Logo({
+  className,
+  showWordmark = true,
+}: {
+  className?: string;
+  showWordmark?: boolean;
+}) {
+  const locale = useLocale();
+
+  if (!showWordmark) {
+    return <LogoMark className={className} />;
+  }
+
+  const script = locale === "en" ? "en" : "ar";
+
+  return (
+    <ThemedBrandImage
+      blueSrc={`/brand/seera-logo-${script}-blue.svg`}
+      whiteSrc={`/brand/seera-logo-${script}-white.svg`}
+      className={cn("h-7 w-auto", className)}
+    />
   );
 }
