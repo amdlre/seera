@@ -1,10 +1,5 @@
 import { z } from "zod";
-
-const optionalUrl = z
-  .string()
-  .url({ message: "validation.url" })
-  .optional()
-  .or(z.literal(""));
+import { optionalUrl } from "@/lib/validations/shared";
 
 /** Full validation used by the client form's Zod resolver (drives required-field UI). */
 export const personalInfoSchema = z.object({

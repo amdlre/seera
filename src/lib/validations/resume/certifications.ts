@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { optionalUrl } from "@/lib/validations/shared";
 
 export const certificationItemSchema = z
   .object({
@@ -12,7 +13,7 @@ export const certificationItemSchema = z
     expiryMonth: z.number().int().min(1).max(12).nullable(),
     expiryYear: z.number().int().nullable(),
     credentialId: z.string().optional().or(z.literal("")),
-    verificationUrl: z.string().url({ message: "validation.url" }).optional().or(z.literal("")),
+    verificationUrl: optionalUrl,
   })
   .superRefine((data, ctx) => {
     if (data.issueMonth === null || data.issueYear === null) {

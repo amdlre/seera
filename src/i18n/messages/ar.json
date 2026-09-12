@@ -8,7 +8,42 @@
     "title": "سِيرة ذاتية تجتاز أنظمة ATS",
     "subtitle": "كل حقل مشروح بمثال جاهز، بالعربية والإنجليزية، بدون الحاجة لقراءة أي دليل.",
     "cta": "ابدأ الآن مجانًا",
-    "ctaSecondary": "تسجيل الدخول"
+    "ctaSecondary": "تسجيل الدخول",
+    "features": [
+      {
+        "title": "متوافقة مع أنظمة ATS",
+        "description": "قالب عمود واحد بلا صور أو جداول، يقرأه أي نظام تتبّع متقدمين آليًا دون أخطاء."
+      },
+      {
+        "title": "عربي وإنجليزي",
+        "description": "أنشئ نسخة كاملة من سيرتك بكلتا اللغتين، وصدّرهما بضغطة واحدة لكل منهما."
+      },
+      {
+        "title": "كل حقل مشروح بمثال",
+        "description": "لا حاجة لقراءة أي دليل — كل حقل معه مثال جاهز يمكنك استخدامه أو التعديل عليه."
+      },
+      {
+        "title": "نتيجة ATS فورية",
+        "description": "شاهد نقاطك من 100 فور تعبئة بياناتك، مع قائمة واضحة بما يجب إصلاحه."
+      }
+    ],
+    "steps": [
+      {
+        "title": "سجّل ببريدك الإلكتروني",
+        "description": "بدون كلمة مرور — نرسل لك رمز دخول لمرة واحدة."
+      },
+      {
+        "title": "املأ بياناتك خطوة بخطوة",
+        "description": "9 خطوات واضحة، مع أمثلة جاهزة لكل حقل ومعاينة حيّة لسيرتك."
+      },
+      {
+        "title": "صدّر PDF جاهزًا",
+        "description": "بالعربية أو الإنجليزية، بتنسيق يجتاز أنظمة ATS مباشرة."
+      }
+    ],
+    "howItWorksTitle": "كيف تعمل المنصة؟",
+    "finalCtaTitle": "ابدأ ببناء سيرتك الذاتية الآن",
+    "footer": "© {year} سِيرة. جميع الحقوق محفوظة."
   },
   "error": {
     "title": "حدث خطأ غير متوقع",
@@ -22,7 +57,8 @@
     "phone": "أدخل رقم جوال صحيحًا بصيغة دولية",
     "url": "أدخل رابطًا صحيحًا",
     "maxLength": "النص طويل جدًا",
-    "dateOrder": "تاريخ النهاية يجب أن يكون بعد تاريخ البداية"
+    "dateOrder": "تاريخ النهاية يجب أن يكون بعد تاريخ البداية",
+    "deleteConfirmation": "السير الذاتية يجب أن تحتوي على كلمة \"حذف\" بالضبط للتأكيد"
   },
   "auth": {
     "login": {
@@ -55,7 +91,7 @@
     "welcome": "أهلًا، {name}",
     "subtitle": "هذه سيرك الذاتية المحفوظة.",
     "logout": "تسجيل الخروج",
-    "empty": "لا توجد سير ذاتية بعد. أنشئ أول سيرة لك للبدء.",
+    "empty": "لا توجد سير ذاتية بعد",
     "myResumes": "سيري الذاتية",
     "createResume": "+ إنشاء سيرة جديدة",
     "creating": "جارٍ الإنشاء...",
@@ -63,11 +99,129 @@
     "status": {
       "draft": "مسودة",
       "completed": "مكتملة"
-    }
+    },
+    "emptyHint": "أنشئ أول سيرة لك للبدء."
   },
   "admin": {
-    "title": "لوحة تحكم الأدمن",
-    "subtitle": "مرحبًا {email} — هذه المنطقة محصورة بالمسؤولين."
+    "title": "لوحة التحكم",
+    "subtitle": "إدارة المستخدمين والسير الذاتية",
+    "nav": {
+      "stats": "الإحصائيات",
+      "resumes": "السير الذاتية",
+      "users": "المستخدمون"
+    },
+    "stats": {
+      "title": "الإحصائيات",
+      "lastNDays": "آخر {days} يومًا",
+      "totalUsers": "إجمالي المستخدمين",
+      "totalResumes": "إجمالي السير الذاتية",
+      "completedResumes": "السير المكتملة",
+      "completionRate": "معدل الإكمال",
+      "exportsAr": "التصدير (عربي)",
+      "exportsEn": "التصدير (إنجليزي)",
+      "averageAtsScore": "متوسط نقاط ATS",
+      "newUsers": "مستخدمون جدد",
+      "timelineTitle": "النشاط عبر الزمن",
+      "registrations": "التسجيلات",
+      "exports": "التصديرات",
+      "exportLanguageTitle": "التصدير حسب اللغة",
+      "arabic": "عربي",
+      "english": "إنجليزي",
+      "funnelTitle": "مسار التحويل",
+      "funnelRegistered": "مسجّل",
+      "funnelCreatedResume": "أنشأ سيرة",
+      "funnelCompleted": "أكمل السيرة",
+      "funnelExported": "صدّر السيرة"
+    },
+    "resumeSheet": {
+      "title": "تفاصيل السيرة الذاتية",
+      "owner": "المالك",
+      "resumeTitle": "عنوان السيرة",
+      "status": "الحالة",
+      "statusDraft": "مسودة",
+      "statusCompleted": "مكتملة",
+      "atsScore": "نقاط ATS",
+      "exports": "التصديرات",
+      "openPreview": "فتح المعاينة",
+      "save": "حفظ",
+      "saving": "جارٍ الحفظ...",
+      "saved": "تم الحفظ"
+    },
+    "confirmDelete": {
+      "title": "تأكيد الحذف",
+      "prompt": "اكتب \"{word}\" للتأكيد",
+      "cancel": "إلغاء",
+      "confirm": "حذف",
+      "deleting": "جارٍ الحذف..."
+    },
+    "errors": {
+      "invalidInput": "بيانات غير صالحة",
+      "actionFailed": "فشلت العملية",
+      "confirmationMismatch": "كلمة التأكيد غير صحيحة"
+    },
+    "resumesTable": {
+      "searchPlaceholder": "البحث بالاسم أو البريد أو العنوان",
+      "statusFilter": "الحالة",
+      "allStatuses": "جميع الحالات",
+      "statusDraft": "مسودة",
+      "statusCompleted": "مكتملة",
+      "exportLanguageFilter": "لغة التصدير",
+      "allLanguages": "جميع اللغات",
+      "arabic": "عربي",
+      "english": "إنجليزي",
+      "deleteSelected": "حذف المحدد ({count})",
+      "exportCsv": "تصدير CSV",
+      "exportXlsx": "تصدير XLSX",
+      "columnUser": "المستخدم",
+      "columnEmail": "البريد الإلكتروني",
+      "columnTitle": "العنوان",
+      "columnStatus": "الحالة",
+      "columnAts": "نقاط ATS",
+      "columnUpdated": "آخر تحديث",
+      "columnExports": "التصديرات",
+      "viewEdit": "عرض / تعديل",
+      "delete": "حذف",
+      "deleteFailed": "فشل الحذف",
+      "deleted": "تم الحذف بنجاح",
+      "bulkDeleted": "تم حذف {count} سيرة بنجاح",
+      "deleteDescription": "سيتم حذف السيرة \"{title}\" بشكل دائم.",
+      "bulkDeleteDescription": "سيتم حذف {count} سيرة ذاتية بشكل دائم.",
+      "totalCount": "{count} نتيجة",
+      "previous": "السابق",
+      "next": "التالي",
+      "pageOf": "صفحة {page} من {totalPages}",
+      "selectAll": "تحديد الكل",
+      "selectRow": "تحديد السيرة {title}",
+      "rowActions": "إجراءات الصف",
+      "noResults": "لا توجد نتائج",
+      "noResultsHint": "جرّب تغيير البحث أو الفلاتر."
+    },
+    "usersTable": {
+      "searchPlaceholder": "البحث بالاسم أو البريد الإلكتروني",
+      "roleFilter": "الدور",
+      "allRoles": "جميع الأدوار",
+      "roleUser": "مستخدم",
+      "roleAdmin": "مشرف",
+      "columnName": "الاسم",
+      "columnEmail": "البريد الإلكتروني",
+      "columnRole": "الدور",
+      "columnResumeCount": "عدد السير",
+      "columnJoined": "تاريخ الانضمام",
+      "columnStatus": "الحالة",
+      "statusActive": "نشط",
+      "statusDisabled": "معطّل",
+      "enable": "تفعيل",
+      "disable": "تعطيل",
+      "roleUpdated": "تم تحديث الدور",
+      "userDisabled": "تم تعطيل المستخدم",
+      "userEnabled": "تم تفعيل المستخدم",
+      "totalCount": "{count} نتيجة",
+      "previous": "السابق",
+      "next": "التالي",
+      "pageOf": "صفحة {page} من {totalPages}",
+      "noResults": "لا توجد نتائج",
+      "noResultsHint": "جرّب تغيير البحث أو الفلتر."
+    }
   },
   "builder": {
     "steps": {
@@ -264,6 +418,36 @@
       "generatingPdf": "جارٍ التوليد...",
       "pdfExportFailed": "تعذّر توليد ملف PDF، حاول مرة أخرى",
       "emailComingSoon": "إرسال نسخة إلى بريدك الإلكتروني سيتوفر قريبًا."
+    }
+  },
+  "ats": {
+    "title": "نتيجة التوافق مع ATS",
+    "fixThisTitle": "أصلح هذا",
+    "fixThisButton": "أصلح",
+    "noIssues": "ممتاز! لا توجد ملاحظات حاليًا.",
+    "jobPostingLabel": "الصق نص الإعلان الوظيفي (اختياري)",
+    "jobPostingPlaceholder": "الصق هنا نص الوظيفة التي تتقدّم لها لمطابقة الكلمات المفتاحية",
+    "keywordMatch": "تطابق الكلمات المفتاحية: {matched} من {total}",
+    "missingKeywords": "الكلمات الناقصة",
+    "issues": {
+      "personalIncomplete": "أكمل جميع حقول المعلومات الشخصية المطلوبة",
+      "summaryIncomplete": "أكمل الملخص المهني (3-4 أسطر)",
+      "missingJobTitle": "أضف المسمى الوظيفي المستهدف",
+      "experienceEmpty": "أضف خبرة عملية واحدة على الأقل",
+      "educationEmpty": "أضف مؤهلًا تعليميًا واحدًا على الأقل",
+      "skillsEmpty": "أضف فئة مهارات واحدة على الأقل",
+      "dateOrderInvalid": "تحقق من تواريخ الخبرات — تاريخ النهاية يجب أن يكون بعد البداية",
+      "unexplainedGap": "لديك فجوة زمنية غير مفسّرة أطول من 6 أشهر بين وظيفتين",
+      "notNewestFirst": "رتّب الخبرات من الأحدث إلى الأقدم",
+      "weakVerbs": "ابدأ نقاط الإنجاز بأفعال قوية في الماضي (طوّرت، قدت، حسّنت...)",
+      "missingNumbers": "أضف أرقامًا تُظهر نتيجة قابلة للقياس في نصف نقاطك على الأقل",
+      "bulletLength": "اجعل طول كل نقطة بين 8 و30 كلمة",
+      "bulletCount": "استخدم 3 إلى 5 نقاط لكل وظيفة",
+      "weakPhrasesOrFirstPerson": "تجنّب عبارات مثل «مسؤول عن» وضمير المتكلم «أنا»",
+      "missingKeywords": "بعض الكلمات المفتاحية من الإعلان الوظيفي غير موجودة في سيرتك",
+      "emojiOrSymbols": "أزل الإيموجي أو الرموز الزخرفية من سيرتك",
+      "easternDigits": "استخدم الأرقام اللاتينية (0-9) بدل الأرقام الهندية",
+      "phoneFormat": "اكتب رقم الجوال بصيغة دولية (مثال: +966 5X XXX XXXX)"
     }
   }
 }

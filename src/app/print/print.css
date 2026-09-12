@@ -33,9 +33,19 @@
   font-display: block;
 }
 
+/*
+ * local() first: prefer the OS-installed "Noto Naskh Arabic" (installed via
+ * `fonts-noto-core` in the production Docker image, see docs/DECISIONS.md)
+ * over the bundled webfont. A full system font carries richer OpenType
+ * shaping/cmap data than a subsetted webfont, which measurably improves
+ * Arabic PDF text-extraction quality — see docs/DECISIONS.md for the
+ * investigation.
+ */
 @font-face {
   font-family: "Noto Naskh Arabic";
-  src: url("/fonts/noto-naskh-arabic-400.woff2") format("woff2");
+  src:
+    local("Noto Naskh Arabic"),
+    url("/fonts/noto-naskh-arabic-400.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: block;
@@ -43,7 +53,9 @@
 
 @font-face {
   font-family: "Noto Naskh Arabic";
-  src: url("/fonts/noto-naskh-arabic-700.woff2") format("woff2");
+  src:
+    local("Noto Naskh Arabic Bold"),
+    url("/fonts/noto-naskh-arabic-700.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: block;

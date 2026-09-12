@@ -8,7 +8,42 @@
     "title": "A resume that passes ATS",
     "subtitle": "Every field comes with a ready example, in Arabic and English, no guide required.",
     "cta": "Start for free",
-    "ctaSecondary": "Sign in"
+    "ctaSecondary": "Sign in",
+    "features": [
+      {
+        "title": "ATS-compatible by design",
+        "description": "A single-column template with no images or tables, parsed correctly by any applicant tracking system."
+      },
+      {
+        "title": "Arabic and English",
+        "description": "Build a complete resume in both languages, and export each with one click."
+      },
+      {
+        "title": "Every field has an example",
+        "description": "No guide needed — every field comes with a ready example you can use or edit."
+      },
+      {
+        "title": "Instant ATS score",
+        "description": "See your score out of 100 as soon as you fill in your data, with a clear list of what to fix."
+      }
+    ],
+    "steps": [
+      {
+        "title": "Sign up with your email",
+        "description": "No password — we send you a one-time login code."
+      },
+      {
+        "title": "Fill in your details step by step",
+        "description": "9 clear steps, each field with a ready example and a live preview of your resume."
+      },
+      {
+        "title": "Export a ready PDF",
+        "description": "In Arabic or English, formatted to pass ATS systems directly."
+      }
+    ],
+    "howItWorksTitle": "How it works",
+    "finalCtaTitle": "Start building your resume now",
+    "footer": "© {year} Seera. All rights reserved."
   },
   "error": {
     "title": "Something went wrong",
@@ -22,7 +57,8 @@
     "phone": "Enter a valid phone number in international format",
     "url": "Enter a valid URL",
     "maxLength": "This text is too long",
-    "dateOrder": "The end date must be after the start date"
+    "dateOrder": "The end date must be after the start date",
+    "deleteConfirmation": "Confirmation must be exactly the word \"حذف\""
   },
   "auth": {
     "login": {
@@ -55,7 +91,7 @@
     "welcome": "Welcome, {name}",
     "subtitle": "Here are your saved resumes.",
     "logout": "Sign out",
-    "empty": "No resumes yet. Create your first one to get started.",
+    "empty": "No resumes yet",
     "myResumes": "My resumes",
     "createResume": "+ Create new resume",
     "creating": "Creating...",
@@ -63,11 +99,129 @@
     "status": {
       "draft": "Draft",
       "completed": "Completed"
-    }
+    },
+    "emptyHint": "Create your first one to get started."
   },
   "admin": {
-    "title": "Admin dashboard",
-    "subtitle": "Welcome {email} — this area is restricted to admins."
+    "title": "Admin Dashboard",
+    "subtitle": "Manage users and resumes",
+    "nav": {
+      "stats": "Stats",
+      "resumes": "Resumes",
+      "users": "Users"
+    },
+    "stats": {
+      "title": "Statistics",
+      "lastNDays": "Last {days} days",
+      "totalUsers": "Total Users",
+      "totalResumes": "Total Resumes",
+      "completedResumes": "Completed Resumes",
+      "completionRate": "Completion Rate",
+      "exportsAr": "Exports (Arabic)",
+      "exportsEn": "Exports (English)",
+      "averageAtsScore": "Average ATS Score",
+      "newUsers": "New Users",
+      "timelineTitle": "Activity Over Time",
+      "registrations": "Registrations",
+      "exports": "Exports",
+      "exportLanguageTitle": "Exports by Language",
+      "arabic": "Arabic",
+      "english": "English",
+      "funnelTitle": "Conversion Funnel",
+      "funnelRegistered": "Registered",
+      "funnelCreatedResume": "Created Resume",
+      "funnelCompleted": "Completed Resume",
+      "funnelExported": "Exported Resume"
+    },
+    "resumeSheet": {
+      "title": "Resume Details",
+      "owner": "Owner",
+      "resumeTitle": "Resume Title",
+      "status": "Status",
+      "statusDraft": "Draft",
+      "statusCompleted": "Completed",
+      "atsScore": "ATS Score",
+      "exports": "Exports",
+      "openPreview": "Open Preview",
+      "save": "Save",
+      "saving": "Saving...",
+      "saved": "Saved"
+    },
+    "confirmDelete": {
+      "title": "Confirm Deletion",
+      "prompt": "Type \"{word}\" to confirm",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "deleting": "Deleting..."
+    },
+    "errors": {
+      "invalidInput": "Invalid input",
+      "actionFailed": "Action failed",
+      "confirmationMismatch": "Confirmation word does not match"
+    },
+    "resumesTable": {
+      "searchPlaceholder": "Search by name, email, or title",
+      "statusFilter": "Status",
+      "allStatuses": "All statuses",
+      "statusDraft": "Draft",
+      "statusCompleted": "Completed",
+      "exportLanguageFilter": "Export language",
+      "allLanguages": "All languages",
+      "arabic": "Arabic",
+      "english": "English",
+      "deleteSelected": "Delete selected ({count})",
+      "exportCsv": "Export CSV",
+      "exportXlsx": "Export XLSX",
+      "columnUser": "User",
+      "columnEmail": "Email",
+      "columnTitle": "Title",
+      "columnStatus": "Status",
+      "columnAts": "ATS Score",
+      "columnUpdated": "Last Updated",
+      "columnExports": "Exports",
+      "viewEdit": "View / Edit",
+      "delete": "Delete",
+      "deleteFailed": "Delete failed",
+      "deleted": "Deleted successfully",
+      "bulkDeleted": "{count} resumes deleted successfully",
+      "deleteDescription": "\"{title}\" will be permanently deleted.",
+      "bulkDeleteDescription": "{count} resumes will be permanently deleted.",
+      "totalCount": "{count} results",
+      "previous": "Previous",
+      "next": "Next",
+      "pageOf": "Page {page} of {totalPages}",
+      "selectAll": "Select all",
+      "selectRow": "Select resume {title}",
+      "rowActions": "Row actions",
+      "noResults": "No results",
+      "noResultsHint": "Try adjusting your search or filters."
+    },
+    "usersTable": {
+      "searchPlaceholder": "Search by name or email",
+      "roleFilter": "Role",
+      "allRoles": "All roles",
+      "roleUser": "User",
+      "roleAdmin": "Admin",
+      "columnName": "Name",
+      "columnEmail": "Email",
+      "columnRole": "Role",
+      "columnResumeCount": "Resume Count",
+      "columnJoined": "Joined",
+      "columnStatus": "Status",
+      "statusActive": "Active",
+      "statusDisabled": "Disabled",
+      "enable": "Enable",
+      "disable": "Disable",
+      "roleUpdated": "Role updated",
+      "userDisabled": "User disabled",
+      "userEnabled": "User enabled",
+      "totalCount": "{count} results",
+      "previous": "Previous",
+      "next": "Next",
+      "pageOf": "Page {page} of {totalPages}",
+      "noResults": "No results",
+      "noResultsHint": "Try adjusting your search or filter."
+    }
   },
   "builder": {
     "steps": {
@@ -264,6 +418,36 @@
       "generatingPdf": "Generating...",
       "pdfExportFailed": "Couldn't generate the PDF, please try again",
       "emailComingSoon": "Emailing yourself a copy is coming soon."
+    }
+  },
+  "ats": {
+    "title": "ATS Compatibility Score",
+    "fixThisTitle": "Fix this",
+    "fixThisButton": "Fix",
+    "noIssues": "Great! No issues right now.",
+    "jobPostingLabel": "Paste the job posting text (optional)",
+    "jobPostingPlaceholder": "Paste the job description you're applying to, to match keywords",
+    "keywordMatch": "Keyword match: {matched} of {total}",
+    "missingKeywords": "Missing keywords",
+    "issues": {
+      "personalIncomplete": "Complete all required personal information fields",
+      "summaryIncomplete": "Complete your professional summary (3-4 lines)",
+      "missingJobTitle": "Add your target job title",
+      "experienceEmpty": "Add at least one work experience entry",
+      "educationEmpty": "Add at least one education entry",
+      "skillsEmpty": "Add at least one skill category",
+      "dateOrderInvalid": "Check your experience dates — the end date must be after the start date",
+      "unexplainedGap": "You have an unexplained gap longer than 6 months between two jobs",
+      "notNewestFirst": "Order your experience from most recent to oldest",
+      "weakVerbs": "Start achievement bullets with strong past-tense verbs (Developed, Led, Improved...)",
+      "missingNumbers": "Add numbers showing a measurable result in at least half your bullets",
+      "bulletLength": "Keep each bullet between 8 and 30 words",
+      "bulletCount": "Use 3 to 5 bullets per job",
+      "weakPhrasesOrFirstPerson": "Avoid phrases like \"responsible for\" and first-person pronouns",
+      "missingKeywords": "Some keywords from the job posting are missing from your resume",
+      "emojiOrSymbols": "Remove emoji or decorative symbols from your resume",
+      "easternDigits": "Use Latin numerals (0-9) instead of Eastern Arabic-Indic digits",
+      "phoneFormat": "Write your phone number in international format (e.g. +966 5X XXX XXXX)"
     }
   }
 }

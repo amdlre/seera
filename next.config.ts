@@ -5,6 +5,7 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   typedRoutes: true,
+  output: "standalone",
   turbopack: {
     root: import.meta.dirname,
   },

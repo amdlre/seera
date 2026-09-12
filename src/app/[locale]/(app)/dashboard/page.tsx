@@ -1,6 +1,8 @@
+import { FileText } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { LogoutButton } from "@/components/auth/logout-button";
 import { CreateResumeButton } from "@/components/builder/create-resume-button";
+import { EmptyState } from "@/components/shared/empty-state";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "@/i18n/navigation";
 import { requireAuth } from "@/lib/auth/session";
@@ -35,7 +37,7 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
       </div>
 
       {resumes.length === 0 ? (
-        <p className="text-muted-foreground text-sm">{t("empty")}</p>
+        <EmptyState icon={FileText} title={t("empty")} description={t("emptyHint")} />
       ) : (
         <div className="flex flex-col gap-3">
           {resumes.map((resume) => (

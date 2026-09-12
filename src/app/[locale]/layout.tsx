@@ -6,6 +6,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { routing } from "@/i18n/routing";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { env } from "@/lib/env";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -27,8 +28,23 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
   const t = await getTranslations({ locale, namespace: "metadata" });
 
   return {
-    title: t("title"),
+    metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
+    title: { default: t("title"), template: `%s — سِيرة` },
     description: t("description"),
+    alternates: {
+      languages: Object.fromEntries(routing.locales.map((l) => [l, `/${l}`])),
+    },
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      locale,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
+    },
   };
 }
 

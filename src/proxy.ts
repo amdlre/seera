@@ -45,5 +45,5 @@ export default async function proxy(request: NextRequest): Promise<NextResponse>
 }
 
 export const config = {
-  matcher: ["/((?!api|_next|_vercel|print|.*\\..*).*)"],
+  matcher: ["/((?!api|_next|_vercel|print|opengraph-image|.*\\..*).*)"],
 };
