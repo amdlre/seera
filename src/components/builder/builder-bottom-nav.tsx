@@ -49,30 +49,40 @@ export function BuilderBottomNav({ resumeId }: { resumeId: string }) {
   }
 
   return (
-    <div className="border-border bg-background sticky bottom-0 flex items-center justify-end gap-2 border-t px-4 py-3">
-      {previous && previous.implemented && (
-        <Button
-          variant="ghost"
-          disabled={isBusy}
-          onClick={() => saveThen(stepHref(resumeId, previous.id))}
-          className="gap-1.5"
-        >
-          <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden="true" />
-          {t("previous")}
-        </Button>
-      )}
+    <div className="border-border bg-background sticky bottom-0 border-t">
+      <div className="mx-auto flex w-full max-w-2xl items-center justify-between gap-2 px-4 py-3 lg:px-8">
+        {previous && previous.implemented ? (
+          <Button
+            variant="ghost"
+            disabled={isBusy}
+            onClick={() => saveThen(stepHref(resumeId, previous.id))}
+            className="gap-1.5"
+          >
+            <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden="true" />
+            {t("previous")}
+          </Button>
+        ) : (
+          <span />
+        )}
 
-      <Button variant="outline" disabled={isBusy} onClick={() => saveThen()} className="gap-1.5">
-        {justSaved ? <Check className="size-4" /> : <Save className="size-4" />}
-        {isBusy ? t("savingDraft") : t("saveDraft")}
-      </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" disabled={isBusy} onClick={() => saveThen()} className="gap-1.5">
+            {justSaved ? <Check className="size-4" /> : <Save className="size-4" />}
+            {isBusy ? t("savingDraft") : t("saveDraft")}
+          </Button>
 
-      {next && next.implemented && (
-        <Button disabled={isBusy} onClick={() => saveThen(stepHref(resumeId, next.id))} className="gap-1.5">
-          {t("next")}
-          <ArrowRight className="size-4 rtl:rotate-180" aria-hidden="true" />
-        </Button>
-      )}
+          {next && next.implemented && (
+            <Button
+              disabled={isBusy}
+              onClick={() => saveThen(stepHref(resumeId, next.id))}
+              className="gap-1.5"
+            >
+              {t("next")}
+              <ArrowRight className="size-4 rtl:rotate-180" aria-hidden="true" />
+            </Button>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

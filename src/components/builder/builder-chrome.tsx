@@ -41,12 +41,16 @@ export function BuilderChrome({
         <div className="flex min-h-screen flex-col">
           <BuilderHeader resumeId={resumeId} />
           <div className="flex flex-1 flex-col lg:flex-row">
-            <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-8 lg:px-8">{children}</main>
+            {/* The step controls live in this column, so they line up with the
+                form instead of stretching under the preview panel. */}
+            <div className="flex min-w-0 flex-1 flex-col">
+              <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-8 lg:px-8">{children}</main>
+              <BuilderBottomNav resumeId={resumeId} />
+            </div>
             <LivePreviewPanel />
           </div>
           <MobilePreviewSheet />
           <UnsavedChangesGuard />
-          <BuilderBottomNav resumeId={resumeId} />
         </div>
       </DraftRegistryProvider>
     </BuilderPreviewProvider>
