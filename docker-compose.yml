@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: seera
+      POSTGRES_PASSWORD: seera
+      POSTGRES_DB: seera
+    ports:
+      - "5433:5432"
+    volumes:
+      - seera-postgres-data:/var/lib/postgresql/data
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    restart: unless-stopped
+    ports:
+      - "1025:1025" # SMTP — استقبال الرسائل من التطبيق محليًا
+      - "8025:8025" # واجهة الويب لعرض رموز OTP المُرسَلة
+
+  minio:
+    image: quay.io/minio/minio:latest
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: seera
+      MINIO_ROOT_PASSWORD: seera12345
+    ports:
+      - "9000:9000" # S3 API — يحاكي CranL S3 Bucket محليًا
+      - "9001:9001" # واجهة الويب لتصفّح ملفات PDF المرفوعة
+    volumes:
+      - seera-minio-data:/data
+
+volumes:
+  seera-postgres-data:
+  seera-minio-data:

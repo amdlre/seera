@@ -14,5 +14,256 @@
     "title": "Something went wrong",
     "description": "We're working on it. You can try again now.",
     "retry": "Try again"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Enter a valid email address",
+    "otpFormat": "Enter the 6-digit code",
+    "phone": "Enter a valid phone number in international format",
+    "url": "Enter a valid URL",
+    "maxLength": "This text is too long",
+    "dateOrder": "The end date must be after the start date"
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in to Seera",
+      "subtitle": "Enter your email and we'll send you a one-time sign-in code.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "name@example.com",
+      "submit": "Send code",
+      "submitting": "Sending..."
+    },
+    "verify": {
+      "title": "Enter verification code",
+      "subtitle": "We sent a 6-digit code to {email}",
+      "codeLabel": "Verification code",
+      "submit": "Sign in",
+      "submitting": "Verifying...",
+      "resend": "Resend code",
+      "resendSuccess": "A new code has been sent",
+      "changeEmail": "Change email"
+    },
+    "errors": {
+      "rateLimited": "You've requested too many codes. Please wait a bit before trying again",
+      "invalidOrExpired": "This code is invalid or has expired. Request a new one",
+      "maxAttempts": "Maximum attempts exceeded. Request a new code",
+      "invalidCode": "Incorrect code",
+      "generic": "Something went wrong. Please try again"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome, {name}",
+    "subtitle": "Here are your saved resumes.",
+    "logout": "Sign out",
+    "empty": "No resumes yet. Create your first one to get started.",
+    "myResumes": "My resumes",
+    "createResume": "+ Create new resume",
+    "creating": "Creating...",
+    "atsScore": "ATS: {score}/100",
+    "status": {
+      "draft": "Draft",
+      "completed": "Completed"
+    }
+  },
+  "admin": {
+    "title": "Admin dashboard",
+    "subtitle": "Welcome {email} — this area is restricted to admins."
+  },
+  "builder": {
+    "steps": {
+      "ariaLabel": "Resume builder steps",
+      "personal": "Personal Info",
+      "summary": "Summary",
+      "experience": "Experience",
+      "education": "Education",
+      "skills": "Skills",
+      "certifications": "Certifications",
+      "languages": "Languages",
+      "custom": "Custom Sections",
+      "review": "Review & Export"
+    },
+    "nav": {
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "common": {
+      "delete": "Delete",
+      "dragToReorder": "Drag to reorder",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "issueDate": "Issue date",
+      "current": "Current",
+      "now": "Present"
+    },
+    "autosave": {
+      "saving": "Saving...",
+      "saved": "Saved ✓",
+      "error": "Couldn't save, try again"
+    },
+    "fieldExample": {
+      "tooltipAriaLabel": "Writing rule for this field",
+      "seeExample": "See a full example",
+      "useExample": "Use this example"
+    },
+    "preview": {
+      "title": "Resume preview",
+      "mobileTrigger": "Preview",
+      "empty": "Start typing to see your resume preview here.",
+      "summaryTitle": "Professional Summary",
+      "experienceTitle": "Work Experience",
+      "educationTitle": "Education",
+      "skillsTitle": "Skills",
+      "certificationsTitle": "Certifications",
+      "languagesTitle": "Languages"
+    },
+    "monthYearPicker": {
+      "callout": "Write the month and year only — no day",
+      "month": "Month",
+      "year": "Year",
+      "currentlyHere": "I currently work here",
+      "months": {
+        "1": "January",
+        "2": "February",
+        "3": "March",
+        "4": "April",
+        "5": "May",
+        "6": "June",
+        "7": "July",
+        "8": "August",
+        "9": "September",
+        "10": "October",
+        "11": "November",
+        "12": "December"
+      }
+    },
+    "personal": {
+      "title": "Personal Information",
+      "fullNameAr": "Full name (Arabic)",
+      "fullNameEn": "Full name (English)",
+      "targetJobTitleAr": "Target job title (Arabic)",
+      "targetJobTitleEn": "Target job title (English)",
+      "email": "Email",
+      "phone": "Phone number",
+      "cityCountryAr": "City, country (Arabic)",
+      "cityCountryEn": "City, country (English)",
+      "linkedin": "LinkedIn",
+      "portfolioUrl": "Extra link (GitHub or portfolio)"
+    },
+    "summary": {
+      "title": "Professional Summary",
+      "summaryAr": "Professional summary (Arabic)",
+      "summaryEn": "Professional summary (English)"
+    },
+    "errors": {
+      "invalidDraft": "Couldn't save the entered data",
+      "saveFailed": "Couldn't save, check your connection and try again"
+    },
+    "experience": {
+      "title": "Work Experience",
+      "empty": "You haven't added any experience yet.",
+      "addItem": "+ Add experience",
+      "titleAr": "Job title (Arabic)",
+      "titleEn": "Job title (English)",
+      "company": "Company name",
+      "cityCountry": "City, country",
+      "bulletsAr": "Achievement bullets (Arabic)",
+      "bulletsEn": "Achievement bullets (English)",
+      "addBullet": "+ Add bullet"
+    },
+    "education": {
+      "title": "Education",
+      "empty": "You haven't added any education yet.",
+      "addItem": "+ Add education",
+      "degreeAr": "Degree (Arabic)",
+      "degreeEn": "Degree (English)",
+      "majorAr": "Major (Arabic)",
+      "majorEn": "Major (English)",
+      "universityAr": "University (Arabic)",
+      "universityEn": "University (English)",
+      "cityCountry": "City, country",
+      "graduationYear": "Graduation year",
+      "isExpected": "Expected graduation",
+      "gpa": "GPA (optional)"
+    },
+    "skills": {
+      "title": "Skills",
+      "empty": "You haven't added any skill category yet.",
+      "addItem": "+ Add skill category",
+      "categoryAr": "Category name (Arabic)",
+      "categoryEn": "Category name (English)",
+      "skillsAr": "Skills (Arabic, comma-separated)",
+      "skillsEn": "Skills (English, comma-separated)"
+    },
+    "certifications": {
+      "title": "Certifications",
+      "empty": "You haven't added any certification yet.",
+      "addItem": "+ Add certification",
+      "nameAr": "Certificate name (Arabic)",
+      "nameEn": "Certificate name (English)",
+      "issuerAr": "Issuer (Arabic)",
+      "issuerEn": "Issuer (English)",
+      "expiryDate": "Expiry date",
+      "neverExpires": "Never expires",
+      "credentialId": "Credential ID (optional)",
+      "verificationUrl": "Verification URL (optional)"
+    },
+    "languages": {
+      "title": "Languages",
+      "empty": "You haven't added any language yet.",
+      "addItem": "+ Add language",
+      "languageAr": "Language (Arabic)",
+      "languageEn": "Language (English)",
+      "level": "Level",
+      "levels": {
+        "native": "Native",
+        "advanced": "Advanced (C1)",
+        "intermediate": "Intermediate (B1-B2)",
+        "basic": "Basic (A1-A2)"
+      },
+      "detail": "Extra detail (optional)",
+      "detailPlaceholder": "e.g. IELTS 7.0"
+    },
+    "custom": {
+      "pageTitle": "Custom Sections",
+      "pageSubtitle": "Add custom sections, reorder every section on your resume, and hide what you don't need.",
+      "addSection": "+ Add new section",
+      "addSectionTitle": "Add a new section",
+      "sectionTitleAr": "Section title (Arabic)",
+      "sectionTitleEn": "Section title (English)",
+      "sectionLayout": "Section type",
+      "layouts": {
+        "bullets": "Bullet list",
+        "dated_entries": "Dated entries",
+        "paragraph": "Short paragraph"
+      },
+      "nonStandardTitleWarning": "Unusual titles may not be read by ATS systems — make sure it fits the section's content",
+      "creating": "Creating...",
+      "create": "Create section",
+      "toggleVisibility": "Show/hide section",
+      "manageItems": "Manage section items",
+      "sectionEmpty": "No items in this section yet.",
+      "addItem": "+ Add item",
+      "bulletPlaceholderAr": "Bullet (Arabic)",
+      "bulletPlaceholderEn": "Bullet (English)",
+      "paragraphPlaceholderAr": "Text (Arabic)",
+      "paragraphPlaceholderEn": "Text (English)",
+      "itemTitleAr": "Title (Arabic)",
+      "itemTitleEn": "Title (English)"
+    },
+    "review": {
+      "title": "Review & Export",
+      "subtitle": "Review your resume, then print it in Arabic or English.",
+      "printSectionTitle": "Print",
+      "printAr": "طباعة بالعربي",
+      "printEn": "Print in English",
+      "printHint": "Opens the resume in a new tab and triggers the print dialog automatically — choose \"Save as PDF\" from there.",
+      "pdfSectionTitle": "Download PDF",
+      "downloadPdfAr": "تحميل PDF بالعربي",
+      "downloadPdfEn": "Download PDF in English",
+      "pdfHint": "Generates a clean PDF on the server with a download link valid for 15 minutes.",
+      "generatingPdf": "Generating...",
+      "pdfExportFailed": "Couldn't generate the PDF, please try again",
+      "emailComingSoon": "Emailing yourself a copy is coming soon."
+    }
   }
 }

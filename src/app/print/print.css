@@ -1,0 +1,148 @@
+/*
+ * ATS-compliant print stylesheet — ATS-CRITERIA.md §2.
+ * Single column, black on white only, standard fonts, no decoration.
+ * Kept as plain CSS (not Tailwind) so these exact rules can't drift.
+ */
+
+@media print {
+  @page {
+    size: A4;
+    margin: 20mm 18mm;
+  }
+}
+
+/*
+ * Self-hosted fonts so PDF export never depends on the host OS having
+ * these installed (PROJECT-BRIEF §6.4). "Arimo" is Google's metrically
+ * Arial-compatible open font, used here in place of "Liberation Sans" —
+ * same purpose, more reliably distributable (see docs/DECISIONS.md).
+ */
+@font-face {
+  font-family: "Arimo";
+  src: url("/fonts/arimo-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Arimo";
+  src: url("/fonts/arimo-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Noto Naskh Arabic";
+  src: url("/fonts/noto-naskh-arabic-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Noto Naskh Arabic";
+  src: url("/fonts/noto-naskh-arabic-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  color: #000000;
+}
+
+body {
+  font-family: Arial, Helvetica, Arimo, sans-serif;
+  font-size: 11pt;
+  line-height: 1.35;
+  max-width: 210mm;
+  margin-inline: auto;
+  padding: 14mm 16mm;
+}
+
+:lang(ar) {
+  font-family: "Noto Naskh Arabic", Tahoma, Arial, sans-serif;
+}
+
+.print-name {
+  font-size: 18pt;
+  font-weight: bold;
+  margin: 0 0 2pt;
+}
+
+.print-job-title {
+  font-size: 12pt;
+  margin: 0 0 4pt;
+}
+
+.print-contact-line {
+  font-size: 10pt;
+  margin: 0 0 12pt;
+}
+
+.print-section {
+  margin-top: 12pt;
+}
+
+.print-section-title {
+  font-size: 13pt;
+  font-weight: bold;
+  border-bottom: 1pt solid #000000;
+  padding-bottom: 2pt;
+  margin: 0 0 6pt;
+}
+
+.print-entry {
+  margin-bottom: 8pt;
+}
+
+.print-entry-title {
+  font-size: 11pt;
+  font-weight: bold;
+  margin: 0;
+}
+
+.print-entry-meta {
+  font-size: 10pt;
+  margin: 0 0 3pt;
+}
+
+.print-bullets {
+  margin: 0;
+  padding-inline-start: 14pt;
+  list-style-type: disc;
+}
+
+.print-bullets li {
+  margin-bottom: 2pt;
+}
+
+.print-paragraph {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.print-skill-line {
+  margin: 0 0 3pt;
+}
+
+p,
+li,
+.print-paragraph,
+.print-skill-line {
+  text-align: start;
+}

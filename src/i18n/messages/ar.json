@@ -14,5 +14,256 @@
     "title": "حدث خطأ غير متوقع",
     "description": "نعمل على حل المشكلة. يمكنك إعادة المحاولة الآن.",
     "retry": "إعادة المحاولة"
+  },
+  "validation": {
+    "required": "هذا الحقل مطلوب",
+    "email": "أدخل بريدًا إلكترونيًا صحيحًا",
+    "otpFormat": "أدخل الرمز المكوّن من 6 أرقام",
+    "phone": "أدخل رقم جوال صحيحًا بصيغة دولية",
+    "url": "أدخل رابطًا صحيحًا",
+    "maxLength": "النص طويل جدًا",
+    "dateOrder": "تاريخ النهاية يجب أن يكون بعد تاريخ البداية"
+  },
+  "auth": {
+    "login": {
+      "title": "تسجيل الدخول إلى سِيرة",
+      "subtitle": "أدخل بريدك الإلكتروني وسنرسل لك رمز دخول لمرة واحدة.",
+      "emailLabel": "البريد الإلكتروني",
+      "emailPlaceholder": "name@example.com",
+      "submit": "إرسال الرمز",
+      "submitting": "جارٍ الإرسال..."
+    },
+    "verify": {
+      "title": "أدخل رمز التحقق",
+      "subtitle": "أرسلنا رمزًا مكوّنًا من 6 أرقام إلى {email}",
+      "codeLabel": "رمز التحقق",
+      "submit": "تأكيد الدخول",
+      "submitting": "جارٍ التحقق...",
+      "resend": "إعادة إرسال الرمز",
+      "resendSuccess": "تم إرسال رمز جديد",
+      "changeEmail": "تغيير البريد الإلكتروني"
+    },
+    "errors": {
+      "rateLimited": "لقد طلبت رموزًا كثيرة. الرجاء الانتظار قليلًا قبل المحاولة مجددًا",
+      "invalidOrExpired": "الرمز غير صالح أو منتهي الصلاحية. اطلب رمزًا جديدًا",
+      "maxAttempts": "تجاوزت الحد الأقصى للمحاولات. اطلب رمزًا جديدًا",
+      "invalidCode": "الرمز غير صحيح",
+      "generic": "حدث خطأ ما. حاول مرة أخرى"
+    }
+  },
+  "dashboard": {
+    "welcome": "أهلًا، {name}",
+    "subtitle": "هذه سيرك الذاتية المحفوظة.",
+    "logout": "تسجيل الخروج",
+    "empty": "لا توجد سير ذاتية بعد. أنشئ أول سيرة لك للبدء.",
+    "myResumes": "سيري الذاتية",
+    "createResume": "+ إنشاء سيرة جديدة",
+    "creating": "جارٍ الإنشاء...",
+    "atsScore": "ATS: {score}/100",
+    "status": {
+      "draft": "مسودة",
+      "completed": "مكتملة"
+    }
+  },
+  "admin": {
+    "title": "لوحة تحكم الأدمن",
+    "subtitle": "مرحبًا {email} — هذه المنطقة محصورة بالمسؤولين."
+  },
+  "builder": {
+    "steps": {
+      "ariaLabel": "خطوات بناء السيرة",
+      "personal": "المعلومات الشخصية",
+      "summary": "الملخص",
+      "experience": "الخبرات",
+      "education": "التعليم",
+      "skills": "المهارات",
+      "certifications": "الشهادات",
+      "languages": "اللغات",
+      "custom": "أقسام إضافية",
+      "review": "المراجعة والتصدير"
+    },
+    "nav": {
+      "previous": "السابق",
+      "next": "التالي"
+    },
+    "common": {
+      "delete": "حذف",
+      "dragToReorder": "اسحب لإعادة الترتيب",
+      "startDate": "تاريخ البداية",
+      "endDate": "تاريخ النهاية",
+      "issueDate": "تاريخ الإصدار",
+      "current": "حاليًا",
+      "now": "الآن"
+    },
+    "autosave": {
+      "saving": "جارٍ الحفظ...",
+      "saved": "تم الحفظ ✓",
+      "error": "تعذّر الحفظ، حاول مرة أخرى"
+    },
+    "fieldExample": {
+      "tooltipAriaLabel": "قاعدة كتابة هذا الحقل",
+      "seeExample": "شاهد مثالًا كاملًا",
+      "useExample": "استخدم هذا المثال"
+    },
+    "preview": {
+      "title": "معاينة السيرة",
+      "mobileTrigger": "معاينة",
+      "empty": "ابدأ بالكتابة لترى معاينة سيرتك هنا.",
+      "summaryTitle": "الملخص المهني",
+      "experienceTitle": "الخبرات العملية",
+      "educationTitle": "التعليم",
+      "skillsTitle": "المهارات",
+      "certificationsTitle": "الشهادات المهنية",
+      "languagesTitle": "اللغات"
+    },
+    "monthYearPicker": {
+      "callout": "اكتب الشهر والسنة فقط — لا تكتب اليوم",
+      "month": "الشهر",
+      "year": "السنة",
+      "currentlyHere": "أعمل هنا حاليًا",
+      "months": {
+        "1": "يناير",
+        "2": "فبراير",
+        "3": "مارس",
+        "4": "أبريل",
+        "5": "مايو",
+        "6": "يونيو",
+        "7": "يوليو",
+        "8": "أغسطس",
+        "9": "سبتمبر",
+        "10": "أكتوبر",
+        "11": "نوفمبر",
+        "12": "ديسمبر"
+      }
+    },
+    "personal": {
+      "title": "المعلومات الشخصية",
+      "fullNameAr": "الاسم الكامل (عربي)",
+      "fullNameEn": "الاسم الكامل (إنجليزي)",
+      "targetJobTitleAr": "المسمى الوظيفي المستهدف (عربي)",
+      "targetJobTitleEn": "المسمى الوظيفي المستهدف (إنجليزي)",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الجوال",
+      "cityCountryAr": "المدينة، الدولة (عربي)",
+      "cityCountryEn": "المدينة، الدولة (إنجليزي)",
+      "linkedin": "LinkedIn",
+      "portfolioUrl": "رابط إضافي (GitHub أو Portfolio)"
+    },
+    "summary": {
+      "title": "الملخص المهني",
+      "summaryAr": "الملخص المهني (عربي)",
+      "summaryEn": "الملخص المهني (إنجليزي)"
+    },
+    "errors": {
+      "invalidDraft": "تعذّر حفظ البيانات المُدخلة",
+      "saveFailed": "تعذّر الحفظ، تحقق من اتصالك وحاول مرة أخرى"
+    },
+    "experience": {
+      "title": "الخبرات العملية",
+      "empty": "لم تُضِف أي خبرة بعد.",
+      "addItem": "+ إضافة خبرة",
+      "titleAr": "المسمى الوظيفي (عربي)",
+      "titleEn": "المسمى الوظيفي (إنجليزي)",
+      "company": "اسم الشركة",
+      "cityCountry": "المدينة، الدولة",
+      "bulletsAr": "نقاط الإنجاز (عربي)",
+      "bulletsEn": "نقاط الإنجاز (إنجليزي)",
+      "addBullet": "+ إضافة نقطة"
+    },
+    "education": {
+      "title": "التعليم",
+      "empty": "لم تُضِف أي مؤهل تعليمي بعد.",
+      "addItem": "+ إضافة مؤهل تعليمي",
+      "degreeAr": "الدرجة العلمية (عربي)",
+      "degreeEn": "الدرجة العلمية (إنجليزي)",
+      "majorAr": "التخصص (عربي)",
+      "majorEn": "التخصص (إنجليزي)",
+      "universityAr": "الجامعة (عربي)",
+      "universityEn": "الجامعة (إنجليزي)",
+      "cityCountry": "المدينة، الدولة",
+      "graduationYear": "سنة التخرج",
+      "isExpected": "متوقع التخرج",
+      "gpa": "المعدل (اختياري)"
+    },
+    "skills": {
+      "title": "المهارات",
+      "empty": "لم تُضِف أي فئة مهارات بعد.",
+      "addItem": "+ إضافة فئة مهارات",
+      "categoryAr": "اسم الفئة (عربي)",
+      "categoryEn": "اسم الفئة (إنجليزي)",
+      "skillsAr": "المهارات (عربي، مفصولة بفواصل)",
+      "skillsEn": "المهارات (إنجليزي، مفصولة بفواصل)"
+    },
+    "certifications": {
+      "title": "الشهادات المهنية",
+      "empty": "لم تُضِف أي شهادة بعد.",
+      "addItem": "+ إضافة شهادة",
+      "nameAr": "اسم الشهادة (عربي)",
+      "nameEn": "اسم الشهادة (إنجليزي)",
+      "issuerAr": "الجهة المانحة (عربي)",
+      "issuerEn": "الجهة المانحة (إنجليزي)",
+      "expiryDate": "تاريخ الانتهاء",
+      "neverExpires": "لا تنتهي",
+      "credentialId": "رقم الاعتماد (اختياري)",
+      "verificationUrl": "رابط التحقق (اختياري)"
+    },
+    "languages": {
+      "title": "اللغات",
+      "empty": "لم تُضِف أي لغة بعد.",
+      "addItem": "+ إضافة لغة",
+      "languageAr": "اللغة (عربي)",
+      "languageEn": "اللغة (إنجليزي)",
+      "level": "المستوى",
+      "levels": {
+        "native": "اللغة الأم",
+        "advanced": "متقدم (C1)",
+        "intermediate": "متوسط (B1-B2)",
+        "basic": "مبتدئ (A1-A2)"
+      },
+      "detail": "تفاصيل إضافية (اختياري)",
+      "detailPlaceholder": "مثال: IELTS 7.0"
+    },
+    "custom": {
+      "pageTitle": "أقسام إضافية",
+      "pageSubtitle": "أضف أقسامًا مخصصة، وأعد ترتيب جميع أقسام سيرتك، وأخفِ ما لا تحتاجه.",
+      "addSection": "+ إضافة قسم جديد",
+      "addSectionTitle": "إضافة قسم جديد",
+      "sectionTitleAr": "عنوان القسم (عربي)",
+      "sectionTitleEn": "عنوان القسم (إنجليزي)",
+      "sectionLayout": "نوع القسم",
+      "layouts": {
+        "bullets": "قائمة نقاط",
+        "dated_entries": "عناصر بتواريخ",
+        "paragraph": "نص قصير"
+      },
+      "nonStandardTitleWarning": "العناوين غير المألوفة قد لا تقرؤها أنظمة ATS — تأكد من ملاءمته لمحتوى القسم",
+      "creating": "جارٍ الإنشاء...",
+      "create": "إنشاء القسم",
+      "toggleVisibility": "إظهار/إخفاء القسم",
+      "manageItems": "إدارة عناصر القسم",
+      "sectionEmpty": "لا توجد عناصر في هذا القسم بعد.",
+      "addItem": "+ إضافة عنصر",
+      "bulletPlaceholderAr": "نقطة (عربي)",
+      "bulletPlaceholderEn": "نقطة (إنجليزي)",
+      "paragraphPlaceholderAr": "نص (عربي)",
+      "paragraphPlaceholderEn": "نص (إنجليزي)",
+      "itemTitleAr": "العنوان (عربي)",
+      "itemTitleEn": "العنوان (إنجليزي)"
+    },
+    "review": {
+      "title": "المراجعة والتصدير",
+      "subtitle": "راجع سيرتك ثم اطبعها بالعربية أو الإنجليزية.",
+      "printSectionTitle": "طباعة",
+      "printAr": "طباعة بالعربي",
+      "printEn": "Print in English",
+      "printHint": "يفتح ملف السيرة في تبويب جديد ويطلب الطباعة تلقائيًا — يمكنك اختيار «حفظ كـ PDF» من نافذة الطباعة.",
+      "pdfSectionTitle": "تحميل PDF",
+      "downloadPdfAr": "تحميل PDF بالعربي",
+      "downloadPdfEn": "Download PDF in English",
+      "pdfHint": "يولّد ملف PDF نظيف على السيرفر برابط تحميل صالح لمدة 15 دقيقة.",
+      "generatingPdf": "جارٍ التوليد...",
+      "pdfExportFailed": "تعذّر توليد ملف PDF، حاول مرة أخرى",
+      "emailComingSoon": "إرسال نسخة إلى بريدك الإلكتروني سيتوفر قريبًا."
+    }
   }
 }

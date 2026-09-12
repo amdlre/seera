@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Geist, Geist_Mono } from "next/font/google";
 import { routing } from "@/i18n/routing";
 import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -49,8 +50,10 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
     >
       <body className="bg-background text-foreground flex min-h-full flex-col text-base">
         <NextIntlClientProvider>
-          {children}
-          <Toaster />
+          <TooltipProvider>
+            {children}
+            <Toaster />
+          </TooltipProvider>
         </NextIntlClientProvider>
       </body>
     </html>
