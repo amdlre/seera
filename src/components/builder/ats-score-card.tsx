@@ -1,16 +1,16 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { updateAtsScoreAction } from "@/actions/resume-ats.actions";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Link } from "@/i18n/navigation";
 import { calculateAtsScore } from "@/lib/ats/score";
 import type { AtsIssue } from "@/lib/ats/types";
 import { ATS_SCORE_THRESHOLDS } from "@/lib/constants/ats";
 import { cn } from "@/lib/utils";
 import { useBuilderPreview } from "./builder-preview-context";
+import { KeywordMatchPanel } from "./keyword-match-panel";
 
 function scoreColorClass(score: number): string {
   if (score < ATS_SCORE_THRESHOLDS.red) return "bg-destructive";
@@ -28,6 +28,8 @@ export function AtsScoreCard({ resumeId }: { resumeId: string }) {
   const t = useTranslations("ats");
   const { personalInfo, summary, sections, itemsBySectionId } = useBuilderPreview();
   const [jobPostingText, setJobPostingText] = useState("");
+  // Scoring re-runs the whole vocabulary scan; deferring keeps typing in the textarea smooth.
+  const deferredPostingText = useDeferredValue(jobPostingText);
 
   const result = useMemo(
     () =>
@@ -36,9 +38,9 @@ export function AtsScoreCard({ resumeId }: { resumeId: string }) {
         summary,
         sections,
         itemsBySectionId,
-        jobPostingText,
+        jobPostingText: deferredPostingText,
       }),
-    [personalInfo, summary, sections, itemsBySectionId, jobPostingText],
+    [personalInfo, summary, sections, itemsBySectionId, deferredPostingText],
   );
 
   useEffect(() => {
@@ -94,29 +96,12 @@ export function AtsScoreCard({ resumeId }: { resumeId: string }) {
         <p className="text-success text-sm">{t("noIssues")}</p>
       )}
 
-      <div className="flex flex-col gap-2">
-        <label htmlFor="job-posting-text" className="text-muted-foreground text-xs font-semibold">
-          {t("jobPostingLabel")}
-        </label>
-        <Textarea
-          id="job-posting-text"
-          rows={4}
-          placeholder={t("jobPostingPlaceholder")}
-          value={jobPostingText}
-          onChange={(event) => setJobPostingText(event.target.value)}
-        />
-        {jobPostingText.trim() && (
-          <p className="text-muted-foreground text-xs">
-            {t("keywordMatch", {
-              matched: result.matchedKeywords.length,
-              total: result.matchedKeywords.length + result.missingKeywords.length,
-            })}
-            {result.missingKeywords.length > 0 && (
-              <span> — {t("missingKeywords")}: {result.missingKeywords.join(", ")}</span>
-            )}
-          </p>
-        )}
-      </div>
+      <KeywordMatchPanel
+        analysis={result.keywordAnalysis}
+        value={jobPostingText}
+        onChange={setJobPostingText}
+        skillsHref={`/builder/${resumeId}/skills`}
+      />
     </div>
   );
 }

@@ -468,10 +468,6 @@
     "fixThisTitle": "Fix this",
     "fixThisButton": "Fix",
     "noIssues": "Great! No issues right now.",
-    "jobPostingLabel": "Paste the job posting text (optional)",
-    "jobPostingPlaceholder": "Paste the job description you're applying to, to match keywords",
-    "keywordMatch": "Keyword match: {matched} of {total}",
-    "missingKeywords": "Missing keywords",
     "issues": {
       "personalIncomplete": "Complete all required personal information fields",
       "summaryIncomplete": "Complete your professional summary (3-4 lines)",
@@ -491,6 +487,35 @@
       "emojiOrSymbols": "Remove emoji or decorative symbols from your resume",
       "easternDigits": "Use Latin numerals (0-9) instead of Eastern Arabic-Indic digits",
       "phoneFormat": "Write your phone number in international format (e.g. +966 5X XXX XXXX)"
+    },
+    "keywords": {
+      "inputLabel": "Match your resume to a job posting",
+      "inputHint": "Paste the job you're applying to — we'll pull out the skills it asks for and compare them with your resume instantly.",
+      "inputPlaceholder": "Paste the full job description here (responsibilities and requirements)...",
+      "clear": "Clear",
+      "noTermsFound": "We didn't recognise specific skills in this text. Try pasting the posting's “Requirements” or “Responsibilities” section.",
+      "coverageTitle": "Required skills coverage",
+      "coverageCount": "{matched} of {total}",
+      "missingTitle": "Required skills missing from your resume ({count})",
+      "missingHint": "Add the ones you genuinely have to your skills section or experience bullets — never list a skill you don't have.",
+      "goToSkills": "Go to skills",
+      "allCovered": "Great! Your resume covers every skill we recognised in the posting.",
+      "matchedTitle": "Skills already in your resume ({count})",
+      "mentions": "Mentioned {count} times in the posting"
+    },
+    "categories": {
+      "programming": "Programming languages",
+      "frameworks": "Frameworks & libraries",
+      "data": "Data & AI",
+      "cloudDevops": "Cloud & DevOps",
+      "design": "Design & UX",
+      "tools": "Tools & systems",
+      "methodologies": "Methodologies & practices",
+      "business": "Business & management",
+      "marketing": "Marketing",
+      "finance": "Finance & accounting",
+      "hr": "Human resources",
+      "softSkills": "Soft skills"
     }
   },
   "common": {

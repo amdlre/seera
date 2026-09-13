@@ -1,0 +1,57 @@
+import { defineTerms } from "./types";
+
+export const DESIGN_TERMS = defineTerms("design", [
+  ["ui-ux", "UI/UX Design", ["ui ux", "ux ui", "ui ux design", "تصميم واجهات المستخدم", "تجربة المستخدم"]],
+  ["ux", "User Experience", ["ux", "ux design", "user experience design"]],
+  ["ui", "User Interface", ["ui", "ui design", "user interface design"]],
+  ["user-friendly", "User-Friendly Interfaces", ["user friendly", "usability"]],
+  ["responsive-design", "Responsive Design", ["responsive web design", "responsive web", "responsive layouts", "التصميم المتجاوب"]],
+  ["accessibility", "Accessibility", ["a11y", "wcag", "إمكانية الوصول"]],
+  ["figma", "Figma", ["فيجما"]],
+  ["adobe-xd", "Adobe XD", []],
+  ["photoshop", "Photoshop", ["adobe photoshop", "فوتوشوب"]],
+  ["illustrator", "Illustrator", ["adobe illustrator"]],
+  ["wireframing", "Wireframing", ["wireframes", "prototyping", "النماذج الأولية"]],
+  ["design-systems", "Design Systems", ["design system"]],
+  ["graphic-design", "Graphic Design", ["التصميم الجرافيكي"]],
+  ["cross-browser", "Cross-Browser Compatibility", ["cross browser"]],
+]);
+
+export const TOOL_TERMS = defineTerms("tools", [
+  ["git", "Git", ["جيت"]],
+  ["github", "GitHub", []],
+  ["gitlab", "GitLab", []],
+  ["version-control", "Version Control", ["source control", "إدارة الإصدارات"]],
+  ["webpack", "Webpack", []],
+  ["vite", "Vite", []],
+  ["babel", "Babel", []],
+  ["npm", "npm", ["yarn", "pnpm"]],
+  ["jira", "Jira", []],
+  ["confluence", "Confluence", []],
+  ["postman", "Postman", []],
+  ["vscode", "VS Code", ["visual studio code"]],
+  ["excel", "Microsoft Excel", ["excel", "ms excel", "إكسل"]],
+  ["ms-office", "Microsoft Office", ["ms office", "microsoft 365", "office 365", "مايكروسوفت أوفيس"]],
+  ["sap", "SAP", ["sap erp"]],
+  ["salesforce", "Salesforce", []],
+  ["erp", "ERP Systems", ["erp", "أنظمة تخطيط موارد المؤسسات"]],
+  ["crm", "CRM", ["crm systems", "إدارة علاقات العملاء"]],
+  ["google-analytics", "Google Analytics", []],
+  ["wordpress", "WordPress", ["ووردبريس"]],
+]);
+
+export const METHODOLOGY_TERMS = defineTerms("methodologies", [
+  ["agile", "Agile", ["agile methodology", "أجايل", "المنهجية الرشيقة"]],
+  ["scrum", "Scrum", ["سكرم"]],
+  ["kanban", "Kanban", []],
+  ["code-review", "Code Review", ["code reviews", "peer review", "مراجعة الكود"]],
+  ["best-practices", "Best Practices", ["coding standards", "clean code", "أفضل الممارسات"]],
+  ["debugging", "Debugging", ["debug", "troubleshooting", "تصحيح الأخطاء"]],
+  ["performance-optimization", "Performance Optimization", ["optimize performance", "application performance", "performance tuning", "تحسين الأداء"]],
+  ["tdd", "Test-Driven Development", ["tdd", "test driven development"]],
+  ["oop", "Object-Oriented Programming", ["oop", "object oriented programming"]],
+  ["system-design", "System Design", ["software architecture", "هندسة البرمجيات"]],
+  ["sdlc", "SDLC", ["software development life cycle", "دورة حياة تطوير البرمجيات"]],
+  ["six-sigma", "Six Sigma", ["lean six sigma", "ستة سيجما"]],
+  ["itil", "ITIL", []],
+]);

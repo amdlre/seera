@@ -137,8 +137,8 @@ describe("calculateAtsScore", () => {
       jobPostingText: "We need a Frontend Developer skilled in React, TypeScript, and GraphQL.",
     });
 
-    expect(result.matchedKeywords).toContain("react");
-    expect(result.missingKeywords).toContain("graphql");
+    expect(result.keywordAnalysis.matched.map((match) => match.id)).toContain("react");
+    expect(result.keywordAnalysis.missing.map((match) => match.id)).toContain("graphql");
   });
 
   it("flags Eastern Arabic-Indic digits as a technical-compatibility issue", () => {

@@ -5,7 +5,15 @@ import { scoreTechnicalCompatibility } from "./technical";
 import type { AtsScoreInput, AtsScoreResult } from "./types";
 import { scoreWritingQuality } from "./writing-quality";
 
-export type { AtsAxisResult, AtsIssue, AtsIssueSeverity, AtsScoreInput, AtsScoreResult } from "./types";
+export type {
+  AtsAxisResult,
+  AtsIssue,
+  AtsIssueSeverity,
+  AtsScoreInput,
+  AtsScoreResult,
+  KeywordAnalysis,
+  KeywordMatch,
+} from "./types";
 
 /**
  * Computes the resume's ATS score (0-100) across five weighted axes, per
@@ -36,7 +44,6 @@ export function calculateAtsScore(input: AtsScoreInput): AtsScoreResult {
     total: Math.max(0, Math.min(100, Math.round(total))),
     axes: { completeness, dates, writingQuality, keywords, technical },
     issues,
-    matchedKeywords: keywordsResult.matched,
-    missingKeywords: keywordsResult.missing,
+    keywordAnalysis: keywordsResult.analysis,
   };
 }

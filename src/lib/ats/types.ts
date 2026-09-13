@@ -1,4 +1,5 @@
 import type { ResumeSection } from "@/db/schema";
+import type { VocabularyCategory } from "./vocabulary/types";
 import type { PersonalInfoDraftInput } from "@/lib/validations/resume/personal-info";
 import type { SummaryDraftInput } from "@/lib/validations/resume/summary";
 
@@ -39,8 +40,21 @@ export type AtsScoreResult = {
     technical: AtsAxisResult;
   };
   issues: AtsIssue[];
-  matchedKeywords: string[];
-  missingKeywords: string[];
+  keywordAnalysis: KeywordAnalysis;
+};
+
+/** One recognised term from a job posting, and how many times the posting mentions it. */
+export type KeywordMatch = {
+  id: string;
+  label: string;
+  category: VocabularyCategory;
+  occurrences: number;
+};
+
+export type KeywordAnalysis = {
+  hasPosting: boolean;
+  matched: KeywordMatch[];
+  missing: KeywordMatch[];
 };
 
 export function findItems(input: AtsScoreInput, type: string): AtsResumeItem[] {
