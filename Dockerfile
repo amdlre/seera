@@ -28,10 +28,6 @@ ENV NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ENV SMTP_HOST="localhost"
 ENV SMTP_PORT="1025"
 ENV MAIL_FROM="noreply@example.com"
-ENV S3_ENDPOINT="http://localhost:9000"
-ENV S3_BUCKET="seera-exports"
-ENV S3_ACCESS_KEY="placeholder"
-ENV S3_SECRET_KEY="placeholder"
 
 RUN npm run build
 
@@ -58,5 +54,9 @@ USER nextjs
 EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
+
+# node:*-slim ships no curl, so probe with Node's built-in fetch.
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+  CMD node -e "fetch('http://127.0.0.1:'+(process.env.PORT||3000)+'/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 
 CMD ["node", "server.js"]

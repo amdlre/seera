@@ -452,7 +452,8 @@
       "pdfHint": "Generates a clean PDF on the server with a download link valid for 15 minutes.",
       "generatingPdf": "Generating...",
       "pdfExportFailed": "Couldn't generate the PDF, please try again",
-      "emailComingSoon": "Emailing yourself a copy is coming soon."
+      "emailComingSoon": "Emailing yourself a copy is coming soon.",
+      "pdfRateLimited": "Too many downloads in a short time. Please wait a few minutes and try again."
     },
     "exit": {
       "back": "Back",

@@ -12,10 +12,29 @@ config({ path: ".env.local", quiet: true });
  * with all standard sections and a couple of items, so the builder and
  * dashboard have something to render against.
  */
+const LOCAL_DATABASE_HOSTS = new Set(["localhost", "127.0.0.1", "::1", "postgres"]);
+
+/**
+ * Refuses to write demo accounts (including a known admin email) anywhere but
+ * a local database. An explicit `ALLOW_SEED=true` is the only override.
+ */
+function assertSafeSeedTarget(databaseUrl: string): void {
+  if (process.env.ALLOW_SEED === "true") return;
+
+  const host = new URL(databaseUrl).hostname;
+  if (process.env.NODE_ENV === "production" || !LOCAL_DATABASE_HOSTS.has(host)) {
+    throw new Error(
+      `Refusing to seed "${host}": demo data is for local databases only. ` +
+        "Set ALLOW_SEED=true if you really mean it.",
+    );
+  }
+}
+
 async function seed(): Promise<void> {
   if (!process.env.DATABASE_URL) {
     throw new Error("DATABASE_URL is required to run the seed script.");
   }
+  assertSafeSeedTarget(process.env.DATABASE_URL);
 
   const queryClient = postgres(process.env.DATABASE_URL);
   const db = drizzle(queryClient, { schema });

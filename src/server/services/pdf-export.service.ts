@@ -6,13 +6,12 @@ import {
 import { buildExportFilename } from "@/lib/pdf/filename";
 import { generateResumePdf } from "@/lib/pdf/generate-resume-pdf";
 import type { PrintLang } from "@/lib/constants/print-labels";
-import { getSignedPdfUrl, uploadPdf } from "@/lib/storage/s3";
 import { countRecentPdfExports } from "@/server/repositories/exports.repository";
 import { getResumeForBuilder } from "./resume.service";
 import { recordExport } from "./resume-exports.service";
 
 export type PdfExportResult = {
-  url: string;
+  pdf: Buffer;
   filename: string;
 };
 
@@ -25,9 +24,10 @@ type ExportPdfInput = {
 };
 
 /**
- * Generates a resume PDF via headless Chromium, uploads it to the exports
- * bucket, and returns a signed download link. Orchestrates: ownership check
- * → rate limit → render → upload → log export (PROJECT-BRIEF §6.3).
+ * Generates a resume PDF via headless Chromium and returns its bytes for an
+ * immediate download. Orchestrates: ownership check → rate limit → render →
+ * log export. The file is never stored: it holds personal data, and the only
+ * available bucket serves everything publicly through a CDN.
  */
 export async function exportResumeAsPdf(
   input: ExportPdfInput,
@@ -52,10 +52,7 @@ export async function exportResumeAsPdf(
   );
   const filename = buildExportFilename(fullName, jobTitle);
 
-  const pdfBuffer = await generateResumePdf(input.resumeId, input.userId, input.lang);
-  const fileKey = `resumes/${input.resumeId}/${Date.now()}-${input.lang}.pdf`;
-  await uploadPdf(fileKey, pdfBuffer);
-  const url = await getSignedPdfUrl(fileKey);
+  const pdf = await generateResumePdf(input.resumeId, input.userId, input.lang);
 
   await recordExport({
     resumeId: input.resumeId,
@@ -64,8 +61,7 @@ export async function exportResumeAsPdf(
     method: "pdf",
     ip: input.ip,
     userAgent: input.userAgent,
-    fileKey,
   });
 
-  return ok({ url, filename });
+  return ok({ pdf, filename });
 }

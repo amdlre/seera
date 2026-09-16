@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth/session";
 import { AppError, ForbiddenError, UnauthorizedError } from "@/lib/errors";
 import { logger } from "@/lib/logger";
+import { attachmentDisposition } from "@/lib/pdf/filename";
 import { exportPdfRequestSchema } from "@/lib/validations/resume/export-pdf";
 import { exportResumeAsPdf } from "@/server/services/pdf-export.service";
 
@@ -17,8 +18,8 @@ const ERROR_STATUS_BY_CODE: Record<string, number> = {
   RATE_LIMITED: 429,
 };
 
-/** Generates a resume PDF via Puppeteer and returns a signed, time-limited download URL. */
-export async function POST(request: Request): Promise<NextResponse> {
+/** Generates a resume PDF via Puppeteer and streams it straight back as a download. */
+export async function POST(request: Request): Promise<Response> {
   let userId: string;
   try {
     const session = await requireAuth();
@@ -51,5 +52,15 @@ export async function POST(request: Request): Promise<NextResponse> {
     return NextResponse.json({ error: result.error.code }, { status });
   }
 
-  return NextResponse.json(result.value);
+  const { pdf, filename } = result.value;
+  return new Response(new Uint8Array(pdf), {
+    status: 200,
+    headers: {
+      "Content-Type": "application/pdf",
+      "Content-Length": String(pdf.byteLength),
+      "Content-Disposition": attachmentDisposition(filename),
+      // Personal data: never let a proxy or the browser cache keep a copy.
+      "Cache-Control": "no-store",
+    },
+  });
 }

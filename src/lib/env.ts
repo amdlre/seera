@@ -14,10 +14,6 @@ const envSchema = z.object({
   SMTP_USER: z.string().optional(),
   SMTP_PASS: z.string().optional(),
   MAIL_FROM: z.string().min(1),
-  S3_ENDPOINT: z.string().url(),
-  S3_BUCKET: z.string().min(1),
-  S3_ACCESS_KEY: z.string().min(1),
-  S3_SECRET_KEY: z.string().min(1),
 });
 
 export const env = envSchema.parse({
@@ -30,8 +26,4 @@ export const env = envSchema.parse({
   SMTP_USER: process.env.SMTP_USER,
   SMTP_PASS: process.env.SMTP_PASS,
   MAIL_FROM: process.env.MAIL_FROM,
-  S3_ENDPOINT: process.env.S3_ENDPOINT,
-  S3_BUCKET: process.env.S3_BUCKET,
-  S3_ACCESS_KEY: process.env.S3_ACCESS_KEY,
-  S3_SECRET_KEY: process.env.S3_SECRET_KEY,
 });

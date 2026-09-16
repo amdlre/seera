@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { filenameFromDisposition } from "@/lib/pdf/filename";
 
 type DownloadPdfButtonProps = {
   resumeId: string;
@@ -12,7 +13,19 @@ type DownloadPdfButtonProps = {
   label: string;
 };
 
-type ExportPdfResponse = { url: string; filename: string };
+const FALLBACK_FILENAME = "Resume.pdf";
+
+function saveBlob(blob: Blob, filename: string): void {
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  document.body.append(anchor);
+  anchor.click();
+  anchor.remove();
+  // Give the browser a moment to start the download before releasing the blob.
+  setTimeout(() => URL.revokeObjectURL(url), 10_000);
+}
 
 export function DownloadPdfButton({ resumeId, language, label }: DownloadPdfButtonProps) {
   const t = useTranslations("builder.review");
@@ -20,19 +33,24 @@ export function DownloadPdfButton({ resumeId, language, label }: DownloadPdfButt
 
   function onClick() {
     startTransition(async () => {
-      const response = await fetch("/api/export/pdf", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ resumeId, lang: language }),
-      });
+      try {
+        const response = await fetch("/api/export/pdf", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ resumeId, lang: language }),
+        });
 
-      if (!response.ok) {
+        if (!response.ok) {
+          toast.error(response.status === 429 ? t("pdfRateLimited") : t("pdfExportFailed"));
+          return;
+        }
+
+        const filename =
+          filenameFromDisposition(response.headers.get("Content-Disposition")) ?? FALLBACK_FILENAME;
+        saveBlob(await response.blob(), filename);
+      } catch {
         toast.error(t("pdfExportFailed"));
-        return;
       }
-
-      const data = (await response.json()) as ExportPdfResponse;
-      window.open(data.url, "_blank", "noopener,noreferrer");
     });
   }
 
