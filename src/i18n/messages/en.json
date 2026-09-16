@@ -43,7 +43,9 @@
     ],
     "howItWorksTitle": "How it works",
     "finalCtaTitle": "Start building your resume now",
-    "footer": "© {year} Seera. All rights reserved."
+    "footer": "© {year} Seera. All rights reserved.",
+    "goToDashboard": "Go to my resumes",
+    "goToAdmin": "Go to admin dashboard"
   },
   "error": {
     "title": "Something went wrong",

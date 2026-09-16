@@ -4,6 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SiteHeader } from "@/components/shared/site-header";
 import { Link } from "@/i18n/navigation";
+import { homePathForRole } from "@/lib/auth/home-path";
+import { getSession } from "@/lib/auth/session";
 
 const FEATURE_ICONS = [FileCheck2, Languages, Sparkles, ShieldCheck] as const;
 
@@ -11,6 +13,12 @@ export default async function MarketingHomePage({ params }: PageProps<"/[locale]
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("marketing");
+  const session = await getSession();
+  // Signed-in visitors skip the sign-up funnel and go straight to their own space.
+  const primaryHref = session ? homePathForRole(session.role) : "/login";
+  const primaryLabel = session
+    ? t(session.role === "admin" ? "goToAdmin" : "goToDashboard")
+    : t("cta");
 
   const features = [0, 1, 2, 3].map((index) => ({
     Icon: FEATURE_ICONS[index],
@@ -25,7 +33,7 @@ export default async function MarketingHomePage({ params }: PageProps<"/[locale]
 
   return (
     <>
-      <SiteHeader />
+      <SiteHeader session={session} />
 
       <main className="flex flex-1 flex-col">
         <section className="flex flex-col items-center px-6 py-24 text-center">
@@ -38,11 +46,13 @@ export default async function MarketingHomePage({ params }: PageProps<"/[locale]
           <p className="text-muted-foreground mt-4 max-w-xl text-lg">{t("subtitle")}</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button asChild size="lg">
-              <Link href="/login">{t("cta")}</Link>
+              <Link href={primaryHref}>{primaryLabel}</Link>
             </Button>
-            <Button asChild size="lg" variant="outline">
-              <Link href="/login">{t("ctaSecondary")}</Link>
-            </Button>
+            {!session && (
+              <Button asChild size="lg" variant="outline">
+                <Link href="/login">{t("ctaSecondary")}</Link>
+              </Button>
+            )}
           </div>
         </section>
 
@@ -80,7 +90,7 @@ export default async function MarketingHomePage({ params }: PageProps<"/[locale]
         <section className="flex flex-col items-center gap-4 px-6 py-16 text-center">
           <h2 className="text-foreground text-2xl font-semibold">{t("finalCtaTitle")}</h2>
           <Button asChild size="lg">
-            <Link href="/login">{t("cta")}</Link>
+            <Link href={primaryHref}>{primaryLabel}</Link>
           </Button>
         </section>
       </main>

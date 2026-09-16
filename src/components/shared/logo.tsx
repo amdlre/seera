@@ -16,12 +16,22 @@ function ThemedBrandImage({
   whiteSrc: string;
   className?: string;
 }) {
+  // The brand SVGs carry only a viewBox (no intrinsic width), so the global
+  // `img { max-width: 100% }` collapses them to 0px inside shrink-to-fit
+  // containers. Size comes from the height class alone; the ratio sets width.
+  const sizing = "max-w-none";
+
   return (
     <>
       {/* eslint-disable-next-line @next/next/no-img-element -- static brand SVG, no optimisation needed */}
-      <img src={blueSrc} alt={BRAND_NAME} className={cn(className, "dark:hidden")} />
+      <img src={blueSrc} alt={BRAND_NAME} className={cn(sizing, className, "dark:hidden")} />
       {/* eslint-disable-next-line @next/next/no-img-element -- static brand SVG, no optimisation needed */}
-      <img src={whiteSrc} alt="" aria-hidden="true" className={cn(className, "hidden dark:block")} />
+      <img
+        src={whiteSrc}
+        alt=""
+        aria-hidden="true"
+        className={cn(sizing, className, "hidden dark:block")}
+      />
     </>
   );
 }

@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { LogoutButton } from "@/components/auth/logout-button";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
+import { homePathForRole } from "@/lib/auth/home-path";
 
 /**
  * Shown instead of the login form when a session already exists, so signing in
@@ -15,7 +16,7 @@ export async function AlreadySignedIn({
   role: "user" | "admin";
 }) {
   const t = await getTranslations("auth.alreadySignedIn");
-  const homeHref = role === "admin" ? "/admin" : "/dashboard";
+  const homeHref = homePathForRole(role);
 
   return (
     <div className="border-border flex w-full max-w-sm flex-col items-center gap-4 rounded-xl border p-6 text-center">
