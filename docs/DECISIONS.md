@@ -141,3 +141,4 @@
 - **متغيرات بيئة وهمية في مهمة الفحص**: `test/pdf-export.test.ts` يستورد `env.ts` الذي يتحقق بـ Zod عند التحميل، فيفشل الملف قبل أن يتخطّى نفسه. القيم نفسها المستخدمة في `Dockerfile`.
 - **`.github` مستثنى من `.dockerignore`** حتى لا يُبطل تعديل الـ workflow ذاكرة `COPY . .`.
 - الإصدارات مثبّتة على أحدث إصدار رئيسي (checkout/setup-node v7، docker actions v4/v6/v7) مع `concurrency` يلغي التشغيل القديم عند push جديد. الملف فُحص بـ `actionlint` بلا ملاحظات.
+- **`typecheck` = `next typegen && tsc --noEmit`**: الأنواع العامة `PageProps`/`LayoutProps` تُولَّد داخل `.next/`؛ على نسخة نظيفة (CI) غير موجودة فيفشل `tsc` — اكتُشف في أول تشغيل على GitHub.
