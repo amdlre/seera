@@ -49,7 +49,8 @@ describe("sendMail via SNDR", () => {
     expect(url).toBe(SNDR_SEND_URL);
     expect(headers.get("Authorization")).toBe("Bearer sndr_test_key");
     expect(JSON.parse(String(init?.body))).toEqual({
-      from: BASE_ENV.MAIL_FROM,
+      // ASCII display names are quoted rather than encoded.
+      from: '"Seera" <no-reply@mail.example.com>',
       to: [mail.to],
       subject: mail.subject,
       text: mail.text,

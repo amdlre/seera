@@ -2,8 +2,9 @@ import nodemailer, { type Transporter } from "nodemailer";
 import { env } from "@/lib/env";
 import { MailDeliveryError } from "@/lib/errors";
 import { MAIL_SEND_TIMEOUT_MS, SNDR_SEND_URL } from "@/lib/constants/mail";
+import { encodeFromHeader } from "@/lib/mail/from-header";
 
-export type OutgoingMail = { to: string; subject: string; text: string };
+export type OutgoingMail = { to: string; subject: string; text: string; html?: string };
 
 let smtpTransporter: Transporter | undefined;
 
@@ -20,6 +21,11 @@ function getSmtpTransporter(): Transporter {
 
 async function sendViaSmtp(mail: OutgoingMail): Promise<void> {
   await getSmtpTransporter().sendMail({ from: env.MAIL_FROM, ...mail });
+}
+
+/** SNDR sends the header verbatim, so a non-ASCII display name must be encoded here. */
+function fromHeader(): string {
+  return encodeFromHeader(env.MAIL_FROM);
 }
 
 /** Extracts SNDR's `{ error: { code, message } }` body into one line, if present. */
@@ -42,10 +48,11 @@ async function sendViaSndr(mail: OutgoingMail): Promise<void> {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: env.MAIL_FROM,
+      from: fromHeader(),
       to: [mail.to],
       subject: mail.subject,
       text: mail.text,
+      ...(mail.html ? { html: mail.html } : {}),
     }),
     signal: AbortSignal.timeout(MAIL_SEND_TIMEOUT_MS),
   });
