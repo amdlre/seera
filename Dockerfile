@@ -29,7 +29,7 @@ ENV SMTP_HOST="localhost"
 ENV SMTP_PORT="1025"
 ENV MAIL_FROM="noreply@example.com"
 
-RUN npm run build
+RUN npm run build && npm run build:migrate
 
 # ---- Runtime ----
 FROM base AS runner
@@ -49,6 +49,10 @@ RUN addgroup --system --gid 1001 nodejs \
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Self-contained migration runner + SQL files, applied on every container start.
+COPY --from=builder --chown=nextjs:nodejs /app/dist/migrate.cjs ./migrate.cjs
+COPY --from=builder --chown=nextjs:nodejs /app/src/db/migrations ./migrations
+ENV MIGRATIONS_DIR=/app/migrations
 
 USER nextjs
 EXPOSE 3000
@@ -59,4 +63,6 @@ ENV HOSTNAME="0.0.0.0"
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
   CMD node -e "fetch('http://127.0.0.1:'+(process.env.PORT||3000)+'/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 
-CMD ["node", "server.js"]
+# Migrate first; if it fails the container exits instead of serving a stale schema.
+# `exec` hands PID 1 to Node so stop signals reach the server.
+CMD ["sh", "-c", "node migrate.cjs && exec node server.js"]
