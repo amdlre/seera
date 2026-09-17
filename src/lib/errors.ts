@@ -46,3 +46,11 @@ export function ok<T>(value: T): Result<T, never> {
 export function err<E>(error: E): Result<never, E> {
   return { ok: false, error };
 }
+
+/** The mail provider rejected or failed to accept a message. */
+export class MailDeliveryError extends AppError {
+  constructor(message = "Email could not be sent") {
+    super(message, "MAIL_DELIVERY_FAILED");
+    this.name = "MailDeliveryError";
+  }
+}

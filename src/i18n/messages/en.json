@@ -87,7 +87,8 @@
       "maxAttempts": "Maximum attempts exceeded. Request a new code",
       "invalidCode": "Incorrect code",
       "generic": "Something went wrong. Please try again",
-      "accountSuspended": "This account has been suspended by an administrator. Contact us if you believe this is a mistake."
+      "accountSuspended": "This account has been suspended by an administrator. Contact us if you believe this is a mistake.",
+      "mailDeliveryFailed": "We couldn't send your sign-in code right now. Please try again shortly"
     },
     "alreadySignedIn": {
       "title": "You are already signed in",

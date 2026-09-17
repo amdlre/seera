@@ -8,7 +8,8 @@ import {
   OTP_REQUEST_LIMIT,
   OTP_REQUEST_WINDOW_MINUTES,
 } from "@/lib/constants/auth";
-import { AppError, err, ok, type Result } from "@/lib/errors";
+import { AppError, err, MailDeliveryError, ok, type Result } from "@/lib/errors";
+import { logger } from "@/lib/logger";
 import {
   countRecentOtpRequests,
   findLatestActiveOtpByEmail,
@@ -57,7 +58,14 @@ export async function requestOtp(
   const expiresAt = new Date(Date.now() + OTP_EXPIRY_MINUTES * 60_000);
 
   await insertOtpCode({ email, codeHash, expiresAt, ip });
-  await sendOtpEmail({ to: email, code, locale });
+  try {
+    await sendOtpEmail({ to: email, code, locale });
+  } catch (error) {
+    logger.error("otp-email-failed", {
+      error: error instanceof Error ? error.message : String(error),
+    });
+    return err(new MailDeliveryError());
+  }
 
   return ok({ expiresInMinutes: OTP_EXPIRY_MINUTES });
 }

@@ -142,21 +142,24 @@ src/
 
 الحزمة على GHCR تكون **خاصة** افتراضيًا: إما اجعلها عامة (GitHub → Packages → seera → Package settings → Change visibility)، أو أعطِ CranL توكن GitHub بصلاحية `read:packages` فقط.
 
-### 1. تجهيز البنية التحتية على CranL
+### 1. تجهيز البنية التحتية
 
-1. **Database** → أنشئ خدمة PostgreSQL 16 → انسخ `DATABASE_URL` الناتج.
-2. **Emails** → اضبط مرسلًا واحصل على بيانات SMTP (`SMTP_HOST/PORT/USER/PASS`) و`MAIL_FROM`.
+1. **CranL → Applications → New Database** → PostgreSQL، المنطقة نفسها للتطبيق (Saudi Arabia). داخل CranL يُستخدم الاتصال **Internal**؛ و**External** فقط لتشغيل الهجرات من خارج المنصة.
+2. **البريد — [SNDR](https://sndr.sh)** (واجهة HTTP، لا SMTP): أنشئ مفتاح API، ثم **Domains → Add domain** وأضف سجلات SPF/DKIM/DMARC. SNDR يرفض أي إرسال من نطاق غير موثَّق، لذا رموز الدخول لا تعمل في الإنتاج قبل ربط دومين خاص (يُفضَّل نطاق فرعي مثل `mail.example.com`).
 
 ### 2. متغيرات البيئة المطلوبة في الإنتاج
 
 ```env
 NODE_ENV=production
-NEXT_PUBLIC_APP_URL=https://your-domain.example      # بلا / في النهاية
-DATABASE_URL=postgres://user:pass@host:5432/seera
-JWT_SECRET=                                            # 32+ حرفًا عشوائيًا (openssl rand -base64 32)
-SMTP_HOST= SMTP_PORT= SMTP_USER= SMTP_PASS= MAIL_FROM=
-PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium            # مضبوط مسبقًا داخل Dockerfile
+NEXT_PUBLIC_APP_URL=https://seera-xxxxxx.cranl.net   # أو الدومين الخاص، بلا / في النهاية
+DATABASE_URL=postgresql://…@<internal-host>:5432/seera_db
+JWT_SECRET=                                          # openssl rand -base64 32
+MAIL_PROVIDER=sndr
+SNDR_API_KEY=sndr_live_…
+MAIL_FROM="سِيرة <no-reply@mail.example.com>"       # نطاق موثَّق في SNDR
 ```
+
+محليًا يبقى `MAIL_PROVIDER=smtp` (الافتراضي) مع Mailhog.
 
 `src/lib/env.ts` يتحقق من كل متغيّر بـ Zod عند الإقلاع ويُفشل التشغيل فورًا إن نقص أي منها — لا يمكن نشر نسخة بإعدادات ناقصة صامتة.
 
