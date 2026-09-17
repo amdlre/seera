@@ -51,7 +51,9 @@ function resumeWith(skillsEn: string, extra: Partial<AtsScoreInput> = {}): AtsSc
     personalInfo: { portfolioUrl: "github.com/someone" },
     summary: {},
     sections: [makeSection("skills")],
-    itemsBySectionId: { "section-skills": [{ id: "s1", data: { categoryEn: "Skills", skillsEn } }] },
+    itemsBySectionId: {
+      "section-skills": [{ id: "s1", data: { categoryEn: "Skills", skillsEn } }],
+    },
     jobPostingText: FRONTEND_POSTING,
     ...extra,
   };
@@ -108,7 +110,9 @@ describe("findTerms — precision", () => {
   });
 
   it("ignores everyday words that the old extractor mistook for keywords", () => {
-    expect(ids("We are hiring for this job, such a strong team with competitive compensation")).toEqual([]);
+    expect(
+      ids("We are hiring for this job, such a strong team with competitive compensation"),
+    ).toEqual([]);
   });
 });
 
@@ -118,11 +122,33 @@ describe("analyzeKeywords — the real posting", () => {
   it("recognises the concrete skills the posting asks for", () => {
     expect(requested).toEqual(
       expect.arrayContaining([
-        "react", "javascript", "html", "css", "redux", "mobx", "state-management",
-        "rest-api", "webpack", "babel", "npm", "git", "version-control", "agile", "scrum",
-        "ui-ux", "ux", "responsive-design", "code-review", "debugging",
-        "performance-optimization", "best-practices", "communication", "collaboration",
-        "problem-solving", "attention-to-detail", "adaptability",
+        "react",
+        "javascript",
+        "html",
+        "css",
+        "redux",
+        "mobx",
+        "state-management",
+        "rest-api",
+        "webpack",
+        "babel",
+        "npm",
+        "git",
+        "version-control",
+        "agile",
+        "scrum",
+        "ui-ux",
+        "ux",
+        "responsive-design",
+        "code-review",
+        "debugging",
+        "performance-optimization",
+        "best-practices",
+        "communication",
+        "collaboration",
+        "problem-solving",
+        "attention-to-detail",
+        "adaptability",
       ]),
     );
   });
@@ -141,7 +167,9 @@ describe("analyzeKeywords — the real posting", () => {
   });
 
   it("does not treat a portfolio URL as the GitHub skill", () => {
-    const analysis = analyzeKeywords(resumeWith("React", { jobPostingText: "Experience with GitHub" }));
+    const analysis = analyzeKeywords(
+      resumeWith("React", { jobPostingText: "Experience with GitHub" }),
+    );
     expect(analysis.missing.map((match) => match.id)).toContain("github");
   });
 
@@ -164,7 +192,9 @@ describe("scoreKeywords", () => {
   });
 
   it("gives full points when the posting names no recognisable skills", () => {
-    const result = scoreKeywords(resumeWith("React", { jobPostingText: "We are a great company." }));
+    const result = scoreKeywords(
+      resumeWith("React", { jobPostingText: "We are a great company." }),
+    );
     expect(result.earned).toBe(15);
     expect(result.issues).toEqual([]);
   });
