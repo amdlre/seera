@@ -18,6 +18,8 @@ const envSchema = z
     SMTP_USER: z.string().optional(),
     SMTP_PASS: z.string().optional(),
     SNDR_API_KEY: z.string().optional(),
+    // Comma-separated emails that always hold the admin role (see lib/auth/admin-emails.ts).
+    ADMIN_EMAILS: z.string().optional(),
   })
   .superRefine((value, ctx) => {
     const missing =
@@ -45,4 +47,5 @@ export const env = envSchema.parse({
   SMTP_USER: process.env.SMTP_USER,
   SMTP_PASS: process.env.SMTP_PASS,
   SNDR_API_KEY: process.env.SNDR_API_KEY || undefined,
+  ADMIN_EMAILS: process.env.ADMIN_EMAILS,
 });
