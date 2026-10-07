@@ -5,83 +5,46 @@ export const contentType = "image/png";
 
 export default function OpengraphImage() {
   return new ImageResponse(
-    (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 28,
+        background: "linear-gradient(135deg, #2E31E6 0%, #10124F 100%)",
+      }}
+    >
       <div
         style={{
-          width: "100%",
-          height: "100%",
           display: "flex",
-          flexDirection: "column",
+          width: 160,
+          height: 160,
+          borderRadius: 37,
+          background: "#FFFFFF",
           alignItems: "center",
           justifyContent: "center",
-          gap: 28,
-          background: "linear-gradient(135deg, #2563EB 0%, #1E3A8A 100%)",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            width: 140,
-            height: 140,
-            borderRadius: 32,
-            background: "#FFFFFF",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {/* The brand mark, matching public/brand/seera-icon-blue.svg. */}
-          <svg width="84" height="84" viewBox="0 0 110.7 110.7">
-            <g transform="scale(0.1) translate(0 928)">
-              <rect
-                x="320.5"
-                y="-618"
-                width="466"
-                height="658"
-                rx="74"
-                fill="none"
-                stroke="#2563EB"
-                strokeWidth="38"
-              />
-              <line
-                x1="430.5"
-                y1="-447"
-                x2="676.5"
-                y2="-447"
-                stroke="#2563EB"
-                strokeWidth="44"
-                strokeLinecap="round"
-              />
-              <line
-                x1="430.5"
-                y1="-314"
-                x2="676.5"
-                y2="-314"
-                stroke="#2563EB"
-                strokeWidth="25"
-                strokeLinecap="round"
-              />
-              <line
-                x1="504.5"
-                y1="-204"
-                x2="676.5"
-                y2="-204"
-                stroke="#2563EB"
-                strokeWidth="25"
-                strokeLinecap="round"
-              />
-              <circle cx="455.5" cy="-764" r="44" fill="#2563EB" />
-              <circle cx="651.5" cy="-764" r="44" fill="#2563EB" />
-            </g>
-          </svg>
-        </div>
-        <div style={{ display: "flex", fontSize: 76, fontWeight: 700, color: "#FFFFFF" }}>
-          Seera
-        </div>
-        <div style={{ display: "flex", fontSize: 34, color: "#DBEAFE" }}>
-          ATS-ready resumes, in Arabic and English
-        </div>
+        {/* The brand mark, matching public/brand/seera-mark.svg. */}
+        <svg width="104" height="104" viewBox="0 0 120 120" fill="none">
+          <path
+            d="M108 88 Q99 62 90 88 Q81 62 72 88 Q63 62 54 88 C46 108 22 100 22 40"
+            stroke="#2E31E6"
+            strokeWidth="10"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <circle cx="22" cy="20" r="10" fill="#0F1530" />
+        </svg>
       </div>
-    ),
+      <div style={{ display: "flex", fontSize: 76, fontWeight: 700, color: "#FFFFFF" }}>Seera</div>
+      <div style={{ display: "flex", fontSize: 34, color: "#DDE1FF" }}>
+        ATS-ready resumes, in Arabic and English
+      </div>
+    </div>,
     { ...size },
   );
 }

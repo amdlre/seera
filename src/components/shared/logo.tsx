@@ -1,4 +1,3 @@
-import { useLocale } from "next-intl";
 import { cn } from "@/lib/utils";
 
 const BRAND_NAME = "سِيرة";
@@ -16,9 +15,8 @@ function ThemedBrandImage({
   whiteSrc: string;
   className?: string;
 }) {
-  // The brand SVGs carry only a viewBox (no intrinsic width), so the global
-  // `img { max-width: 100% }` collapses them to 0px inside shrink-to-fit
-  // containers. Size comes from the height class alone; the ratio sets width.
+  // The global `img { max-width: 100% }` collapses these inside shrink-to-fit
+  // containers, so opt out: size comes from the height class, width follows.
   const sizing = "max-w-none";
 
   return (
@@ -40,16 +38,17 @@ function ThemedBrandImage({
 export function LogoMark({ className }: { className?: string }) {
   return (
     <ThemedBrandImage
-      blueSrc="/brand/seera-icon-blue.svg"
-      whiteSrc="/brand/seera-icon-white.svg"
+      blueSrc="/brand/seera-mark.svg"
+      whiteSrc="/brand/seera-mark-white.svg"
       className={cn("size-8 w-auto", className)}
     />
   );
 }
 
 /**
- * The full lockup (mark + wordmark), in the wordmark matching the active
- * locale. Falls back to the mark alone when `showWordmark` is false.
+ * The full lockup (mark + «سِيرة» + SEERAH). The artwork carries both scripts,
+ * so it is locale-independent. Falls back to the mark alone when
+ * `showWordmark` is false.
  */
 export function Logo({
   className,
@@ -58,19 +57,15 @@ export function Logo({
   className?: string;
   showWordmark?: boolean;
 }) {
-  const locale = useLocale();
-
   if (!showWordmark) {
     return <LogoMark className={className} />;
   }
 
-  const script = locale === "en" ? "en" : "ar";
-
   return (
     <ThemedBrandImage
-      blueSrc={`/brand/seera-logo-${script}-blue.svg`}
-      whiteSrc={`/brand/seera-logo-${script}-white.svg`}
-      className={cn("h-7 w-auto", className)}
+      blueSrc="/brand/seera-logo.svg"
+      whiteSrc="/brand/seera-logo-white.svg"
+      className={cn("h-8 w-auto", className)}
     />
   );
 }

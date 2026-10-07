@@ -12,7 +12,7 @@ export const MAIL_SEND_TIMEOUT_MS = 10_000;
  * from globals.css are mirrored here as plain hex.
  */
 export const EMAIL_THEME = {
-  primary: "#165DFC",
+  primary: "#2E31E6",
   foreground: "#0F172B",
   mutedForeground: "#62748E",
   border: "#E2E8F0",
