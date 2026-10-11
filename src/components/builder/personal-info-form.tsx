@@ -5,14 +5,16 @@ import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { savePersonalInfoAction } from "@/actions/resume.actions";
-import { Form, FormControl, FormField } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { FieldWithExample } from "@/components/shared/field-with-example";
+import { Form } from "@/components/ui/form";
 import { useDraftForm } from "@/hooks/use-draft-form";
 import { FIELD_GUIDES } from "@/lib/constants/field-guides";
+import { formatPhoneInternational } from "@/lib/resume/phone";
 import { personalInfoSchema, type PersonalInfoInput } from "@/lib/validations/resume/personal-info";
 import { AutosaveIndicator } from "./autosave-indicator";
 import { useBuilderPreview } from "./builder-preview-context";
+import { EnglishCityHint } from "./english-city-hint";
+import { GuidedInputField } from "./guided-input-field";
+import { JobTitleMismatchHint } from "./job-title-mismatch-hint";
 
 const EMPTY_VALUES: PersonalInfoInput = {
   fullNameAr: "",
@@ -33,6 +35,8 @@ export function PersonalInfoForm({ resumeId }: { resumeId: string }) {
 
   const form = useForm<PersonalInfoInput>({
     resolver: zodResolver(personalInfoSchema),
+    // Never submitted (drafts save on demand) — validate on blur so errors show.
+    mode: "onTouched",
     defaultValues: { ...EMPTY_VALUES, ...personalInfo },
   });
 
@@ -47,10 +51,6 @@ export function PersonalInfoForm({ resumeId }: { resumeId: string }) {
     return result.success;
   });
 
-  function buildUseExampleHandler(fieldName: keyof PersonalInfoInput) {
-    return (value: string) => form.setValue(fieldName, value, { shouldDirty: true });
-  }
-
   return (
     <Form {...form}>
       <form onSubmit={(event) => event.preventDefault()} className="flex flex-col gap-6">
@@ -60,173 +60,97 @@ export function PersonalInfoForm({ resumeId }: { resumeId: string }) {
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2">
-          <FormField
-            control={form.control}
+          <GuidedInputField
+            form={form}
             name="fullNameAr"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("fullNameAr")}
-                required
-                guide={FIELD_GUIDES.fullNameAr}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={buildUseExampleHandler("fullNameAr")}
-              >
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-              </FieldWithExample>
-            )}
+            label={t("fullNameAr")}
+            required
+            guide={FIELD_GUIDES.fullNameAr}
           />
-          <FormField
-            control={form.control}
+          <GuidedInputField
+            form={form}
             name="fullNameEn"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("fullNameEn")}
-                required
-                guide={FIELD_GUIDES.fullNameEn}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={buildUseExampleHandler("fullNameEn")}
-              >
-                <FormControl>
-                  <Input {...field} dir="ltr" />
-                </FormControl>
-              </FieldWithExample>
-            )}
+            label={t("fullNameEn")}
+            required
+            dir="ltr"
+            guide={FIELD_GUIDES.fullNameEn}
           />
-          <FormField
-            control={form.control}
+          <GuidedInputField
+            form={form}
             name="targetJobTitleAr"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("targetJobTitleAr")}
-                required
-                guide={FIELD_GUIDES.targetJobTitleAr}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={buildUseExampleHandler("targetJobTitleAr")}
-              >
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-              </FieldWithExample>
-            )}
+            label={t("targetJobTitleAr")}
+            required
+            guide={FIELD_GUIDES.targetJobTitleAr}
           />
-          <FormField
-            control={form.control}
+          <GuidedInputField
+            form={form}
             name="targetJobTitleEn"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("targetJobTitleEn")}
-                required
-                guide={FIELD_GUIDES.targetJobTitleEn}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={buildUseExampleHandler("targetJobTitleEn")}
-              >
-                <FormControl>
-                  <Input {...field} dir="ltr" />
-                </FormControl>
-              </FieldWithExample>
-            )}
+            label={t("targetJobTitleEn")}
+            required
+            dir="ltr"
+            guide={FIELD_GUIDES.targetJobTitleEn}
           />
-          <FormField
-            control={form.control}
+          <JobTitleMismatchHint
+            titleAr={form.watch("targetJobTitleAr")}
+            titleEn={form.watch("targetJobTitleEn")}
+          />
+          <GuidedInputField
+            form={form}
             name="email"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("email")}
-                required
-                guide={FIELD_GUIDES.email}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={buildUseExampleHandler("email")}
-              >
-                <FormControl>
-                  <Input type="email" dir="ltr" {...field} />
-                </FormControl>
-              </FieldWithExample>
-            )}
+            label={t("email")}
+            required
+            type="email"
+            dir="ltr"
+            guide={FIELD_GUIDES.email}
           />
-          <FormField
-            control={form.control}
+          <GuidedInputField
+            form={form}
             name="phone"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("phone")}
-                required
-                guide={FIELD_GUIDES.phone}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={buildUseExampleHandler("phone")}
-              >
-                <FormControl>
-                  <Input type="tel" dir="ltr" {...field} />
-                </FormControl>
-              </FieldWithExample>
-            )}
+            label={t("phone")}
+            required
+            type="tel"
+            dir="ltr"
+            guide={FIELD_GUIDES.phone}
+            formatOnBlur={formatPhoneInternational}
           />
-          <FormField
-            control={form.control}
+          <GuidedInputField
+            form={form}
             name="cityCountryAr"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("cityCountryAr")}
-                required
-                guide={FIELD_GUIDES.cityCountryAr}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={buildUseExampleHandler("cityCountryAr")}
-              >
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-              </FieldWithExample>
-            )}
+            label={t("cityCountryAr")}
+            required
+            guide={FIELD_GUIDES.cityCountryAr}
           />
-          <FormField
-            control={form.control}
+          <GuidedInputField
+            form={form}
             name="cityCountryEn"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("cityCountryEn")}
-                required
-                guide={FIELD_GUIDES.cityCountryEn}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={buildUseExampleHandler("cityCountryEn")}
-              >
-                <FormControl>
-                  <Input {...field} dir="ltr" />
-                </FormControl>
-              </FieldWithExample>
+            label={t("cityCountryEn")}
+            required
+            dir="ltr"
+            guide={FIELD_GUIDES.cityCountryEn}
+            renderHint={(value) => (
+              <EnglishCityHint
+                value={value}
+                onFix={(fixed) =>
+                  form.setValue("cityCountryEn", fixed, { shouldDirty: true, shouldValidate: true })
+                }
+              />
             )}
           />
-          <FormField
-            control={form.control}
+          <GuidedInputField
+            form={form}
             name="linkedin"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("linkedin")}
-                guide={FIELD_GUIDES.linkedin}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={buildUseExampleHandler("linkedin")}
-              >
-                <FormControl>
-                  <Input dir="ltr" {...field} />
-                </FormControl>
-              </FieldWithExample>
-            )}
+            label={t("linkedin")}
+            dir="ltr"
+            guide={FIELD_GUIDES.linkedin}
+            placeholder={t("linkedinPlaceholder")}
           />
-          <FormField
-            control={form.control}
+          <GuidedInputField
+            form={form}
             name="portfolioUrl"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("portfolioUrl")}
-                guide={FIELD_GUIDES.portfolioUrl}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={buildUseExampleHandler("portfolioUrl")}
-              >
-                <FormControl>
-                  <Input dir="ltr" {...field} />
-                </FormControl>
-              </FieldWithExample>
-            )}
+            label={t("portfolioUrl")}
+            dir="ltr"
+            guide={FIELD_GUIDES.portfolioUrl}
+            placeholder={t("portfolioUrlPlaceholder")}
           />
         </div>
       </form>

@@ -4,7 +4,11 @@ import { Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { useSectionItems } from "@/hooks/use-section-items";
-import { EMPTY_SKILL_CATEGORY_ITEM, type SkillCategoryItemInput } from "@/lib/validations/resume/skills";
+import {
+  EMPTY_SKILL_CATEGORY_ITEM,
+  type SkillCategoryItemInput,
+} from "@/lib/validations/resume/skills";
+import { DuplicateSkillsNotice } from "./duplicate-skills-notice";
 import { SkillCategoryItemCard } from "./skill-category-item-card";
 import { SortableItemList } from "./sortable-item-list";
 
@@ -22,6 +26,7 @@ export function SkillsForm() {
       <h1 className="text-foreground text-xl font-semibold">{t("title")}</h1>
 
       {items.length === 0 && <p className="text-muted-foreground text-sm">{t("empty")}</p>}
+      <DuplicateSkillsNotice items={items} />
 
       <SortableItemList
         dndContextId="skills-items"

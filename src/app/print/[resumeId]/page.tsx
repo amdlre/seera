@@ -54,7 +54,7 @@ export default async function PrintPage({ params, searchParams }: PrintPageProps
   const { resume, sections, itemsBySectionId } = result.value;
 
   return (
-    <div lang={lang} dir={dir}>
+    <div lang={lang} dir={dir} className="resume-doc">
       <ResumePrintTemplate
         lang={lang}
         resume={resume}

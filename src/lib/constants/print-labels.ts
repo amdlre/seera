@@ -17,6 +17,13 @@ export const PRINT_LABELS = {
       intermediate: "متوسط",
       basic: "مبتدئ",
     },
+    employmentTypes: {
+      full_time: "دوام كامل",
+      part_time: "دوام جزئي",
+      contract: "عقد",
+      freelance: "عمل حر",
+      internship: "تدريب",
+    },
   },
   en: {
     present: "Present",
@@ -29,6 +36,13 @@ export const PRINT_LABELS = {
       advanced: "Advanced",
       intermediate: "Intermediate",
       basic: "Basic",
+    },
+    employmentTypes: {
+      full_time: "Full-time",
+      part_time: "Part-time",
+      contract: "Contract",
+      freelance: "Freelance",
+      internship: "Internship",
     },
   },
 } as const;

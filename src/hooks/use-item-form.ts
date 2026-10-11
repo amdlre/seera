@@ -26,6 +26,9 @@ export function useItemForm<TSchema extends z.ZodTypeAny>(params: {
 
   const form = useForm<z.infer<TSchema>>({
     resolver: zodResolver(schema),
+    // No form here is ever submitted (drafts save on demand), so validate on
+    // blur — otherwise required/format errors would never be shown.
+    mode: "onTouched",
     defaultValues: defaultValues as DefaultValues<z.infer<TSchema>>,
   });
 

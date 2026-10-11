@@ -5,7 +5,7 @@ type DefaultSectionBlueprint = Pick<
   "type" | "titleAr" | "titleEn" | "layout" | "sortOrder"
 >;
 
-/** The seven standard sections every new resume starts with, per ATS-CRITERIA.md. */
+/** The eight standard sections every new resume starts with, per ATS-CRITERIA.md. */
 export const DEFAULT_RESUME_SECTIONS: DefaultSectionBlueprint[] = [
   {
     type: "personal",
@@ -43,17 +43,24 @@ export const DEFAULT_RESUME_SECTIONS: DefaultSectionBlueprint[] = [
     sortOrder: 4,
   },
   {
+    type: "projects",
+    titleAr: "المشاريع",
+    titleEn: "Projects",
+    layout: "dated_entries",
+    sortOrder: 5,
+  },
+  {
     type: "certifications",
     titleAr: "الشهادات المهنية",
     titleEn: "Certifications",
     layout: "dated_entries",
-    sortOrder: 5,
+    sortOrder: 6,
   },
   {
     type: "languages",
     titleAr: "اللغات",
     titleEn: "Languages",
     layout: "bullets",
-    sortOrder: 6,
+    sortOrder: 7,
   },
 ];

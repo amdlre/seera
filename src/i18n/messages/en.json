@@ -60,7 +60,8 @@
     "url": "Enter a valid URL",
     "maxLength": "This text is too long",
     "dateOrder": "The end date must be after the start date",
-    "deleteConfirmation": "Confirmation must be exactly the word \"حذف\""
+    "deleteConfirmation": "Confirmation must be exactly the word \"حذف\"",
+    "englishCityFormat": "Write the city and country in English with a regular comma, e.g. Riyadh, Saudi Arabia"
   },
   "auth": {
     "login": {
@@ -258,6 +259,7 @@
       "experience": "Experience",
       "education": "Education",
       "skills": "Skills",
+      "projects": "Projects",
       "certifications": "Certifications",
       "languages": "Languages",
       "custom": "Custom Sections",
@@ -282,7 +284,8 @@
       "endDate": "End date",
       "issueDate": "Issue date",
       "current": "Current",
-      "now": "Present"
+      "now": "Present",
+      "titleMismatch": "The Arabic title “{titleAr}” and the English title “{titleEn}” describe different roles. Align them so both resumes match."
     },
     "autosave": {
       "saving": "Saving...",
@@ -298,13 +301,7 @@
     "preview": {
       "title": "Resume preview",
       "mobileTrigger": "Preview",
-      "empty": "Start typing to see your resume preview here.",
-      "summaryTitle": "Professional Summary",
-      "experienceTitle": "Work Experience",
-      "educationTitle": "Education",
-      "skillsTitle": "Skills",
-      "certificationsTitle": "Certifications",
-      "languagesTitle": "Languages"
+      "empty": "Start typing to see your resume preview here."
     },
     "monthYearPicker": {
       "callout": "Write the month and year only — no day",
@@ -337,7 +334,9 @@
       "cityCountryAr": "City, country (Arabic)",
       "cityCountryEn": "City, country (English)",
       "linkedin": "LinkedIn",
-      "portfolioUrl": "Extra link (GitHub or portfolio)"
+      "portfolioUrl": "Extra link (GitHub or portfolio)",
+      "linkedinPlaceholder": "e.g. linkedin.com/in/your-name",
+      "portfolioUrlPlaceholder": "e.g. github.com/your-name"
     },
     "summary": {
       "title": "Professional Summary",
@@ -354,11 +353,21 @@
       "addItem": "+ Add experience",
       "titleAr": "Job title (Arabic)",
       "titleEn": "Job title (English)",
-      "company": "Company name",
-      "cityCountry": "City, country",
       "bulletsAr": "Achievement bullets (Arabic)",
       "bulletsEn": "Achievement bullets (English)",
-      "addBullet": "+ Add bullet"
+      "addBullet": "+ Add bullet",
+      "companyAr": "Company name (Arabic)",
+      "companyEn": "Company name (English)",
+      "cityCountryAr": "City, country (Arabic)",
+      "cityCountryEn": "City, country (English)",
+      "employmentType": "Employment type",
+      "employmentTypes": {
+        "full_time": "Full-time",
+        "part_time": "Part-time",
+        "contract": "Contract",
+        "freelance": "Freelance",
+        "internship": "Internship"
+      }
     },
     "education": {
       "title": "Education",
@@ -370,10 +379,11 @@
       "majorEn": "Major (English)",
       "universityAr": "University (Arabic)",
       "universityEn": "University (English)",
-      "cityCountry": "City, country",
       "graduationYear": "Graduation year",
       "isExpected": "Expected graduation",
-      "gpa": "GPA (optional)"
+      "gpa": "GPA (optional)",
+      "cityCountryAr": "City, country (Arabic)",
+      "cityCountryEn": "City, country (English)"
     },
     "skills": {
       "title": "Skills",
@@ -381,8 +391,24 @@
       "addItem": "+ Add skill category",
       "categoryAr": "Category name (Arabic)",
       "categoryEn": "Category name (English)",
-      "skillsAr": "Skills (Arabic, comma-separated)",
-      "skillsEn": "Skills (English, comma-separated)"
+      "skillsAr": "Skills (Arabic)",
+      "skillsEn": "Skills (English)",
+      "skillsPlaceholder": "Type a skill and press Enter",
+      "duplicatesAcrossCategories": "These skills appear in more than one category: {skills}. List each skill only once."
+    },
+    "projects": {
+      "title": "Projects",
+      "empty": "You haven't added any project yet. Projects matter a lot for developers and designers.",
+      "addItem": "+ Add project",
+      "nameAr": "Project name and summary (Arabic)",
+      "nameEn": "Project name and summary (English)",
+      "url": "Project link",
+      "urlPlaceholder": "e.g. github.com/your-name/project",
+      "technologies": "Technologies used",
+      "technologiesPlaceholder": "Type a technology and press Enter",
+      "bulletsAr": "Achievement bullets (Arabic)",
+      "bulletsEn": "Achievement bullets (English)",
+      "addBullet": "+ Add bullet"
     },
     "certifications": {
       "title": "Certifications",
@@ -465,6 +491,15 @@
       "save": "Save and leave",
       "saving": "Saving...",
       "saveFailed": "Could not save, please try again"
+    },
+    "cityFormat": {
+      "arabicComma": "The Arabic comma “،” was used in an English field.",
+      "useFixed": "Replace with: {value}",
+      "suggestOrder": "Suggested format: City, Country — e.g. Riyadh, Saudi Arabia"
+    },
+    "tags": {
+      "remove": "Remove {tag}",
+      "duplicate": "“{tag}” is already added."
     }
   },
   "ats": {
@@ -490,7 +525,8 @@
       "missingKeywords": "Some keywords from the job posting are missing from your resume",
       "emojiOrSymbols": "Remove emoji or decorative symbols from your resume",
       "easternDigits": "Use Latin numerals (0-9) instead of Eastern Arabic-Indic digits",
-      "phoneFormat": "Write your phone number in international format (e.g. +966 5X XXX XXXX)"
+      "phoneFormat": "Write your phone number in international format (e.g. +966 5X XXX XXXX)",
+      "experienceFieldsIncomplete": "Some experience entries are missing a required field (e.g. the English company name or city)"
     },
     "keywords": {
       "inputLabel": "Match your resume to a job posting",
@@ -520,6 +556,23 @@
       "finance": "Finance & accounting",
       "hr": "Human resources",
       "softSkills": "Soft skills"
+    },
+    "pointsGain": "+{points}",
+    "severity": {
+      "error": "Error",
+      "warning": "Warning",
+      "info": "Tip"
+    },
+    "breakdown": {
+      "title": "How your score is calculated",
+      "points": "{earned} of {max}",
+      "axes": {
+        "completeness": "Section completeness",
+        "writingQuality": "Writing quality",
+        "dates": "Dates & ordering",
+        "keywords": "Keywords",
+        "technical": "Technical compatibility"
+      }
     }
   },
   "common": {

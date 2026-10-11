@@ -1,6 +1,13 @@
+import { experienceItemSchema } from "@/lib/validations/resume/experience";
 import { personalInfoSchema } from "@/lib/validations/resume/personal-info";
 import { summarySchema } from "@/lib/validations/resume/summary";
-import { findItems, findSectionId, type AtsAxisResult, type AtsIssue, type AtsScoreInput } from "./types";
+import {
+  findItems,
+  findSectionId,
+  type AtsAxisResult,
+  type AtsIssue,
+  type AtsScoreInput,
+} from "./types";
 
 const POINTS = {
   personal: 10,
@@ -70,6 +77,19 @@ export function scoreCompleteness(input: AtsScoreInput): AtsAxisResult {
         points: POINTS[section.key],
       });
     }
+  }
+
+  // Entries exist but some field is missing (e.g. the English company name
+  // after the bilingual-fields migration): no points lost, but say so.
+  const experienceItems = findItems(input, "experience");
+  if (experienceItems.some((item) => !experienceItemSchema.safeParse(item.data).success)) {
+    issues.push({
+      id: "completeness-experience-fields",
+      severity: "warning",
+      messageKey: "issues.experienceFieldsIncomplete",
+      sectionId: findSectionId(input, "experience"),
+      points: 0,
+    });
   }
 
   return { earned, max: 30, issues };

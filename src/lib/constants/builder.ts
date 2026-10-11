@@ -4,6 +4,7 @@ export type BuilderStepId =
   | "experience"
   | "education"
   | "skills"
+  | "projects"
   | "certifications"
   | "languages"
   | "custom"
@@ -19,23 +20,24 @@ type BuilderStepDefinition = {
   skippable: boolean;
 };
 
-/** The full 9-step wizard, in display order. Phases 3-4 implement steps 1-8; review lands in Phase 5. */
+/** The full 10-step wizard, in display order. */
 export const BUILDER_STEPS: BuilderStepDefinition[] = [
   { id: "personal", order: 1, titleKey: "personal", implemented: true, skippable: false },
   { id: "summary", order: 2, titleKey: "summary", implemented: true, skippable: true },
   { id: "experience", order: 3, titleKey: "experience", implemented: true, skippable: true },
   { id: "education", order: 4, titleKey: "education", implemented: true, skippable: true },
   { id: "skills", order: 5, titleKey: "skills", implemented: true, skippable: true },
+  { id: "projects", order: 6, titleKey: "projects", implemented: true, skippable: true },
   {
     id: "certifications",
-    order: 6,
+    order: 7,
     titleKey: "certifications",
     implemented: true,
     skippable: true,
   },
-  { id: "languages", order: 7, titleKey: "languages", implemented: true, skippable: true },
-  { id: "custom", order: 8, titleKey: "custom", implemented: true, skippable: true },
-  { id: "review", order: 9, titleKey: "review", implemented: true, skippable: true },
+  { id: "languages", order: 8, titleKey: "languages", implemented: true, skippable: true },
+  { id: "custom", order: 9, titleKey: "custom", implemented: true, skippable: true },
+  { id: "review", order: 10, titleKey: "review", implemented: true, skippable: true },
 ];
 
 export const AUTOSAVE_DEBOUNCE_MS = 1500;

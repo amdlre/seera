@@ -6,6 +6,7 @@ import { EducationForm } from "@/components/builder/education-form";
 import { ExperienceForm } from "@/components/builder/experience-form";
 import { LanguagesForm } from "@/components/builder/languages-form";
 import { PersonalInfoForm } from "@/components/builder/personal-info-form";
+import { ProjectsForm } from "@/components/builder/projects-form";
 import { SkillsForm } from "@/components/builder/skills-form";
 import { SummaryForm } from "@/components/builder/summary-form";
 
@@ -28,6 +29,8 @@ export default async function BuilderStepPage({ params }: BuilderStepPageProps) 
       return <EducationForm />;
     case "skills":
       return <SkillsForm />;
+    case "projects":
+      return <ProjectsForm />;
     case "certifications":
       return <CertificationsForm />;
     case "languages":

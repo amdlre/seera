@@ -41,7 +41,11 @@ export function DownloadPdfButton({ resumeId, language, label }: DownloadPdfButt
         });
 
         if (!response.ok) {
-          toast.error(response.status === 429 ? t("pdfRateLimited") : t("pdfExportFailed"));
+          if (response.status === 429) {
+            toast.warning(t("pdfRateLimited"));
+          } else {
+            toast.error(t("pdfExportFailed"));
+          }
           return;
         }
 
@@ -55,7 +59,14 @@ export function DownloadPdfButton({ resumeId, language, label }: DownloadPdfButt
   }
 
   return (
-    <Button type="button" size="lg" variant="outline" onClick={onClick} disabled={isPending} className="gap-2">
+    <Button
+      type="button"
+      size="lg"
+      variant="outline"
+      onClick={onClick}
+      disabled={isPending}
+      className="gap-2"
+    >
       {isPending ? <Loader2 className="size-4 animate-spin" /> : <Download className="size-4" />}
       {isPending ? t("generatingPdf") : label}
     </Button>

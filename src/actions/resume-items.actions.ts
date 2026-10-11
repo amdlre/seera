@@ -12,6 +12,7 @@ import {
 import { educationItemDraftSchema } from "@/lib/validations/resume/education";
 import { experienceItemDraftSchema } from "@/lib/validations/resume/experience";
 import { languageItemDraftSchema } from "@/lib/validations/resume/languages";
+import { projectItemDraftSchema } from "@/lib/validations/resume/projects";
 import { skillCategoryItemDraftSchema } from "@/lib/validations/resume/skills";
 import * as itemsService from "@/server/services/resume-items.service";
 
@@ -19,6 +20,7 @@ export type ItemDataKind =
   | "experience"
   | "education"
   | "skillCategory"
+  | "project"
   | "certification"
   | "language"
   | "customBullet"
@@ -29,6 +31,7 @@ const DRAFT_SCHEMA_BY_KIND: Record<ItemDataKind, z.ZodTypeAny> = {
   experience: experienceItemDraftSchema,
   education: educationItemDraftSchema,
   skillCategory: skillCategoryItemDraftSchema,
+  project: projectItemDraftSchema,
   certification: certificationItemDraftSchema,
   language: languageItemDraftSchema,
   customBullet: customBulletItemDraftSchema,
@@ -38,15 +41,16 @@ const DRAFT_SCHEMA_BY_KIND: Record<ItemDataKind, z.ZodTypeAny> = {
 
 export type ItemActionResult = { success: true } | { success: false; messageKey: string };
 export type AddItemActionResult =
-  | { success: true; itemId: string }
-  | { success: false; messageKey: string };
+  { success: true; itemId: string } | { success: false; messageKey: string };
 
 function validateDraft(
   kind: ItemDataKind,
   input: unknown,
 ): { ok: true; data: Record<string, unknown> } | { ok: false } {
   const parsed = DRAFT_SCHEMA_BY_KIND[kind].safeParse(input);
-  return parsed.success ? { ok: true, data: parsed.data as Record<string, unknown> } : { ok: false };
+  return parsed.success
+    ? { ok: true, data: parsed.data as Record<string, unknown> }
+    : { ok: false };
 }
 
 /** Appends a new item to a section (e.g. a blank experience entry). */

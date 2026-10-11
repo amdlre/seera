@@ -54,3 +54,11 @@ export class MailDeliveryError extends AppError {
     this.name = "MailDeliveryError";
   }
 }
+
+/** Headless Chromium could not render the resume into a PDF. */
+export class PdfRenderError extends AppError {
+  constructor(message = "PDF could not be rendered") {
+    super(message, "PDF_RENDER_FAILED");
+    this.name = "PdfRenderError";
+  }
+}

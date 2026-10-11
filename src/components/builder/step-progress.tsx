@@ -18,6 +18,7 @@ const LIST_SECTION_TYPES: Partial<Record<string, ResumeSectionType>> = {
   experience: "experience",
   education: "education",
   skills: "skills",
+  projects: "projects",
   certifications: "certifications",
   languages: "languages",
 };
@@ -72,7 +73,9 @@ export function StepProgress({ resumeId }: { resumeId: string }) {
           const isCurrent = step.id === currentStepId;
           const status = statusFor(step.id);
           const href =
-            step.id === "review" ? `/builder/${resumeId}/review` : `/builder/${resumeId}/${step.id}`;
+            step.id === "review"
+              ? `/builder/${resumeId}/review`
+              : `/builder/${resumeId}/${step.id}`;
 
           const badge = (
             <span
@@ -81,7 +84,8 @@ export function StepProgress({ resumeId }: { resumeId: string }) {
                 isCurrent && "border-primary bg-primary text-primary-foreground",
                 !isCurrent && status === "complete" && "border-primary text-primary",
                 !isCurrent && status === "incomplete" && "border-warning text-warning",
-                !isCurrent && (status === "empty" || status === "not-implemented") &&
+                !isCurrent &&
+                  (status === "empty" || status === "not-implemented") &&
                   "border-border text-muted-foreground",
               )}
             >

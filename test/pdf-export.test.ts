@@ -6,7 +6,7 @@ import { generateResumePdf } from "@/lib/pdf/generate-resume-pdf";
  * Acceptance tests from ATS-CRITERIA.md §5. These exercise the real
  * Puppeteer pipeline against a live app + seeded database, so they need:
  *   TEST_RESUME_ID / TEST_USER_ID  — an existing resume and its owner
- *   NEXT_PUBLIC_APP_URL            — pointing at a running `next dev`/`start`
+ *   a running `next dev`/`start` on PORT (default 3000), or PDF_RENDER_ORIGIN
  * Run `npm run db:seed` and `npm run dev` first, then pass the seeded
  * resume/user ids. Skips cleanly (not a failure) when they're absent, e.g.
  * on a fresh checkout with no live server.

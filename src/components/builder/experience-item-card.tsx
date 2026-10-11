@@ -1,72 +1,29 @@
 "use client";
 
-import { Plus, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { FieldWithExample } from "@/components/shared/field-with-example";
 import { useItemForm } from "@/hooks/use-item-form";
+import { EMPLOYMENT_TYPES } from "@/lib/constants/experience";
 import { FIELD_GUIDES } from "@/lib/constants/field-guides";
-import { experienceItemSchema, type ExperienceItemInput } from "@/lib/validations/resume/experience";
+import {
+  experienceItemSchema,
+  type ExperienceItemInput,
+} from "@/lib/validations/resume/experience";
 import { AutosaveIndicator } from "./autosave-indicator";
+import { BulletListField } from "./bilingual-bullets-field";
+import { EnglishCityHint } from "./english-city-hint";
+import { GuidedInputField } from "./guided-input-field";
+import { JobTitleMismatchHint } from "./job-title-mismatch-hint";
 import { MonthYearPicker } from "./month-year-picker";
-
-function BulletListField({
-  values,
-  onChange,
-  dir,
-  addLabel,
-}: {
-  values: string[];
-  onChange: (values: string[]) => void;
-  dir: "rtl" | "ltr";
-  addLabel: string;
-}) {
-  function updateBullet(index: number, value: string) {
-    onChange(values.map((bullet, i) => (i === index ? value : bullet)));
-  }
-  function removeBullet(index: number) {
-    onChange(values.filter((_, i) => i !== index));
-  }
-
-  return (
-    <div className="flex flex-col gap-2">
-      {values.map((value, index) => (
-        <div key={index} className="flex gap-2">
-          <Textarea
-            dir={dir}
-            rows={2}
-            value={value}
-            onChange={(event) => updateBullet(index, event.target.value)}
-          />
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-sm"
-            className="h-fit"
-            onClick={() => removeBullet(index)}
-            aria-label="remove"
-          >
-            <Trash2 className="size-4" />
-          </Button>
-        </div>
-      ))}
-      <Button
-        type="button"
-        variant="outline"
-        size="sm"
-        className="w-fit gap-1"
-        onClick={() => onChange([...values, ""])}
-      >
-        <Plus className="size-3.5" />
-        {addLabel}
-      </Button>
-    </div>
-  );
-}
 
 export function ExperienceItemCard({
   sectionId,
@@ -97,71 +54,87 @@ export function ExperienceItemCard({
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <FormField
-            control={form.control}
+          <GuidedInputField
+            form={form}
             name="titleAr"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("titleAr")}
-                required
-                guide={FIELD_GUIDES.experienceTitle}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={(value) => form.setValue("titleAr", value, { shouldDirty: true })}
-              >
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-              </FieldWithExample>
-            )}
+            label={t("titleAr")}
+            required
+            guide={FIELD_GUIDES.experienceTitle}
           />
-          <FormField
-            control={form.control}
+          <GuidedInputField
+            form={form}
             name="titleEn"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("titleEn")}
-                required
-                guide={FIELD_GUIDES.experienceTitle}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={(value) => form.setValue("titleEn", value, { shouldDirty: true })}
-              >
-                <FormControl>
-                  <Input {...field} dir="ltr" />
-                </FormControl>
-              </FieldWithExample>
+            label={t("titleEn")}
+            required
+            dir="ltr"
+            guide={FIELD_GUIDES.experienceTitle}
+          />
+          <JobTitleMismatchHint titleAr={form.watch("titleAr")} titleEn={form.watch("titleEn")} />
+          <GuidedInputField
+            form={form}
+            name="companyAr"
+            label={t("companyAr")}
+            required
+            guide={FIELD_GUIDES.experienceCompanyAr}
+          />
+          <GuidedInputField
+            form={form}
+            name="companyEn"
+            label={t("companyEn")}
+            required
+            dir="ltr"
+            guide={FIELD_GUIDES.experienceCompanyEn}
+          />
+          <GuidedInputField
+            form={form}
+            name="cityCountryAr"
+            label={t("cityCountryAr")}
+            required
+            guide={FIELD_GUIDES.cityCountryAr}
+          />
+          <GuidedInputField
+            form={form}
+            name="cityCountryEn"
+            label={t("cityCountryEn")}
+            required
+            dir="ltr"
+            guide={FIELD_GUIDES.cityCountryEn}
+            renderHint={(value) => (
+              <EnglishCityHint
+                value={value}
+                onFix={(fixed) =>
+                  form.setValue("cityCountryEn", fixed, { shouldDirty: true, shouldValidate: true })
+                }
+              />
             )}
           />
           <FormField
             control={form.control}
-            name="company"
+            name="employmentType"
             render={({ field, fieldState }) => (
               <FieldWithExample
-                label={t("company")}
+                label={t("employmentType")}
                 required
-                guide={FIELD_GUIDES.experienceCompany}
+                guide={FIELD_GUIDES.employmentType}
                 errorMessageKey={fieldState.error?.message}
-                onUseExample={(value) => form.setValue("company", value, { shouldDirty: true })}
+                onUseExample={() =>
+                  form.setValue("employmentType", "full_time", { shouldDirty: true })
+                }
               >
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-              </FieldWithExample>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="cityCountry"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("cityCountry")}
-                required
-                guide={FIELD_GUIDES.experienceCityCountry}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={(value) => form.setValue("cityCountry", value, { shouldDirty: true })}
-              >
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <FormControl>
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {EMPLOYMENT_TYPES.map((employmentType) => (
+                      <SelectItem key={employmentType} value={employmentType}>
+                        {t(`employmentTypes.${employmentType}`)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </FieldWithExample>
             )}
           />
@@ -198,44 +171,22 @@ export function ExperienceItemCard({
           </div>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-1.5">
-            <Label>{t("bulletsAr")}</Label>
-            <span className="text-destructive" aria-hidden="true">
-              *
-            </span>
-          </div>
-          <p className="text-muted-foreground flex items-start gap-1.5 text-xs">
-            <span aria-hidden="true">💡</span>
-            <span>{FIELD_GUIDES.experienceBullet.tip.ar}</span>
-          </p>
-          <BulletListField
-            values={form.watch("bulletsAr")}
-            onChange={(values) => form.setValue("bulletsAr", values, { shouldDirty: true })}
-            dir="rtl"
-            addLabel={t("addBullet")}
-          />
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-1.5">
-            <Label>{t("bulletsEn")}</Label>
-            <span className="text-destructive" aria-hidden="true">
-              *
-            </span>
-          </div>
-          <p className="text-muted-foreground flex items-start gap-1.5 text-xs">
-            <span aria-hidden="true">💡</span>
-            <span>{FIELD_GUIDES.experienceBullet.tip.en}</span>
-          </p>
-          <BulletListField
-            values={form.watch("bulletsEn")}
-            onChange={(values) => form.setValue("bulletsEn", values, { shouldDirty: true })}
-            dir="ltr"
-            addLabel={t("addBullet")}
-          />
-        </div>
-
+        <BulletListField
+          label={t("bulletsAr")}
+          tip={FIELD_GUIDES.experienceBullet.tip.ar}
+          values={form.watch("bulletsAr")}
+          onChange={(values) => form.setValue("bulletsAr", values, { shouldDirty: true })}
+          dir="rtl"
+          addLabel={t("addBullet")}
+        />
+        <BulletListField
+          label={t("bulletsEn")}
+          tip={FIELD_GUIDES.experienceBullet.tip.en}
+          values={form.watch("bulletsEn")}
+          onChange={(values) => form.setValue("bulletsEn", values, { shouldDirty: true })}
+          dir="ltr"
+          addLabel={t("addBullet")}
+        />
       </form>
     </Form>
   );

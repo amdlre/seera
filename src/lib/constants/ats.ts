@@ -7,6 +7,15 @@ export const ATS_AXIS_WEIGHTS = {
   technical: 10,
 } as const;
 
+/** Display order of the axes in the score breakdown. */
+export const ATS_AXIS_ORDER = [
+  "completeness",
+  "writingQuality",
+  "dates",
+  "keywords",
+  "technical",
+] as const satisfies ReadonlyArray<keyof typeof ATS_AXIS_WEIGHTS>;
+
 export const ATS_SCORE_THRESHOLDS = {
   red: 60,
   amber: 80,

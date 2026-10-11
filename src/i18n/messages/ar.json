@@ -60,7 +60,8 @@
     "url": "أدخل رابطًا صحيحًا",
     "maxLength": "النص طويل جدًا",
     "dateOrder": "تاريخ النهاية يجب أن يكون بعد تاريخ البداية",
-    "deleteConfirmation": "السير الذاتية يجب أن تحتوي على كلمة \"حذف\" بالضبط للتأكيد"
+    "deleteConfirmation": "السير الذاتية يجب أن تحتوي على كلمة \"حذف\" بالضبط للتأكيد",
+    "englishCityFormat": "اكتب المدينة والدولة بالإنجليزية وبفاصلة إنجليزية، مثل: Riyadh, Saudi Arabia"
   },
   "auth": {
     "login": {
@@ -258,6 +259,7 @@
       "experience": "الخبرات",
       "education": "التعليم",
       "skills": "المهارات",
+      "projects": "المشاريع",
       "certifications": "الشهادات",
       "languages": "اللغات",
       "custom": "أقسام إضافية",
@@ -282,7 +284,8 @@
       "endDate": "تاريخ النهاية",
       "issueDate": "تاريخ الإصدار",
       "current": "حاليًا",
-      "now": "الآن"
+      "now": "الآن",
+      "titleMismatch": "المسمى العربي «{titleAr}» والإنجليزي «{titleEn}» يصفان دورين مختلفين. وحّدهما حتى تتطابق نسختا السيرة."
     },
     "autosave": {
       "saving": "جارٍ الحفظ...",
@@ -298,13 +301,7 @@
     "preview": {
       "title": "معاينة السيرة",
       "mobileTrigger": "معاينة",
-      "empty": "ابدأ بالكتابة لترى معاينة سيرتك هنا.",
-      "summaryTitle": "الملخص المهني",
-      "experienceTitle": "الخبرات العملية",
-      "educationTitle": "التعليم",
-      "skillsTitle": "المهارات",
-      "certificationsTitle": "الشهادات المهنية",
-      "languagesTitle": "اللغات"
+      "empty": "ابدأ بالكتابة لترى معاينة سيرتك هنا."
     },
     "monthYearPicker": {
       "callout": "اكتب الشهر والسنة فقط — لا تكتب اليوم",
@@ -337,7 +334,9 @@
       "cityCountryAr": "المدينة، الدولة (عربي)",
       "cityCountryEn": "المدينة، الدولة (إنجليزي)",
       "linkedin": "LinkedIn",
-      "portfolioUrl": "رابط إضافي (GitHub أو Portfolio)"
+      "portfolioUrl": "رابط إضافي (GitHub أو Portfolio)",
+      "linkedinPlaceholder": "مثال: linkedin.com/in/your-name",
+      "portfolioUrlPlaceholder": "مثال: github.com/your-name"
     },
     "summary": {
       "title": "الملخص المهني",
@@ -354,11 +353,21 @@
       "addItem": "+ إضافة خبرة",
       "titleAr": "المسمى الوظيفي (عربي)",
       "titleEn": "المسمى الوظيفي (إنجليزي)",
-      "company": "اسم الشركة",
-      "cityCountry": "المدينة، الدولة",
       "bulletsAr": "نقاط الإنجاز (عربي)",
       "bulletsEn": "نقاط الإنجاز (إنجليزي)",
-      "addBullet": "+ إضافة نقطة"
+      "addBullet": "+ إضافة نقطة",
+      "companyAr": "اسم الشركة (عربي)",
+      "companyEn": "اسم الشركة (إنجليزي)",
+      "cityCountryAr": "المدينة، الدولة (عربي)",
+      "cityCountryEn": "المدينة، الدولة (إنجليزي)",
+      "employmentType": "نوع الوظيفة",
+      "employmentTypes": {
+        "full_time": "دوام كامل",
+        "part_time": "دوام جزئي",
+        "contract": "عقد مؤقت",
+        "freelance": "عمل حر",
+        "internship": "تدريب"
+      }
     },
     "education": {
       "title": "التعليم",
@@ -370,10 +379,11 @@
       "majorEn": "التخصص (إنجليزي)",
       "universityAr": "الجامعة (عربي)",
       "universityEn": "الجامعة (إنجليزي)",
-      "cityCountry": "المدينة، الدولة",
       "graduationYear": "سنة التخرج",
       "isExpected": "متوقع التخرج",
-      "gpa": "المعدل (اختياري)"
+      "gpa": "المعدل (اختياري)",
+      "cityCountryAr": "المدينة، الدولة (عربي)",
+      "cityCountryEn": "المدينة، الدولة (إنجليزي)"
     },
     "skills": {
       "title": "المهارات",
@@ -381,8 +391,24 @@
       "addItem": "+ إضافة فئة مهارات",
       "categoryAr": "اسم الفئة (عربي)",
       "categoryEn": "اسم الفئة (إنجليزي)",
-      "skillsAr": "المهارات (عربي، مفصولة بفواصل)",
-      "skillsEn": "المهارات (إنجليزي، مفصولة بفواصل)"
+      "skillsAr": "المهارات (عربي)",
+      "skillsEn": "المهارات (إنجليزي)",
+      "skillsPlaceholder": "اكتب مهارة واضغط Enter",
+      "duplicatesAcrossCategories": "هذه المهارات مكررة في أكثر من فئة: {skills}. اذكر كل مهارة مرة واحدة فقط."
+    },
+    "projects": {
+      "title": "المشاريع",
+      "empty": "لم تُضِف أي مشروع بعد. المشاريع مهمة جدًا للمطورين والمصممين.",
+      "addItem": "+ إضافة مشروع",
+      "nameAr": "اسم المشروع ووصفه (عربي)",
+      "nameEn": "اسم المشروع ووصفه (إنجليزي)",
+      "url": "رابط المشروع",
+      "urlPlaceholder": "مثال: github.com/your-name/project",
+      "technologies": "التقنيات المستخدمة",
+      "technologiesPlaceholder": "اكتب تقنية واضغط Enter",
+      "bulletsAr": "نقاط الإنجاز (عربي)",
+      "bulletsEn": "نقاط الإنجاز (إنجليزي)",
+      "addBullet": "+ إضافة نقطة"
     },
     "certifications": {
       "title": "الشهادات المهنية",
@@ -465,6 +491,15 @@
       "save": "حفظ والخروج",
       "saving": "جارٍ الحفظ...",
       "saveFailed": "تعذّر الحفظ، حاول مرة أخرى"
+    },
+    "cityFormat": {
+      "arabicComma": "استخدمت الفاصلة العربية «،» في حقل إنجليزي.",
+      "useFixed": "استبدلها: {value}",
+      "suggestOrder": "الصيغة المقترحة: City, Country — مثال: Riyadh, Saudi Arabia"
+    },
+    "tags": {
+      "remove": "إزالة {tag}",
+      "duplicate": "«{tag}» مضافة مسبقًا."
     }
   },
   "ats": {
@@ -490,7 +525,8 @@
       "missingKeywords": "بعض الكلمات المفتاحية من الإعلان الوظيفي غير موجودة في سيرتك",
       "emojiOrSymbols": "أزل الإيموجي أو الرموز الزخرفية من سيرتك",
       "easternDigits": "استخدم الأرقام اللاتينية (0-9) بدل الأرقام الهندية",
-      "phoneFormat": "اكتب رقم الجوال بصيغة دولية (مثال: +966 5X XXX XXXX)"
+      "phoneFormat": "اكتب رقم الجوال بصيغة دولية (مثال: +966 5X XXX XXXX)",
+      "experienceFieldsIncomplete": "بعض الخبرات ينقصها حقل مطلوب (مثل اسم الشركة أو المدينة بالإنجليزية)"
     },
     "keywords": {
       "inputLabel": "مطابقة سيرتك مع إعلان وظيفي",
@@ -520,6 +556,23 @@
       "finance": "المالية والمحاسبة",
       "hr": "الموارد البشرية",
       "softSkills": "المهارات الشخصية"
+    },
+    "pointsGain": "+{points}",
+    "severity": {
+      "error": "خطأ",
+      "warning": "تحذير",
+      "info": "تنبيه"
+    },
+    "breakdown": {
+      "title": "كيف تُحسب نتيجتك",
+      "points": "{earned} من {max}",
+      "axes": {
+        "completeness": "اكتمال الأقسام",
+        "writingQuality": "جودة الكتابة",
+        "dates": "التواريخ والتسلسل",
+        "keywords": "الكلمات المفتاحية",
+        "technical": "التوافق التقني"
+      }
     }
   },
   "common": {

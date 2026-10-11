@@ -1,8 +1,6 @@
-import { AppError, err, ok, type Result } from "@/lib/errors";
-import {
-  PDF_EXPORT_RATE_LIMIT,
-  PDF_EXPORT_RATE_WINDOW_MINUTES,
-} from "@/lib/constants/auth";
+import { AppError, err, ok, PdfRenderError, type Result } from "@/lib/errors";
+import { logger } from "@/lib/logger";
+import { PDF_EXPORT_RATE_LIMIT, PDF_EXPORT_RATE_WINDOW_MINUTES } from "@/lib/constants/auth";
 import { buildExportFilename } from "@/lib/pdf/filename";
 import { generateResumePdf } from "@/lib/pdf/generate-resume-pdf";
 import type { PrintLang } from "@/lib/constants/print-labels";
@@ -52,7 +50,14 @@ export async function exportResumeAsPdf(
   );
   const filename = buildExportFilename(fullName, jobTitle);
 
-  const pdf = await generateResumePdf(input.resumeId, input.userId, input.lang);
+  let pdf: Buffer;
+  try {
+    pdf = await generateResumePdf(input.resumeId, input.userId, input.lang);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    logger.error("pdf-render-failed", { resumeId: input.resumeId, lang: input.lang, message });
+    return err(new PdfRenderError(message));
+  }
 
   await recordExport({
     resumeId: input.resumeId,

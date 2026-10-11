@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { EMPLOYMENT_TYPES } from "@/lib/constants/experience";
+import { englishCityCountry } from "./english-text";
 
 /**
  * Full validation for one work-experience entry. `superRefine` enforces the
@@ -9,8 +11,11 @@ export const experienceItemSchema = z
   .object({
     titleAr: z.string().min(1, { message: "validation.required" }),
     titleEn: z.string().min(1, { message: "validation.required" }),
-    company: z.string().min(1, { message: "validation.required" }),
-    cityCountry: z.string().min(1, { message: "validation.required" }),
+    companyAr: z.string().min(1, { message: "validation.required" }),
+    companyEn: z.string().min(1, { message: "validation.required" }),
+    cityCountryAr: z.string().min(1, { message: "validation.required" }),
+    cityCountryEn: englishCityCountry(),
+    employmentType: z.enum(EMPLOYMENT_TYPES),
     startMonth: z.number().int().min(1).max(12).nullable(),
     startYear: z.number().int().nullable(),
     endMonth: z.number().int().min(1).max(12).nullable(),
@@ -48,8 +53,11 @@ export const experienceItemSchema = z
 export const experienceItemDraftSchema = z.object({
   titleAr: z.string().optional(),
   titleEn: z.string().optional(),
-  company: z.string().optional(),
-  cityCountry: z.string().optional(),
+  companyAr: z.string().optional(),
+  companyEn: z.string().optional(),
+  cityCountryAr: z.string().optional(),
+  cityCountryEn: z.string().optional(),
+  employmentType: z.enum(EMPLOYMENT_TYPES).optional(),
   startMonth: z.number().int().min(1).max(12).nullable().optional(),
   startYear: z.number().int().nullable().optional(),
   endMonth: z.number().int().min(1).max(12).nullable().optional(),
@@ -65,8 +73,11 @@ export type ExperienceItemDraftInput = z.infer<typeof experienceItemDraftSchema>
 export const EMPTY_EXPERIENCE_ITEM: ExperienceItemDraftInput = {
   titleAr: "",
   titleEn: "",
-  company: "",
-  cityCountry: "",
+  companyAr: "",
+  companyEn: "",
+  cityCountryAr: "",
+  cityCountryEn: "",
+  employmentType: "full_time",
   startMonth: null,
   startYear: null,
   endMonth: null,

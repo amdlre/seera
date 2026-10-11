@@ -4,7 +4,7 @@ import { Eye } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { ResumePreviewContent } from "./resume-preview-content";
+import { LiveResumePreview } from "./live-resume-preview";
 
 /** Floating "Preview" button that opens the live preview as a Sheet on mobile. */
 export function MobilePreviewSheet() {
@@ -26,7 +26,7 @@ export function MobilePreviewSheet() {
           <SheetTitle>{t("title")}</SheetTitle>
         </SheetHeader>
         <div className="px-4 pb-6">
-          <ResumePreviewContent />
+          <LiveResumePreview />
         </div>
       </SheetContent>
     </Sheet>

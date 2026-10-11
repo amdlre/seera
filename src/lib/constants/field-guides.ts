@@ -51,8 +51,8 @@ export const FIELD_GUIDES = {
   },
   phone: {
     tip: {
-      ar: "بصيغة دولية بدون أقواس أو شرطات",
-      en: "International format, no parentheses or dashes",
+      ar: "بصيغة دولية — رقم الجوال المحلي 05... يتحوّل تلقائيًا إلى +966",
+      en: "International format — a local 05... number is converted to +966 automatically",
     },
     example: { ar: "+966 50 000 0000", en: "+966 50 000 0000" },
   },
@@ -71,7 +71,7 @@ export const FIELD_GUIDES = {
     example: { ar: "Riyadh, Saudi Arabia", en: "Riyadh, Saudi Arabia" },
   },
   linkedin: {
-    tip: { ar: "رابط كامل بدون اختصار", en: "Full link, not a shortened one" },
+    tip: { ar: "رابط ملفك كاملًا بدون اختصار", en: "Your full profile link, not a shortened one" },
     example: { ar: "linkedin.com/in/username", en: "linkedin.com/in/username" },
   },
   portfolioUrl: {
@@ -105,13 +105,54 @@ export const FIELD_GUIDES = {
     },
     example: { ar: "مطوّر واجهات أمامية", en: "Frontend Developer" },
   },
-  experienceCompany: {
-    tip: { ar: "اسم الشركة كما هو رسميًا", en: "The company's official name" },
-    example: { ar: "شركة تقنية", en: "Tech Company" },
+  experienceCompanyAr: {
+    tip: { ar: "اسم الشركة كما يُكتب بالعربية رسميًا", en: "The company's official Arabic name" },
+    example: { ar: "شركة علم", en: "شركة علم" },
   },
-  experienceCityCountry: {
-    tip: { ar: "المدينة والدولة فقط", en: "City and country only" },
-    example: { ar: "الرياض، السعودية", en: "Riyadh, Saudi Arabia" },
+  experienceCompanyEn: {
+    tip: { ar: "اسم الشركة الرسمي بالإنجليزية", en: "The company's official English name" },
+    example: { ar: "Elm Company", en: "Elm Company" },
+  },
+  employmentType: {
+    tip: {
+      ar: "يظهر في السيرة فقط إذا لم يكن دوامًا كاملًا (تدريب، عمل حر...)",
+      en: "Printed only when it isn't full-time (internship, freelance...)",
+    },
+    example: { ar: "دوام كامل", en: "Full-time" },
+  },
+  projectNameAr: {
+    tip: {
+      ar: "اسم المشروع — ثم وصف قصير لما يفعله",
+      en: "Project name — then a short line on what it does",
+    },
+    example: {
+      ar: "سِيرة — منصة لبناء السيرة الذاتية بالعربية والإنجليزية",
+      en: "سِيرة — منصة لبناء السيرة الذاتية بالعربية والإنجليزية",
+    },
+  },
+  projectNameEn: {
+    tip: {
+      ar: "اسم المشروع بالإنجليزية — ثم وصف قصير",
+      en: "Project name — then a short line on what it does",
+    },
+    example: {
+      ar: "Seera — Bilingual ATS-friendly resume builder",
+      en: "Seera — Bilingual ATS-friendly resume builder",
+    },
+  },
+  projectUrl: {
+    tip: {
+      ar: "رابط عام يمكن فتحه: الموقع أو GitHub",
+      en: "A public link: the live site or GitHub",
+    },
+    example: { ar: "github.com/username/project", en: "github.com/username/project" },
+  },
+  projectTechnologies: {
+    tip: {
+      ar: "اكتب كل تقنية واضغط Enter أو فاصلة",
+      en: "Type each technology, then press Enter or comma",
+    },
+    example: { ar: "Next.js, TypeScript, PostgreSQL", en: "Next.js, TypeScript, PostgreSQL" },
   },
   experienceBullet: {
     tip: {
@@ -144,8 +185,8 @@ export const FIELD_GUIDES = {
   },
   skillList: {
     tip: {
-      ar: "انسخ المهارات بالصيغة نفسها الواردة في الإعلان الوظيفي، مفصولة بفواصل",
-      en: "Copy skills in the exact spelling from the job posting, comma-separated",
+      ar: "اكتب المهارة كما وردت في الإعلان الوظيفي ثم اضغط Enter أو فاصلة",
+      en: "Type each skill as spelled in the job posting, then press Enter or comma",
     },
     example: { ar: "JavaScript, TypeScript, Python", en: "JavaScript, TypeScript, Python" },
   },

@@ -2,15 +2,22 @@
 
 import { useTranslations } from "next-intl";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FieldWithExample } from "@/components/shared/field-with-example";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useItemForm } from "@/hooks/use-item-form";
 import { FIELD_GUIDES } from "@/lib/constants/field-guides";
 import { educationItemSchema, type EducationItemInput } from "@/lib/validations/resume/education";
 import { AutosaveIndicator } from "./autosave-indicator";
+import { EnglishCityHint } from "./english-city-hint";
+import { GuidedInputField } from "./guided-input-field";
 import { buildYearOptions } from "./month-year-picker";
 
 export function EducationItemCard({
@@ -42,118 +49,70 @@ export function EducationItemCard({
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <FormField
-            control={form.control}
+          <GuidedInputField
+            form={form}
             name="degreeAr"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("degreeAr")}
-                required
-                guide={FIELD_GUIDES.educationDegree}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={(value) => form.setValue("degreeAr", value, { shouldDirty: true })}
-              >
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-              </FieldWithExample>
-            )}
+            label={t("degreeAr")}
+            required
+            guide={FIELD_GUIDES.educationDegree}
           />
-          <FormField
-            control={form.control}
+          <GuidedInputField
+            form={form}
             name="degreeEn"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("degreeEn")}
-                required
-                guide={FIELD_GUIDES.educationDegree}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={(value) => form.setValue("degreeEn", value, { shouldDirty: true })}
-              >
-                <FormControl>
-                  <Input {...field} dir="ltr" />
-                </FormControl>
-              </FieldWithExample>
-            )}
+            label={t("degreeEn")}
+            required
+            dir="ltr"
+            guide={FIELD_GUIDES.educationDegree}
           />
-          <FormField
-            control={form.control}
+          <GuidedInputField
+            form={form}
             name="majorAr"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("majorAr")}
-                required
-                guide={FIELD_GUIDES.educationMajor}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={(value) => form.setValue("majorAr", value, { shouldDirty: true })}
-              >
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-              </FieldWithExample>
-            )}
+            label={t("majorAr")}
+            required
+            guide={FIELD_GUIDES.educationMajor}
           />
-          <FormField
-            control={form.control}
+          <GuidedInputField
+            form={form}
             name="majorEn"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("majorEn")}
-                required
-                guide={FIELD_GUIDES.educationMajor}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={(value) => form.setValue("majorEn", value, { shouldDirty: true })}
-              >
-                <FormControl>
-                  <Input {...field} dir="ltr" />
-                </FormControl>
-              </FieldWithExample>
-            )}
+            label={t("majorEn")}
+            required
+            dir="ltr"
+            guide={FIELD_GUIDES.educationMajor}
           />
-          <FormField
-            control={form.control}
+          <GuidedInputField
+            form={form}
             name="universityAr"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("universityAr")}
-                required
-                guide={FIELD_GUIDES.educationUniversity}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={(value) => form.setValue("universityAr", value, { shouldDirty: true })}
-              >
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-              </FieldWithExample>
-            )}
+            label={t("universityAr")}
+            required
+            guide={FIELD_GUIDES.educationUniversity}
           />
-          <FormField
-            control={form.control}
+          <GuidedInputField
+            form={form}
             name="universityEn"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("universityEn")}
-                required
-                guide={FIELD_GUIDES.educationUniversity}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={(value) => form.setValue("universityEn", value, { shouldDirty: true })}
-              >
-                <FormControl>
-                  <Input {...field} dir="ltr" />
-                </FormControl>
-              </FieldWithExample>
-            )}
+            label={t("universityEn")}
+            required
+            dir="ltr"
+            guide={FIELD_GUIDES.educationUniversity}
           />
-          <FormField
-            control={form.control}
-            name="cityCountry"
-            render={({ field }) => (
-              <FormItem>
-                <Label>{t("cityCountry")}</Label>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-              </FormItem>
+          <GuidedInputField
+            form={form}
+            name="cityCountryAr"
+            label={t("cityCountryAr")}
+            guide={FIELD_GUIDES.cityCountryAr}
+          />
+          <GuidedInputField
+            form={form}
+            name="cityCountryEn"
+            label={t("cityCountryEn")}
+            dir="ltr"
+            guide={FIELD_GUIDES.cityCountryEn}
+            renderHint={(value) => (
+              <EnglishCityHint
+                value={value}
+                onFix={(fixed) =>
+                  form.setValue("cityCountryEn", fixed, { shouldDirty: true, shouldValidate: true })
+                }
+              />
             )}
           />
         </div>

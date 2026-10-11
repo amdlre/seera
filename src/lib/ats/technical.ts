@@ -1,4 +1,6 @@
 import { EASTERN_ARABIC_DIGITS, EMOJI_OR_DECORATIVE_SYMBOL } from "@/lib/constants/ats";
+import { INTERNATIONAL_PHONE_FORMAT } from "@/lib/constants/phone";
+import { formatPhoneInternational } from "@/lib/resume/phone";
 import { findSectionId, type AtsAxisResult, type AtsIssue, type AtsScoreInput } from "./types";
 
 function collectAllText(input: AtsScoreInput): string {
@@ -11,7 +13,9 @@ function collectAllText(input: AtsScoreInput): string {
 
   for (const section of input.sections) {
     for (const item of input.itemsBySectionId[section.id] ?? []) {
-      parts.push(...Object.values(item.data).filter((value): value is string => typeof value === "string"));
+      parts.push(
+        ...Object.values(item.data).filter((value): value is string => typeof value === "string"),
+      );
     }
   }
 
@@ -50,8 +54,10 @@ export function scoreTechnicalCompatibility(input: AtsScoreInput): AtsAxisResult
     });
   }
 
-  const phone = input.personalInfo.phone ?? "";
-  if (!/^\+\d[\d ]{7,}$/.test(phone)) {
+  // Judge the phone as it will be printed: a local Saudi number (05...) is
+  // rewritten to +966 automatically, so it isn't a problem for the user to fix.
+  const phone = formatPhoneInternational(input.personalInfo.phone ?? "");
+  if (!INTERNATIONAL_PHONE_FORMAT.test(phone)) {
     earned -= 3;
     issues.push({
       id: "technical-phone-format",

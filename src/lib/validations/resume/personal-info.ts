@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { draftText, optionalUrl } from "@/lib/validations/shared";
+import { englishCityCountry } from "./english-text";
 
 /** Full validation used by the client form's Zod resolver (drives required-field UI). */
 export const personalInfoSchema = z.object({
@@ -16,7 +17,7 @@ export const personalInfoSchema = z.object({
     .min(1, { message: "validation.required" })
     .regex(/^\+?[0-9 ]{8,15}$/, { message: "validation.phone" }),
   cityCountryAr: z.string().min(1, { message: "validation.required" }),
-  cityCountryEn: z.string().min(1, { message: "validation.required" }),
+  cityCountryEn: englishCityCountry(),
   linkedin: optionalUrl,
   portfolioUrl: optionalUrl,
 });

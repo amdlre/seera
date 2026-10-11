@@ -2,8 +2,8 @@
 
 import { useTranslations } from "next-intl";
 import { Form, FormControl, FormField } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { FieldWithExample } from "@/components/shared/field-with-example";
+import { TagInput } from "@/components/shared/tag-input";
 import { useItemForm } from "@/hooks/use-item-form";
 import { FIELD_GUIDES } from "@/lib/constants/field-guides";
 import {
@@ -11,6 +11,9 @@ import {
   type SkillCategoryItemInput,
 } from "@/lib/validations/resume/skills";
 import { AutosaveIndicator } from "./autosave-indicator";
+import { GuidedInputField } from "./guided-input-field";
+
+type SkillsFieldName = "skillsAr" | "skillsEn";
 
 export function SkillCategoryItemCard({
   sectionId,
@@ -30,6 +33,39 @@ export function SkillCategoryItemCard({
     defaultValues: initialData,
   });
 
+  function setSkills(name: SkillsFieldName, value: string) {
+    form.setValue(name, value, { shouldDirty: true, shouldValidate: true });
+  }
+
+  function renderSkillsField(name: SkillsFieldName, dir: "rtl" | "ltr") {
+    return (
+      <FormField
+        control={form.control}
+        name={name}
+        render={({ field, fieldState }) => (
+          <FieldWithExample
+            label={t(name)}
+            required
+            guide={FIELD_GUIDES.skillList}
+            errorMessageKey={fieldState.error?.message}
+            onUseExample={(value) => setSkills(name, value)}
+          >
+            <FormControl>
+              <TagInput
+                value={field.value ?? ""}
+                onChange={(value) => setSkills(name, value)}
+                onBlur={field.onBlur}
+                dir={dir}
+                placeholder={t("skillsPlaceholder")}
+                invalid={Boolean(fieldState.error)}
+              />
+            </FormControl>
+          </FieldWithExample>
+        )}
+      />
+    );
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={(event) => event.preventDefault()} className="flex flex-col gap-4">
@@ -38,74 +74,23 @@ export function SkillCategoryItemCard({
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <FormField
-            control={form.control}
+          <GuidedInputField
+            form={form}
             name="categoryAr"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("categoryAr")}
-                required
-                guide={FIELD_GUIDES.skillCategory}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={(value) => form.setValue("categoryAr", value, { shouldDirty: true })}
-              >
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-              </FieldWithExample>
-            )}
+            label={t("categoryAr")}
+            required
+            guide={FIELD_GUIDES.skillCategory}
           />
-          <FormField
-            control={form.control}
+          <GuidedInputField
+            form={form}
             name="categoryEn"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("categoryEn")}
-                required
-                guide={FIELD_GUIDES.skillCategory}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={(value) => form.setValue("categoryEn", value, { shouldDirty: true })}
-              >
-                <FormControl>
-                  <Input {...field} dir="ltr" />
-                </FormControl>
-              </FieldWithExample>
-            )}
+            label={t("categoryEn")}
+            required
+            dir="ltr"
+            guide={FIELD_GUIDES.skillCategory}
           />
-          <FormField
-            control={form.control}
-            name="skillsAr"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("skillsAr")}
-                required
-                guide={FIELD_GUIDES.skillList}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={(value) => form.setValue("skillsAr", value, { shouldDirty: true })}
-              >
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-              </FieldWithExample>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="skillsEn"
-            render={({ field, fieldState }) => (
-              <FieldWithExample
-                label={t("skillsEn")}
-                required
-                guide={FIELD_GUIDES.skillList}
-                errorMessageKey={fieldState.error?.message}
-                onUseExample={(value) => form.setValue("skillsEn", value, { shouldDirty: true })}
-              >
-                <FormControl>
-                  <Input {...field} dir="ltr" />
-                </FormControl>
-              </FieldWithExample>
-            )}
-          />
+          {renderSkillsField("skillsAr", "rtl")}
+          {renderSkillsField("skillsEn", "ltr")}
         </div>
       </form>
     </Form>

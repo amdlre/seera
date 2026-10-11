@@ -65,4 +65,7 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
 
 # Migrate first; if it fails the container exits instead of serving a stale schema.
 # `exec` hands PID 1 to Node so stop signals reach the server.
-CMD ["sh", "-c", "node migrate.cjs && exec node server.js"]
+# HOSTNAME is pinned here, not only via ENV: orchestrators (Kubernetes-style
+# hosts) overwrite it with the pod name, and Next would then bind to the pod
+# IP only — refusing Puppeteer's loopback request to /print (PDF export 500).
+CMD ["sh", "-c", "node migrate.cjs && HOSTNAME=0.0.0.0 exec node server.js"]

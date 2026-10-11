@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { optionalEnglishCityCountry } from "./english-text";
 
 export const educationItemSchema = z.object({
   degreeAr: z.string().min(1, { message: "validation.required" }),
@@ -7,11 +8,15 @@ export const educationItemSchema = z.object({
   majorEn: z.string().min(1, { message: "validation.required" }),
   universityAr: z.string().min(1, { message: "validation.required" }),
   universityEn: z.string().min(1, { message: "validation.required" }),
-  cityCountry: z.string().optional().or(z.literal("")),
+  cityCountryAr: z.string().optional().or(z.literal("")),
+  cityCountryEn: optionalEnglishCityCountry(),
   graduationYear: z.number().int(),
   isExpected: z.boolean(),
   gpaValue: z.number().min(0).nullable().optional(),
-  gpaScale: z.union([z.literal(4), z.literal(5)]).nullable().optional(),
+  gpaScale: z
+    .union([z.literal(4), z.literal(5)])
+    .nullable()
+    .optional(),
 });
 
 export const educationItemDraftSchema = z.object({
@@ -21,11 +26,15 @@ export const educationItemDraftSchema = z.object({
   majorEn: z.string().optional(),
   universityAr: z.string().optional(),
   universityEn: z.string().optional(),
-  cityCountry: z.string().optional(),
+  cityCountryAr: z.string().optional(),
+  cityCountryEn: z.string().optional(),
   graduationYear: z.number().int().nullable().optional(),
   isExpected: z.boolean().optional(),
   gpaValue: z.number().nullable().optional(),
-  gpaScale: z.union([z.literal(4), z.literal(5)]).nullable().optional(),
+  gpaScale: z
+    .union([z.literal(4), z.literal(5)])
+    .nullable()
+    .optional(),
 });
 
 export type EducationItemInput = z.infer<typeof educationItemSchema>;
@@ -38,7 +47,8 @@ export const EMPTY_EDUCATION_ITEM: EducationItemDraftInput = {
   majorEn: "",
   universityAr: "",
   universityEn: "",
-  cityCountry: "",
+  cityCountryAr: "",
+  cityCountryEn: "",
   graduationYear: null,
   isExpected: false,
   gpaValue: null,

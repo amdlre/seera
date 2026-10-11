@@ -20,6 +20,10 @@ const envSchema = z
     SNDR_API_KEY: z.string().optional(),
     // Comma-separated emails that always hold the admin role (see lib/auth/admin-emails.ts).
     ADMIN_EMAILS: z.string().optional(),
+    // Port the server listens on; Puppeteer reaches /print over loopback on it.
+    PORT: z.coerce.number().int().positive().default(3000),
+    // Optional override for where Puppeteer loads /print from (see lib/pdf/generate-resume-pdf.ts).
+    PDF_RENDER_ORIGIN: z.string().url().optional(),
   })
   .superRefine((value, ctx) => {
     const missing =
@@ -48,4 +52,6 @@ export const env = envSchema.parse({
   SMTP_PASS: process.env.SMTP_PASS,
   SNDR_API_KEY: process.env.SNDR_API_KEY || undefined,
   ADMIN_EMAILS: process.env.ADMIN_EMAILS,
+  PORT: process.env.PORT || undefined,
+  PDF_RENDER_ORIGIN: process.env.PDF_RENDER_ORIGIN || undefined,
 });
