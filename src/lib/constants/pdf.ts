@@ -10,7 +10,7 @@ export const PDF_RENDER_TIMEOUT_MS = 30_000;
 
 /**
  * Chromium flags for running inside a container as a non-root user:
- * no sandbox (no user namespaces), and /tmp instead of the tiny /dev/shm.
+ * no sandbox (no user namespaces), and /tmp instead of the tiny /dev/shm
  */
 export const PDF_CHROMIUM_ARGS = [
   "--no-sandbox",
