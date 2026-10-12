@@ -7,6 +7,7 @@ import {
   pickLang,
   text,
 } from "../document-helpers";
+import { NoBreakText } from "../no-break-text";
 
 type ItemsProps = { items: DocumentItem[]; lang: PrintLang };
 type LabelledItemsProps = ItemsProps & { labels: PrintLabels };
@@ -15,7 +16,7 @@ type LabelledItemsProps = ItemsProps & { labels: PrintLabels };
 export function ParagraphSectionBody({ items, lang, field }: ItemsProps & { field: string }) {
   return items.map(({ id, data }) => (
     <p key={id} className="print-paragraph">
-      {pickLang(data, field, lang)}
+      <NoBreakText text={pickLang(data, field, lang)} />
     </p>
   ));
 }
@@ -25,7 +26,9 @@ export function BulletsSectionBody({ items, lang }: ItemsProps) {
   return (
     <ul className="print-bullets">
       {items.map(({ id, data }) => (
-        <li key={id}>{pickLang(data, "text", lang)}</li>
+        <li key={id}>
+          <NoBreakText text={pickLang(data, "text", lang)} />
+        </li>
       ))}
     </ul>
   );
@@ -35,7 +38,8 @@ export function BulletsSectionBody({ items, lang }: ItemsProps) {
 export function SkillsSectionBody({ items, lang }: ItemsProps) {
   return items.map(({ id, data }) => (
     <p key={id} className="print-skill-line">
-      <strong>{pickLang(data, "category", lang)}:</strong> {pickLang(data, "skills", lang)}
+      <strong>{pickLang(data, "category", lang)}:</strong>{" "}
+      <NoBreakText text={pickLang(data, "skills", lang)} />
     </p>
   ));
 }

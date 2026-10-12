@@ -10,6 +10,11 @@ export const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 30;
 
 /** Short-lived token letting Puppeteer load /print without a session cookie. */
 export const EXPORT_TOKEN_TTL_SECONDS = 120;
+/**
+ * Request header carrying the export token from Puppeteer to `/print`. A header,
+ * not a query param: a URL ends up in the PDF's Title metadata and in access logs.
+ */
+export const EXPORT_TOKEN_HEADER = "x-seera-export-token";
 
 /** How long a signed PDF download URL stays valid, per PROJECT-BRIEF §6.3. */
 export const SIGNED_PDF_URL_TTL_SECONDS = 15 * 60;

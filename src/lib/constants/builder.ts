@@ -25,9 +25,9 @@ export const BUILDER_STEPS: BuilderStepDefinition[] = [
   { id: "personal", order: 1, titleKey: "personal", implemented: true, skippable: false },
   { id: "summary", order: 2, titleKey: "summary", implemented: true, skippable: true },
   { id: "experience", order: 3, titleKey: "experience", implemented: true, skippable: true },
-  { id: "education", order: 4, titleKey: "education", implemented: true, skippable: true },
-  { id: "skills", order: 5, titleKey: "skills", implemented: true, skippable: true },
-  { id: "projects", order: 6, titleKey: "projects", implemented: true, skippable: true },
+  { id: "projects", order: 4, titleKey: "projects", implemented: true, skippable: true },
+  { id: "education", order: 5, titleKey: "education", implemented: true, skippable: true },
+  { id: "skills", order: 6, titleKey: "skills", implemented: true, skippable: true },
   {
     id: "certifications",
     order: 7,

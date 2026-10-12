@@ -29,24 +29,24 @@ export const DEFAULT_RESUME_SECTIONS: DefaultSectionBlueprint[] = [
     sortOrder: 2,
   },
   {
+    type: "projects",
+    titleAr: "المشاريع",
+    titleEn: "Projects",
+    layout: "dated_entries",
+    sortOrder: 3,
+  },
+  {
     type: "education",
     titleAr: "التعليم",
     titleEn: "Education",
     layout: "dated_entries",
-    sortOrder: 3,
+    sortOrder: 4,
   },
   {
     type: "skills",
     titleAr: "المهارات",
     titleEn: "Skills",
     layout: "bullets",
-    sortOrder: 4,
-  },
-  {
-    type: "projects",
-    titleAr: "المشاريع",
-    titleEn: "Projects",
-    layout: "dated_entries",
     sortOrder: 5,
   },
   {

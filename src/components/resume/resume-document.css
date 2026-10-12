@@ -57,8 +57,8 @@
 
 .resume-doc {
   font-family: Arial, Helvetica, Arimo, sans-serif;
-  font-size: 11pt;
-  line-height: 1.35;
+  font-size: 10pt;
+  line-height: 1.2;
   color: #000000;
   background: #ffffff;
 }
@@ -74,46 +74,53 @@
 }
 
 .print-name {
-  font-size: 18pt;
+  font-size: 16pt;
   font-weight: bold;
   margin: 0 0 2pt;
 }
 
 .print-job-title {
-  font-size: 12pt;
-  margin: 0 0 4pt;
+  font-size: 11pt;
+  margin: 0 0 2pt;
 }
 
 .print-contact-line {
   font-size: 10pt;
-  margin: 0 0 12pt;
+  margin: 0 0 2pt;
 }
 
 .print-section {
-  margin-top: 12pt;
+  margin-top: 7pt;
 }
 
 .print-section-title {
-  font-size: 13pt;
+  font-size: 11.5pt;
   font-weight: bold;
   border-bottom: 1pt solid #000000;
-  padding-bottom: 2pt;
-  margin: 0 0 6pt;
+  padding-bottom: 1pt;
+  margin: 0 0 3pt;
+  break-after: avoid;
 }
 
 .print-entry {
-  margin-bottom: 8pt;
+  margin-bottom: 5pt;
+}
+
+.print-entry-compact {
+  margin-top: 0;
+  margin-bottom: 3pt;
 }
 
 .print-entry-title {
   font-size: 11pt;
   font-weight: bold;
   margin: 0;
+  break-after: avoid;
 }
 
 .print-entry-meta {
   font-size: 10pt;
-  margin: 0 0 3pt;
+  margin: 0 0 1pt;
 }
 
 .print-bullets {
@@ -123,7 +130,7 @@
 }
 
 .print-bullets li {
-  margin-bottom: 2pt;
+  margin-bottom: 0.5pt;
 }
 
 .print-paragraph {
@@ -132,10 +139,18 @@
 }
 
 .print-skill-line {
-  margin: 0 0 3pt;
+  margin: 0 0 1pt;
 }
 
 .resume-doc p,
 .resume-doc li {
   text-align: start;
+}
+
+/*
+ * Hyphenated words ("user-centered") must not break across lines: PDF text
+ * extraction drops the hyphen at a line end and returns "usercentered".
+ */
+.print-nowrap {
+  white-space: nowrap;
 }

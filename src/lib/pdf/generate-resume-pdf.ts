@@ -3,6 +3,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import puppeteer, { type Browser } from "puppeteer";
 import { signExportToken } from "@/lib/auth/export-token";
+import { EXPORT_TOKEN_HEADER } from "@/lib/constants/auth";
 import {
   PDF_CHROMIUM_ARGS,
   PDF_PROFILE_DIR_PREFIX,
@@ -54,7 +55,7 @@ export async function generateResumePdf(
   lang: PrintLang,
 ): Promise<Buffer> {
   const token = await signExportToken({ resumeId, userId });
-  const printUrl = `${resolveRenderOrigin()}/print/${resumeId}?lang=${lang}&token=${token}`;
+  const printUrl = `${resolveRenderOrigin()}/print/${resumeId}?lang=${lang}`;
 
   const profileDir = await mkdtemp(path.join(tmpdir(), PDF_PROFILE_DIR_PREFIX));
   let browser: Browser;
@@ -67,6 +68,7 @@ export async function generateResumePdf(
 
   try {
     const page = await browser.newPage();
+    await page.setExtraHTTPHeaders({ [EXPORT_TOKEN_HEADER]: token });
     const response = await page.goto(printUrl, {
       waitUntil: "networkidle0",
       timeout: PDF_RENDER_TIMEOUT_MS,
@@ -75,6 +77,12 @@ export async function generateResumePdf(
       throw new PdfRenderError(`Print page responded with HTTP ${response?.status() ?? "none"}`);
     }
     await page.evaluateHandle("document.fonts.ready");
+    // The /print root layout can't see ?lang=, so <html lang> is always "ar";
+    // fix it before printing — Chromium writes it into the PDF's Language field.
+    await page.evaluate((documentLang) => {
+      document.documentElement.lang = documentLang;
+      document.documentElement.dir = documentLang === "ar" ? "rtl" : "ltr";
+    }, lang);
 
     const pdfBytes = await page.pdf({
       format: "A4",

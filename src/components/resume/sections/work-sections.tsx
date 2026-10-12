@@ -9,6 +9,7 @@ import {
   pickLangList,
   text,
 } from "../document-helpers";
+import { NoBreakText } from "../no-break-text";
 
 type SectionBodyProps = { items: DocumentItem[]; lang: PrintLang; labels: PrintLabels };
 
@@ -19,7 +20,9 @@ function BulletList({ bullets }: { bullets: string[] }) {
   return (
     <ul className="print-bullets">
       {bullets.map((bullet, index) => (
-        <li key={index}>{bullet}</li>
+        <li key={index}>
+          <NoBreakText text={bullet} />
+        </li>
       ))}
     </ul>
   );
@@ -50,41 +53,56 @@ export function ExperienceSectionBody({ items, lang, labels }: SectionBodyProps)
   });
 }
 
-/** Projects: "Name — link", the technologies line, then bullets. */
+/**
+ * Projects: "Name — link", then the technologies line and bullets. A project
+ * without bullets collapses to one line, "Name — link (technologies)", so a
+ * list of short projects doesn't cost two lines each.
+ */
 export function ProjectsSectionBody({ items, lang }: Omit<SectionBodyProps, "labels">) {
-  return items.map(({ id, data }) => (
-    <div key={id} className="print-entry">
-      <p className="print-entry-title">
-        {joinPresent([pickLang(data, "name", lang), text(data.url)], " — ")}
-      </p>
-      {text(data.technologies) && <p className="print-entry-meta">{text(data.technologies)}</p>}
-      <BulletList bullets={pickLangList(data, "bullets", lang)} />
-    </div>
-  ));
+  return items.map(({ id, data }) => {
+    const title = joinPresent([pickLang(data, "name", lang), text(data.url)], " — ");
+    const technologies = text(data.technologies);
+    const bullets = pickLangList(data, "bullets", lang);
+    if (bullets.length === 0) {
+      return (
+        <p key={id} className="print-entry print-entry-compact">
+          <strong>{title}</strong>
+          {technologies && ` (${technologies})`}
+        </p>
+      );
+    }
+    return (
+      <div key={id} className="print-entry">
+        <p className="print-entry-title">{title}</p>
+        {technologies && <p className="print-entry-meta">{technologies}</p>}
+        <BulletList bullets={bullets} />
+      </div>
+    );
+  });
 }
 
-/** Education: degree, "Major — University — City", then year and optional GPA. */
+/** Education: "Degree, Major", then "University — City | Year | GPA" — two lines per entry. */
 export function EducationSectionBody({ items, lang, labels }: SectionBodyProps) {
+  const listSeparator = lang === "ar" ? "، " : ", ";
   return items.map(({ id, data }) => {
     const gpa =
       typeof data.gpaValue === "number"
         ? `${labels.gpaOutOf}: ${data.gpaValue}/${String(data.gpaScale ?? "")}`
         : "";
     const year = `${data.isExpected ? `${labels.present}: ` : ""}${String(data.graduationYear ?? "")}`;
+    const place = joinPresent(
+      [pickLang(data, "university", lang), pickLang(data, "cityCountry", lang)],
+      " — ",
+    );
     return (
       <div key={id} className="print-entry">
-        <p className="print-entry-title">{pickLang(data, "degree", lang)}</p>
-        <p className="print-entry-meta">
+        <p className="print-entry-title">
           {joinPresent(
-            [
-              pickLang(data, "major", lang),
-              pickLang(data, "university", lang),
-              pickLang(data, "cityCountry", lang),
-            ],
-            " — ",
+            [pickLang(data, "degree", lang), pickLang(data, "major", lang)],
+            listSeparator,
           )}
         </p>
-        <p className="print-entry-meta">{joinPresent([year, gpa], " — ")}</p>
+        <p className="print-entry-meta">{joinPresent([place, year, gpa], " | ")}</p>
       </div>
     );
   });
@@ -96,7 +114,9 @@ export function DatedEntriesSectionBody({ items, lang, labels }: SectionBodyProp
     <div key={id} className="print-entry">
       <p className="print-entry-title">{pickLang(data, "title", lang)}</p>
       <p className="print-entry-meta">{formatDateRange(data, labels)}</p>
-      <p className="print-paragraph">{pickLang(data, "description", lang)}</p>
+      <p className="print-paragraph">
+        <NoBreakText text={pickLang(data, "description", lang)} />
+      </p>
     </div>
   ));
 }

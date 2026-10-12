@@ -1,15 +1,17 @@
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { AutoPrintTrigger } from "@/components/resume/auto-print-trigger";
 import { ResumePrintTemplate } from "@/components/resume/resume-print-template";
 import { verifyExportToken } from "@/lib/auth/export-token";
 import { getSession } from "@/lib/auth/session";
+import { EXPORT_TOKEN_HEADER } from "@/lib/constants/auth";
 import type { PrintLang } from "@/lib/constants/print-labels";
 import { UnauthorizedError } from "@/lib/errors";
 import { getResumeForPrint } from "@/server/services/resume.service";
 
 type PrintPageProps = {
   params: Promise<{ resumeId: string }>;
-  searchParams: Promise<{ lang?: string; autoprint?: string; token?: string }>;
+  searchParams: Promise<{ lang?: string; autoprint?: string }>;
 };
 
 function resolveLang(lang: string | undefined): PrintLang {
@@ -41,7 +43,8 @@ async function resolveViewer(
 
 export default async function PrintPage({ params, searchParams }: PrintPageProps) {
   const { resumeId } = await params;
-  const { lang: rawLang, autoprint, token } = await searchParams;
+  const { lang: rawLang, autoprint } = await searchParams;
+  const token = (await headers()).get(EXPORT_TOKEN_HEADER) ?? undefined;
   const lang = resolveLang(rawLang);
   const dir = lang === "ar" ? "rtl" : "ltr";
 
@@ -51,10 +54,18 @@ export default async function PrintPage({ params, searchParams }: PrintPageProps
     notFound();
   }
 
-  const { resume, sections, itemsBySectionId } = result.value;
+  const { resume, sections, itemsBySectionId, personalInfo } = result.value;
+  // Becomes the PDF's Title metadata (and the tab title when printing).
+  const documentTitle = [
+    lang === "ar" ? personalInfo.fullNameAr : personalInfo.fullNameEn,
+    lang === "ar" ? resume.targetJobTitleAr : resume.targetJobTitleEn,
+  ]
+    .filter(Boolean)
+    .join(" — ");
 
   return (
     <div lang={lang} dir={dir} className="resume-doc">
+      <title>{documentTitle || resume.title}</title>
       <ResumePrintTemplate
         lang={lang}
         resume={resume}
