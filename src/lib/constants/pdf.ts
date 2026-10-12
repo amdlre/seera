@@ -16,4 +16,10 @@ export const PDF_CHROMIUM_ARGS = [
   "--no-sandbox",
   "--disable-setuid-sandbox",
   "--disable-dev-shm-usage",
+  // Crashpad needs a writable database dir and is useless in a throwaway render.
+  "--disable-crash-reporter",
+  "--disable-breakpad",
 ];
+
+/** Prefix for the per-render Chromium profile created under the OS temp dir. */
+export const PDF_PROFILE_DIR_PREFIX = "seera-chromium-";

@@ -1,7 +1,11 @@
-import puppeteer from "puppeteer";
+import { mkdtemp, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
+import puppeteer, { type Browser } from "puppeteer";
 import { signExportToken } from "@/lib/auth/export-token";
 import {
   PDF_CHROMIUM_ARGS,
+  PDF_PROFILE_DIR_PREFIX,
   PDF_RENDER_LOOPBACK_HOST,
   PDF_RENDER_TIMEOUT_MS,
 } from "@/lib/constants/pdf";
@@ -19,6 +23,26 @@ function resolveRenderOrigin(): string {
 }
 
 /**
+ * Starts headless Chromium with a fresh, writable profile directory and
+ * HOME/XDG pointing into it — a container user without a real home makes
+ * Chromium's crash handler abort at launch otherwise.
+ */
+async function launchBrowser(profileDir: string): Promise<Browser> {
+  return puppeteer.launch({
+    headless: true,
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+    args: PDF_CHROMIUM_ARGS,
+    userDataDir: profileDir,
+    env: {
+      ...process.env,
+      HOME: profileDir,
+      XDG_CONFIG_HOME: profileDir,
+      XDG_CACHE_HOME: profileDir,
+    },
+  });
+}
+
+/**
  * Renders `/print/[resumeId]` with a real headless Chromium and returns the
  * resulting PDF bytes. Chromium is what correctly shapes Arabic script and
  * produces selectable, extractable text — the non-negotiable ATS requirement
@@ -32,11 +56,14 @@ export async function generateResumePdf(
   const token = await signExportToken({ resumeId, userId });
   const printUrl = `${resolveRenderOrigin()}/print/${resumeId}?lang=${lang}&token=${token}`;
 
-  const browser = await puppeteer.launch({
-    headless: true,
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
-    args: PDF_CHROMIUM_ARGS,
-  });
+  const profileDir = await mkdtemp(path.join(tmpdir(), PDF_PROFILE_DIR_PREFIX));
+  let browser: Browser;
+  try {
+    browser = await launchBrowser(profileDir);
+  } catch (error) {
+    await rm(profileDir, { recursive: true, force: true });
+    throw error;
+  }
 
   try {
     const page = await browser.newPage();
@@ -58,5 +85,6 @@ export async function generateResumePdf(
     return Buffer.from(pdfBytes);
   } finally {
     await browser.close();
+    await rm(profileDir, { recursive: true, force: true });
   }
 }

@@ -44,7 +44,14 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 RUN addgroup --system --gid 1001 nodejs \
-  && adduser --system --uid 1001 nextjs
+  && adduser --system --uid 1001 --home /home/nextjs nextjs
+
+# A system user's home defaults to /nonexistent, and Chromium refuses to start
+# without a writable profile/config dir ("chrome_crashpad_handler: --database
+# is required" → PDF export 500). Give it a real home and XDG dirs.
+ENV HOME=/home/nextjs \
+  XDG_CONFIG_HOME=/tmp/.chromium \
+  XDG_CACHE_HOME=/tmp/.chromium
 
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
